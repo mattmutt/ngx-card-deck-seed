@@ -1,0 +1,21 @@
+<ng-container #templates>
+    <ng-container #billboard>
+
+        <ng-container #header></ng-container>
+
+        <ng-container #body>
+
+            <!-- placed progress bar as a componentized template -->
+            <ng-template #metricsBillboardProgressWidget let-metricEntity="metricEntity">
+
+                <div role="chart-render-bar" class="progress-static warning">
+                    <div progressMeter [attr.data-value]="metricEntity.model.progress"></div>
+
+                </div>
+
+            </ng-template>
+
+        </ng-container>
+
+    </ng-container>
+</ng-container>

@@ -1,0 +1,215 @@
+@import "~ngx-card-deck/styles/theme";
+
+:host {
+    width: 100%;
+    display: block;
+    //padding: 0 2rem;
+    background-color: #f2f2f2;
+
+    SECTION {
+        $chartWidgetGutterWidth: 10%;
+        $divider-line-width: 1px;
+        $divider-line-color: #cecece;
+        $rendered-elements-count: 3; // how many inner card children
+
+        &[role="chart-widget"] {
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+            align-content: flex-start;
+            align-items: baseline; // deviates a bit i know
+
+            // UX: strict conformance of having text fit, despite clippage
+            // overflow: hidden;
+
+            // however, algorithms for wrap can aide
+            flex-wrap: wrap;
+
+            // do not apply divider on first child (element)
+            [role="chart-summary"]:first-child {
+                border: 0;
+            }
+
+            // sub layout
+            [role="chart-summary"] {
+                display: flex;
+                flex-direction: column;
+                //flex: 0 1 100%;
+                flex: 0 1;
+
+                padding: 0 1rem;
+
+                [role="chart-summary-title"] {
+                    align-content: flex-start;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+
+                    H4 {
+                        margin: 0;
+                        padding: 0 1rem;
+                    }
+                }
+
+                [role="chart-summary-label"] {
+
+                    // adaptive spacing over breaks
+                    %attribute-unit-spacing-size-rwd {
+                        // base
+                        $base-size: 0.3rem;
+                        padding-left: $base-size;
+
+                        @include property-mapped-to-rwd("padding-left", (
+                            $base-size * 1.20,
+                            $base-size * 1.40,
+                            $base-size * 1.60,
+                            $base-size * 1.80
+                        ));
+                    }
+
+                    display: flex;
+                    flex-direction: row;
+                    flex: 0 1;
+
+                    justify-content: center;
+                    align-items: baseline;
+                    margin: 0;
+
+                    [role="chart-summary-attribute-value"] {
+                        margin: 0;
+                        // color: #007cbb;
+                    }
+
+                    [role="chart-summary-attribute-unit"] {
+
+                        @extend %attribute-unit-spacing-size-rwd;
+
+                        margin: 0;
+                        white-space: nowrap;
+                        text-overflow: clip;
+                        overflow-x: hidden;
+
+                    }
+                }
+
+                // user interaction
+                // &:hover {
+                //   background-color: rgba(1, 1, 1, .05);
+                // }
+
+                [role="chart-render-container"] {
+                    width: 100%;
+                    padding: 0 20% 0;
+                    position: relative;
+
+                    // progress widget
+                    [role="chart-render-bar"] {
+                        height: 0.5rem;
+
+                        // future work : transition in
+                        /*
+                        &.render {
+                          &::before {
+                            transition: all 5s;
+                          }
+
+                          &.start {
+                            &::before {
+                              transition: all 5s;
+                            }
+                          }
+
+                        }
+                        */
+
+                    }
+
+                    /*
+                    [role="tooltip"] {
+                      width: 100%;
+
+                      [role="chart-render-bar"] {
+                        font-size: 4px;
+                      }
+                    }
+                    */
+                }
+
+                // used and capacity summary
+                [role="chart-summary-informational"] {
+                    display: flex;
+                    justify-content: center;
+                    align-items: stretch;
+                    font-size: 12px;
+                    line-height: 1.5;
+                    padding-top: 0.5rem;
+
+                    > * {
+                        // common children
+                    }
+
+                    // first
+                    > *:nth-of-type(1) {
+                        text-align: right;
+                        margin-right: 0.5rem;
+                        padding-right: 0.5rem;
+                        border-right: $divider-line-width solid $divider-line-color;
+                    }
+
+                    // second
+                    > *:nth-of-type(2) {
+                        text-align: left;
+                    }
+
+                }
+
+                // +++++ RWD ++++
+                // determine "card' count before wrapping into single column
+                @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                    flex-basis: (100 / $rendered-elements-count)#{"%"};
+                    // divider
+                    border-left: $divider-line-width solid $divider-line-color;
+                }
+
+                @include respond-to-rwd-list(('mobile', 'small')) {
+                    flex-basis: 100%;
+                    // add divider
+                    border-top: $divider-line-width solid $divider-line-color;
+                    padding: 1rem 0;
+                }
+
+                // /+++++ RWD ++++
+
+                // /summary
+            }
+
+            // ++++++ RWD +++++++
+            @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                flex-wrap: nowrap;
+            }
+            // /++++++ RWD +++++++
+
+            // widget
+        }
+
+    }
+
+}
+
+
+// header icon
+@include selectCardLayoutAspectByComponentType("*", "card-summary-billboard", "header") {
+    // styling header background just for this card type
+    background: linear-gradient(to right, rgba(173,4,18,.2), rgba(73,74,81, 0));
+
+    ::ng-deep I.headerIcon {
+        background-size: cover;
+
+        // for each instance of the metricsa billboard
+        &.mountains {
+            background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-mountains.svg");
+        }
+
+    }
+}

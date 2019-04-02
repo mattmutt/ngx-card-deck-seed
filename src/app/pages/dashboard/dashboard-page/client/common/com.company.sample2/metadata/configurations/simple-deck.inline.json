@@ -1,0 +1,35 @@
+{
+    "id": "simple-deck",
+    "cards": [
+        {
+            "id": "my-simple-plugin1",
+            "component": "card-metrics-billboard",
+            "header": {
+                "title": "Simple Card",
+                "icon": "datastore"
+            },
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 3,
+                "height": 1
+            },
+            "services": [
+                {
+                    "network": {
+                        "url": "/network/vendors/extension/com.company.sample2/plugins/deck1/cards/local-plugin3/data/summary.json"
+                    }
+                }
+            ],
+            "templates": [
+                {
+                    "body": {
+                        "organization": "project2",
+                        "template": "metricsBillboardProgressWidget"
+                    }
+                }
+            ]
+        }
+    ]
+}
+

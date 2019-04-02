@@ -1,0 +1,79 @@
+{
+  "deployment": {
+    "page": {
+      "embedded": false,
+      "sandboxed": false
+    }
+  },
+  "services": {
+    "dashboardMetadata": {
+      "mocked": false,
+      "transport": "network",
+      "publicPath": "/dashboard",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "/network/vendors/extension/{{ dashboardOrganizerPath }}/metadata/dashboard",
+        "extension": ".json",
+        "authentication": null
+      }
+    },
+    "session": {
+      "transport": "service",
+      "mocked": true,
+      "publicPath": "/dashboard",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "/network/vendors/extension/{{ dashboardOrganizerPath }}/acme/session/usersession",
+        "extension": ".json",
+        "authentication": null
+      }
+    },
+    "remote-served-service": {
+      "transport": "service",
+      "mocked": false,
+      "publicPath": "/dashboard",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "authentication": {
+          "sameOriginPolicyEnabled": true
+        },
+        "extension": null
+      }
+    },
+    "rest": {
+      "transport": "service",
+      "mocked": true,
+      "publicPath": "/dashboard",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "extension": null,
+        "authentication": null
+      }
+    },
+    "network": {
+      "transport": "network",
+      "mocked": false,
+      "publicPath": "/dashboard",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "extension": null,
+        "authentication": null
+      }
+    }
+
+  }
+}
+

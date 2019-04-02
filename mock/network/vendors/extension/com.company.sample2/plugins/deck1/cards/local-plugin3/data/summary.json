@@ -1,0 +1,40 @@
+{
+  "provider": {
+    "serverGuid": "acme-resource-provider-2017-06-22",
+    "type": "Folder",
+    "value": "group-d1"
+  },
+  "summaryItems": [
+    {
+      "label": "summary.vmCount",
+      "value": 83
+    },
+    {
+      "label": "summary.hostCount",
+      "value": 28
+    }
+  ],
+  "resourceMeters": [
+    {
+      "title": "CpuResourceDataItem.CpuLabel",
+      "free": "400 Packages",
+      "used": "100 Prepared",
+      "capacity": "300 Pending",
+      "progress": 33
+    },
+    {
+      "title": "MemoryResourceDataItem.MemoryLabel",
+      "free": "777 Bottles",
+      "used": "100 barrels",
+      "capacity": "2000 liters",
+      "progress": 25
+    },
+    {
+      "title": "StorageResourceDataItem.StorageLabel",
+      "free": "69 Nodes",
+      "used": "19 workers",
+      "capacity": "50 people",
+      "progress": 28
+    }
+  ]
+}

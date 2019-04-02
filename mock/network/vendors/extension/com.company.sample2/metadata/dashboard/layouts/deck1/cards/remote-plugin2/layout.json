@@ -1,0 +1,95 @@
+{
+    "id": "remote-plugin2",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "deck1:remote-plugin2-i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Sample Deck 1 - remote plugin2",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin2-service",
+                "type": "service",
+                "name": "Metadata call for the dashboard for Sample Deck 1 - remote plugin2 to metadata",
+                "resolver": {
+                    "remote-served-service": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/view/embed.html",
+                        "isEvaluated": true,
+                        "mocked": false,
+                        "plugin": {
+                            "identifier": "remote-served-example2",
+                            "route": "/home"
+                        },
+                        "channel": {
+                            "remote": {
+                                "framework": {
+                                    "type": "angular",
+                                    "semanticVersion": "^4.3.0"
+                                }
+                            },
+                            "events": {
+                                "registration": {
+                                    "library": {
+                                        "type": "clientBridge",
+                                        "semanticVersion": "^1.0.0"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin2-configuration",
+                "type": "parameters",
+                "name": "General configurations for the dashboard for Sample Deck 1 - remote plugin2",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.iconClassesList": [
+                                "mountain"
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "componentsList": [
+            {
+                "resourceId": "deck1:remote-plugin2-card",
+                "type": "component-layout-metadata",
+                "component": "deck1:remote-plugin2",
+                "name": "remote plugin 1 instance",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "remotePlugin2",
+                                        "view": {
+                                            "body": {
+                                                "organization": "sample1",
+                                                "template": "remotePlugin2"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

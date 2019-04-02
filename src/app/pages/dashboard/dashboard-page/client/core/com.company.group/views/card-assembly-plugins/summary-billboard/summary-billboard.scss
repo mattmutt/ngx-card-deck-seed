@@ -1,0 +1,65 @@
+@import "~ngx-card-deck/styles/theme";
+
+:host {
+
+   @import '../base/styles/card-assembly-plugin-base';
+
+   width: 100%;
+   padding: 0 2rem;
+
+   SECTION {
+
+      $chartWidgetGutterWidth: 10%;
+
+      &[role="chart-widget"] {
+         justify-content: center;
+         display: flex;
+         flex-wrap: wrap;
+         flex-direction: row;
+         margin: 12px 0;
+
+         // UX: strict conformance of having text fit, despite clippage
+         overflow: hidden;
+         // however, algorithms for wrap
+
+         // sub layout / inner "cards"
+         [role="chart-metric"] {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            //background-color: rgba(0,0,0,.05);
+
+            [role="chart-metric-value"] {
+               margin: 0;
+            }
+
+            [role="chart-metric-label"] {
+               margin: 0;
+            }
+
+            /*
+              // intra-spacing
+              &:not(:first-child) {
+                  margin-left: $chartWidgetGutterWidth / 2;
+              }
+
+              &:not(:last-child) {
+                  margin-right: $chartWidgetGutterWidth / 2;
+              }
+              //=========
+              */
+
+         }
+
+      }
+
+   }
+
+   // /++++++ RWD +++++++
+   @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+      // flex-wrap: nowrap;
+   }
+   // ++++++ RWD +++++++
+
+}

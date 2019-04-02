@@ -1,0 +1,77 @@
+{
+    "id": "local-plugin3",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "local-plugin3:resource-metrics-i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for business team 1 - resource metrics",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "local-plugin3:resource-metrics-service",
+                "type": "service",
+                "name": "Network data call for the dashboard for business team 1 - resource metrics",
+                "resolver": {
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/data/summary.json",
+                        "isEvaluated": true,
+                        "isSync": false
+                    }
+                }
+            },
+
+
+            {
+                "resourceId": "local-plugin3:resource-metrics-configuration",
+                "type": "parameters",
+                "name": "General configurations for metrics local plugin",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.isHeaderVisible": true
+                        }
+                    }
+                }
+            }
+
+
+        ],
+        "componentsList": [
+            {
+                "resourceId": "local-plugin3:resource-metrics-card",
+                "type": "component-layout-metadata",
+                "component": "local-plugin3:resource-metrics-billboard",
+                "name": "resource metrics development card assembly prototype",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "metricsBillboardProgressWidget",
+                                        "view": {
+                                            "body": {
+                                                "organization": "project2",
+                                                "template": "metricsBillboardProgressWidget"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

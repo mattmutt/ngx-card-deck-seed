@@ -1,0 +1,18 @@
+{
+   "extends": "../tsconfig.json",
+   "compilerOptions": {
+      "outDir": "../out-tsc/app",
+      "baseUrl": "./",
+      "module": "es2015",
+      "types": []
+   },
+   "angularCompilerOptions": {
+      "preserveWhitespaces": false,
+      "fullTemplateTypeCheck": false
+   },
+   "exclude": [
+      "test.ts",
+      "app/modules/ngx-card-deck/lib/mock/**",
+      "**/*.spec.ts"
+   ]
+}

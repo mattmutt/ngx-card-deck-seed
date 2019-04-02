@@ -1,0 +1,217 @@
+{
+    "id": "hardware-type",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "journal1:hardware-type-i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for business team 1 - hardware-type",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "journal1:hardware-type-service",
+                "type": "service",
+                "name": "hardware-type service layer",
+                "resolver": {
+                    "network": {
+                        "mockUrl": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/data-server/web-services/inventory/summary/hardwaretype.json",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/data-server/web-services/inventory/summary/hardwaretype.json",
+                        "model": "hardwaretype",
+                        "isEvaluated": true,
+                        "isSync": false
+                    }
+                }
+            },
+            {
+                "resourceId": "journal1:hardware-type-configuration",
+                "type": "parameters",
+                "name": "General configurations for the dashboard for business team 1 - hardware-type",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.iconClassesList": [
+                                "datastore"
+                            ],
+                            "DashboardParserService": {
+                                "ParsedResponseTransformable": "InventorySummaryTransformerService"
+                            },
+                            "SimpleGridCard": {
+                                "isHeaderVisible": true,
+                                "isFooterVisible": false,
+                                "isFilterVisible": false,
+                                "isColumnSeparatorVisible": false
+                            }
+                        }
+                    }
+                }
+            }
+        ],
+        "componentsList": [
+            {
+                "resourceId": "journal1:hardware-type-card",
+                "type": "component-layout-metadata",
+                "component": "journal1:grid-card",
+                "name": "hardware type card assembly prototype",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "inventory_entity_name",
+                                        "type": {
+                                            "classifier": "string"
+                                        },
+                                        "text": {
+                                            "header": {
+                                                "key": "inventory_entity_name"
+                                            },
+                                            "footer": {
+                                                "key": "inventory_entity_total"
+                                            }
+                                        },
+                                        "layout": {
+                                            "alignment": "left",
+                                            "dimensions": {
+                                                "width": {
+                                                    "initial": {
+                                                        "clipping": true,
+                                                        "value": 150,
+                                                        "metric": "px"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "view": {
+                                            "footer": {
+                                                "organization": "project1",
+                                                "template": "inventorySummaryNameItem",
+                                                "context": {
+                                                    "schema": null,
+                                                    "variables": {
+                                                        "color": "blue"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "inventory_entity_count_graph",
+                                        "type": {
+                                            "classifier": "number"
+                                        },
+                                        "text": {
+                                            "header": {
+                                                "key": "inventory_entity_count"
+                                            }
+                                        },
+                                        "layout": {
+                                            "alignment": "left",
+                                            "dimensions": {
+                                                "width": {
+                                                    "initial": {
+                                                        "clipping": false,
+                                                        "value": 100,
+                                                        "metric": "px"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "view": {
+                                            "body": {
+                                                "organization": "project1",
+                                                "template": "inventorySummaryCountGraphItem",
+                                                "context": {
+                                                    "schema": null,
+                                                    "variables": {
+                                                        "bar-foreground-color": "#fd8c7f"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "inventory_entity_count",
+                                        "type": {
+                                            "classifier": "number"
+                                        },
+                                        "text": {
+                                            "header": {
+                                                "key": ""
+                                            }
+                                        },
+                                        "layout": {
+                                            "alignment": "right",
+                                            "dimensions": {
+                                                "width": {
+                                                    "initial": {
+                                                        "clipping": false,
+                                                        "value": 100,
+                                                        "metric": "px"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "view": {
+                                            "body": {
+                                                "organization": "project1",
+                                                "template": "inventorySummaryCountItem",
+                                                "context": {
+                                                    "schema": null,
+                                                    "variables": {
+                                                    }
+                                                }
+                                            },
+                                            "footer": {
+                                                "organization": "project1",
+                                                "template": "inventorySummaryCountItem"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        "id": "inventory_entity_percentage",
+                                        "type": {
+                                            "classifier": "number"
+                                        },
+                                        "text": {
+                                            "header": {
+                                                "key": "inventory_entity_percentage"
+                                            }
+                                        },
+                                        "layout": {
+                                            "alignment": "left",
+                                            "dimensions": {
+                                                "width": {
+                                                    "initial": {
+                                                        "clipping": false,
+                                                        "value": 40,
+                                                        "metric": "px"
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        "view": {
+                                            "footer": {
+                                                "organization": "project1",
+                                                "template": "inventorySummaryPercentageItem"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

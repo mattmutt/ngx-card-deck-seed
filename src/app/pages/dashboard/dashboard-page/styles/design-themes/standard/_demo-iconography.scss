@@ -1,0 +1,54 @@
+// specific icons and styles for use in the dashboard
+
+// common iconography
+[class ^= "icon"] {
+    background-repeat: no-repeat;
+    display: inline-block;
+}
+
+// within outlet card header
+// ----------- header bar icons --------------------
+
+// icon contrast swaps to white
+:host-context(.standard-dark-theme) {
+    ::ng-deep I.headerIcon {
+        filter: invert(1);
+    }
+}
+
+
+::ng-deep I.headerIcon {
+    background-size: cover;
+    flex-shrink: 0;
+
+    &.datastore {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-skull.svg");
+    }
+
+    &.book-bookmark {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-book-bookmark.svg");
+    }
+
+    &.lightbulb {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-lightbulb.svg");
+    }
+
+    &.social-treehouse {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-social-treehouse.svg");
+    }
+
+    &.loading {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-sheriff-badge.svg");
+    }
+
+    &.mountain {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-mountains.svg");
+    }
+
+    &.map {
+        background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-map.svg");
+    }
+
+}
+
+

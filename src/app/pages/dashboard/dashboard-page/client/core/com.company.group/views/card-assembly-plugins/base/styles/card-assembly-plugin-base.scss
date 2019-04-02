@@ -1,0 +1,13 @@
+// chaining back on  :host (pseudo - shadowed)
+& {
+    display: block;
+    overflow: hidden; // must honor containing layout
+
+    &:not(.loaded) {
+    }
+
+    &.loaded {
+
+    }
+
+}

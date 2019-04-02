@@ -1,0 +1,108 @@
+{
+    "breakdownTotal": {
+        "totalText": "total",
+        "neCountTotal": 30046,
+        "nePercentAverage": 100.0
+    },
+    "breakdownData": [
+        {
+            "necount": 10000,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 75.91,
+            "name": "MODULE",
+            "hardwaretype": "MODULE"
+        },
+        {
+            "necount": 4602,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 15.32,
+            "name": "CHASSIS",
+            "hardwaretype": "CHASSIS"
+        },
+        {
+            "necount": 1599,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 5.32,
+            "name": "POWER_SUPPLY",
+            "hardwaretype": "POWER_SUPPLY"
+        },
+        {
+            "necount": 1038,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 3.45,
+            "name": "DISK DRIVE",
+            "hardwaretype": "DISK DRIVE"
+        },
+        {
+            "necount": 4920,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 33.05,
+            "name": "COFFEE MACHINE",
+            "hardwaretype": "COFFEE MACHINE"
+        },
+        {
+            "necount": 1832,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 9.50,
+            "name": "MONITOR",
+            "hardwaretype": "MONITOR"
+        },
+        {
+            "necount": 241,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 4.11,
+            "name": "FAST 3D MEMORY",
+            "hardwaretype": "FAST 3D MEMORY"
+        },
+        {
+            "necount": 104,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 41,
+            "name": "56K MODEM",
+            "hardwaretype": "FAST 56K MODEM"
+        },
+        {
+            "necount": 321,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 84,
+            "name": "TAPE DRIVE",
+            "hardwaretype": "TAPE DRIVE"
+        },
+        {
+            "necount": 23,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 42,
+            "name": "MONOCHROME PRINTER",
+            "hardwaretype": "MONOCHROME PRINTER"
+        },
+        {
+            "necount": 15,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 1.4,
+            "name": "RACKMOUNT REFRIGERATION",
+            "hardwaretype": "RACKMOUNT REFRIGERATION"
+        },
+        {
+            "necount": 4,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 9,
+            "name": "BATTERY FUELED ROBOT",
+            "hardwaretype": "BATTERY FUELED ROBOT"
+        },
+        {
+            "necount": 99,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 6.3,
+            "name": "SLEEPING MANAGER",
+            "hardwaretype": "SLEEPING MANAGER"
+        },
+        {
+            "necount": 4,
+            "metadata": "COMPANY_INV_HARDWARE_METADATA",
+            "precentage": 94,
+            "name": "ANALOG KEYBOARD",
+            "hardwaretype": "ANALOG KEYBOARD"
+        }
+    ]
+}
+

@@ -1,0 +1,45 @@
+
+html, body {
+    font-family: Arial, Helvetica;
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+main {
+    width: inherit;
+    height: inherit;
+}
+
+#earth {
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background: url("https://cdn.star.nesdis.noaa.gov/GOES16/ABI/GIFS/GOES16-CONUS-GEOCOLOR-625x375.gif") no-repeat center;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    border: 1px solid;
+}
+
+
+/* ------- themes ---------- */
+
+/* ------- light theme ---------- */
+html.light body {
+    color: #333;
+}
+
+html.light #earth {
+    border-color: #ccc;
+}
+
+
+/* ------- dark theme ---------- */
+html.dark body {
+    color: #777;
+}
+
+html.dark #earth {
+    border-color: #004d8a;
+}

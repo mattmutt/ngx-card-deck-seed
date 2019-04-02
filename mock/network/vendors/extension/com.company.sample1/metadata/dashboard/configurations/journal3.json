@@ -1,0 +1,100 @@
+{
+    "id": "journal3",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "journal3-client:i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Team",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ document.id }}/{{ application.i18n.localeLanguageCode }}/dashboard.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "cardsList": [
+            {
+                "resourceId": "resource-metrics",
+                "type": "card",
+                "component": "card-metrics-billboard",
+                "name": "Resource Metrics for CPU, Memory and Storage",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "virtual-network-summary",
+                "type": "card",
+                "component": "card-summary-billboard",
+                "name": "Virtual Machine Summary",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+
+        ],
+        "viewsList": [
+            {
+                "resourceId": "journal3:dashboard",
+                "type": "dashboard-view-state",
+                "component": "rows-list-dashboard-container",
+                "name": "Journal 3 - dashboard assembly prototype",
+                "resolver": {
+                    "injector": "dashboard-assembly-rows-list",
+                    "node": {
+                        "data": {
+                            "dashboard": {
+                                "view": {
+                                    "viewportScalableSizing": true,
+                                    "viewportPositionRelative" : false
+                                },
+                                "container": {
+                                    "orderedViewRowsList": [
+                                        {
+                                            "cardViewReferencesList": [
+                                                {
+                                                    "resourceId": "resource-metrics",
+                                                    "span": {
+                                                        "column": 1,
+                                                        "contentBoxSizing": true
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        {
+                                            "cardViewReferencesList": [
+                                                {
+                                                    "resourceId": "virtual-network-summary",
+                                                    "span": {
+                                                        "contentBoxSizing": true,
+                                                        "column": 1
+                                                    }
+                                                }
+
+                                            ]
+                                        }
+
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

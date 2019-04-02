@@ -1,0 +1,11 @@
+{
+    "card.title": "Virtual Network Readiness Check",
+    "card.footer": null,
+    "card.subtitle": "Resources valid as of May 2017",
+
+
+    "field1": "WAN throughput",
+    "field2": "Telecommunication Costs",
+    "field3": "MxN Node Separation Timing",
+    "field4": "Business Value Contracts"
+}

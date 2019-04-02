@@ -1,0 +1,80 @@
+{
+    "id": "remote-plugin3",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "deck1:remote-plugin3-i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Sample Deck 1 - remote plugin3",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin3-service",
+                "type": "service",
+                "name": "Metadata call for the dashboard for Sample Deck 1 - remote plugin3 to metadata",
+                "resolver": {
+                    "remote-served-service": {
+                        "xurl": "//google-developers.appspot.com/chart/interactive/docs/gallery/controls_18c6e3317c87b3b7eed0e49b3544d19a.frame?hl=en",
+                        "url": "//watson-conversation-duo-dev.ng.bluemix.net",
+                        "isEvaluated": true,
+                        "mocked": false,
+                        "plugin": {
+                            "identifier": "remote-served-example3",
+                            "route": null
+                        }
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin3-configuration",
+                "type": "parameters",
+                "name": "General configurations for the dashboard for Sample Deck 1 - remote plugin3",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.iconClassesList": [
+                                "lightbulb"
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "componentsList": [
+            {
+                "resourceId": "deck1:remote-plugin3-card",
+                "type": "component-layout-metadata",
+                "component": "deck1:remote-plugin3",
+                "name": "remote plugin 1 instance",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "remotePlugin3",
+                                        "view": {
+                                            "body": {
+                                                "organization": "sample1",
+                                                "template": "remotePlugin3"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

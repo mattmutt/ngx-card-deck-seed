@@ -1,0 +1,40 @@
+{
+  "provider": {
+    "serverGuid": "acme-resource-provider-2017-12-20",
+    "type": "Folder",
+    "value": "group-d1"
+  },
+  "summaryItems": [
+    {
+      "label": "summary.vmCount",
+      "value": 83
+    },
+    {
+      "label": "summary.hostCount",
+      "value": 28
+    }
+  ],
+  "resourceMeters": [
+    {
+      "title": "CpuResourceDataItem.CpuLabel",
+      "free": "350 Servers",
+      "used": "30 CPUs",
+      "capacity": "33 stored",
+      "progress": 7
+    },
+    {
+      "title": "MemoryResourceDataItem.MemoryLabel",
+      "free": "323 Processes",
+      "used": "100 threads",
+      "capacity": "50 standby",
+      "progress": 21
+    },
+    {
+      "title": "StorageResourceDataItem.StorageLabel",
+      "free": "150 Monitors",
+      "used": "12 showing",
+      "capacity": "1000 reserved",
+      "progress": 45
+    }
+  ]
+}

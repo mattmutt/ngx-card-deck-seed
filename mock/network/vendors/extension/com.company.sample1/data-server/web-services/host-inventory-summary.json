@@ -1,0 +1,143 @@
+{
+  "hostsConnectionData": [
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "notResponding",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "notResponding",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "notResponding",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "connected",
+      "inMaintenanceMode": false
+    },
+    {
+      "connectionState": "disconnected",
+      "inMaintenanceMode": false
+    }
+  ],
+  "dashboardData": [
+    {
+      "label": "hostCount",
+      "value": "28",
+      "nestedProperties": null
+    },
+    {
+      "label": "hostConnectedCount",
+      "value": "15",
+      "nestedProperties": null
+    },
+    {
+      "label": "hostDisconnectedCount",
+      "value": "10",
+      "nestedProperties": null
+    },
+    {
+      "label": "hostNotRespondingCount",
+      "value": "3",
+      "nestedProperties": null
+    },
+    {
+      "label": "hostInMaintenanceCount",
+      "value": "0",
+      "nestedProperties": null
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "userName": "Administrator@company.LOCAL",
+  "locale": "en_US",
+  "serversInfo": [
+    {
+      "name": "Group (1)",
+      "serviceUrl": "https://server.eng.company.com:443/sdk",
+      "serviceGuid": "2017-abcd-server-service",
+      "version": "6.5.0",
+      "sessionKey": "52d16adf-956c-48a5-3b3f-1910f480a95b",
+      "hostId": null
+    }
+  ],
+  "clientId": "4025f609-d90e-4f54-b319-7118376e64a3",
+  "linkedServersInfo": [
+    [
+      {
+        "name": "server.eng.company.com (Mock)",
+        "serviceUrl": "https://server.eng.company.com:443/sdk",
+        "serviceGuid": "2017-abcd-server-service",
+        "version": "6.5.0",
+        "sessionKey": "52d16adf-956c-48a5-3b3f-1910f480a95b",
+        "sessionCookie": "\"a3275176a3546aad67115a08001d771d2369d090\"",
+        "hostId": null,
+        "serviceInstance": {
+          "serverGuid": "2017-abcd-server-service",
+          "type": "ServiceInstance",
+          "value": "ServiceInstance"
+        },
+        "content": {
+          "rootFolder": {
+            "serverGuid": "2017-abcd-server-service",
+            "type": "Folder",
+            "value": "group-d1"
+          }
+      }
+      }
+    ]
+  ],
+  "clientRef": "company:client:0",
+  "hashedClientId": "200068",
+  "groups": [
+    "company.local\\CAAdmins",
+    "company.local\\LicenseService.Administrators",
+    "company.local\\SystemConfiguration.BashShellAdministrators"
+  ],
+  "systemDomains": [
+    "company.local"
+  ]
+}
+

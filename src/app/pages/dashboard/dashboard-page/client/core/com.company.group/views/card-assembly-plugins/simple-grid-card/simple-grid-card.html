@@ -1,0 +1,80 @@
+<!-- has layout metadata -->
+<section #componentSection *ngIf="isComponentPhaseReady" role="grid-widget">
+
+    <clr-datagrid #gridComponent (clrDgRefresh)="onRefreshEvent($event)" [clrDgLoading]="!loadedFlag"
+                  [class.removeFilters]="this.library.alias.parameters['SimpleGridCard']['isFilterVisible'] === false"
+                  [class.removeColumnSeparators]="this.library.alias.parameters['SimpleGridCard']['isColumnSeparatorVisible'] === false"
+                  [style.height.px]="layout.availableScrollHeightMetric">
+
+        <clr-dg-column #gridHeader *ngFor="let fieldMetadata of fieldMetadataList"
+                       [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'header')"
+                       [clrDgField]="fieldMetadata.id"
+                       [style.width.px]="fieldMetadata.layout.dimensions.width?.initial.value">
+
+            <ng-template
+                *ngIf="this.library.alias.parameters['SimpleGridCard']['isHeaderVisible'] !== false"
+                [ngTemplateOutlet]="positionBasedTemplateMap.header[fieldMetadata.id]"
+                [ngTemplateOutletContext]="{ fieldMetadata: fieldMetadata, library: library }"></ng-template>
+
+        </clr-dg-column>
+
+
+        <clr-dg-row *ngFor="let rowData of transformedSimpleGridRecords" [clrDgItem]="rowData">
+            <clr-dg-cell *ngFor="let fieldMetadata of fieldMetadataList"
+                         [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'body')">
+                <ng-template
+                    [ngTemplateOutlet]="positionBasedTemplateMap.body[fieldMetadata.id]"
+                    [ngTemplateOutletContext]="{ rowData: rowData, model: initialDataModelResponseModel, fieldMetadata: fieldMetadata, library: library }"
+                ></ng-template>
+            </clr-dg-cell>
+        </clr-dg-row>
+
+        <clr-dg-footer *ngIf="this.library.alias.parameters['SimpleGridCard']['isFooterVisible'] !== false">
+            <div class="datagrid-footer-container datagrid-row">
+                <div #footerContainerMaster class="datagrid-footer-container-master datagrid-row-flex">
+                    <div #gridFooter *ngFor="let fieldMetadata of fieldMetadataList; let idx=index"
+                         class="datagrid-cell"
+                         [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'footer')"
+                         [style.width.px]="deriveSynchronizedColumnWidth(fieldMetadata, idx)"
+                    >
+                        <ng-template
+                                *ngIf="transformedSimpleGridRecords"
+                                [ngTemplateOutlet]="positionBasedTemplateMap.footer[fieldMetadata.id]"
+                                [ngTemplateOutletContext]="{ fieldMetadata: fieldMetadata, model: initialDataModelResponseModel, records: simpleGridRecords, library: library }"></ng-template>
+                    </div>
+
+                </div>
+            </div>
+        </clr-dg-footer>
+
+        <clr-dg-placeholder>
+            <span [textContent]="library.alias.cardI18n['grid.empty_results']"></span>
+        </clr-dg-placeholder>
+
+    </clr-datagrid>
+
+</section>
+
+<!-- ============= standard template framework for grid card ================= -->
+
+<ng-template #defaultHeaderTemplate let-fieldMetadata="fieldMetadata">
+    <span *ngIf="library.alias.cardI18n[fieldMetadata.text.header.key]"
+          [textContent]="library.alias.cardI18n[fieldMetadata.text.header.key]"
+          [title]="library.alias.cardI18n[fieldMetadata.text.header.key]"></span>
+</ng-template>
+
+
+<ng-template #defaultBodyTemplate let-rowData="rowData" let-fieldMetadata="fieldMetadata">
+    {{ rowData[ fieldMetadata.id] }}
+</ng-template>
+
+
+<ng-template #footerSection>
+    {{ library.alias.cardI18n["card.footer"] }}
+</ng-template>
+
+
+<!-- ============= extension points template framework for grid card ================= -->
+<ng-container [ngIf]="isTemplatePhaseReady"
+              *ngComponentOutlet="templatableComponentClass; ngModuleFactory: templatableModuleFactory"></ng-container>
+

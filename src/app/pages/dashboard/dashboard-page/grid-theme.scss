@@ -1,0 +1,17 @@
+// framework styling link
+@import "~ngx-card-deck/styles/theme";
+
+@include themifyClarity() {
+    ::ng-deep GRIDSTER:not(.mobile) {
+
+        // override gridster original themes
+        > GRIDSTER-PREVIEW {
+
+        }
+
+    }
+}
+
+
+
+

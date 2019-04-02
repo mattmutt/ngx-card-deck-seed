@@ -1,0 +1,70 @@
+{
+    "id": "journal1",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "journal1-client:i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Team",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ document.id }}/{{ application.i18n.localeLanguageCode }}/dashboard.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "cardsList": [
+            {
+                "resourceId": "hardware-type",
+                "type": "card",
+                "component": "card-datagrid",
+                "name": "hardware type",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+
+        ],
+        "viewsList": [
+            {
+                "resourceId": "journal1:dashboard",
+                "type": "dashboard-view-state",
+                "component": "rows-list-dashboard-container",
+                "name": "Journal 1 - dashboard assembly prototype / December 2017",
+                "resolver": {
+                    "injector": "dashboard-assembly-rows-list",
+                    "node": {
+                        "data": {
+                            "dashboard": {
+                                "view": {
+                                    "viewportScalableSizing": false,
+                                    "viewportPositionRelative" : false
+                                },
+                                "container": {
+                                    "orderedViewRowsList": [
+                                        {
+                                            "cardViewReferencesList": [
+                                                {
+                                                    "resourceId": "hardware-type",
+                                                    "span": {
+                                                        "column": 1
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

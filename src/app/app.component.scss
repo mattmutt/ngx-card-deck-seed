@@ -1,0 +1,261 @@
+$canvas-background-color: #cdcdcf;
+$component-background-color: darken($canvas-background-color, 10%);
+$child-background-color-mix-percent: 5%;
+
+$navigation-background-color: #283;
+$resolved-navigation-background-color: mix($navigation-background-color, $component-background-color, $child-background-color-mix-percent);
+
+%standard-layout {
+    display: flex;
+    padding: 0.5rem;
+    flex: 0 1;
+    flex-basis: 100%;
+}
+
+
+:host {
+    @extend %standard-layout;
+    flex-direction: column;
+    height: 100vh;
+}
+
+HEADER {
+    $navigation-background-color: #00f;
+    font-size: 12pt;
+    letter-spacing: 1px;
+    text-align: center;
+    @extend %standard-layout;
+    padding: 0 1rem;
+    flex: 0 0 1.5rem;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+
+    .projectIcon {
+        background-image: url("//i.postimg.cc/kGm8vJWs/card-deck.png");
+        width: 1.5rem;
+        height: 1.5rem;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-right: 0.5rem;
+
+        &:hover {
+            filter: drop-shadow(0.2rem -0.5rem 0.5rem rgb(160, 0, 210));
+        }
+    }
+
+}
+
+
+[role="navigationAnchor"] {
+    $collapsedSize: 32px;
+    padding: 2px;
+    position: relative;
+    height: $collapsedSize;
+
+    NAV {
+        @extend %standard-layout;
+        flex: 0 0;
+        flex-basis: auto;
+        flex-direction: row;
+        overflow: hidden;
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        right: 0;
+        padding: 0;
+
+        > [role="navigationSectionsContainer"] {
+            display: inline-flex;
+            width: 100%;
+            justify-content: flex-start;
+
+            > [role="navigationSection"] {
+                margin: 0 0.25rem;
+                border-radius: 3px;
+                padding: 0.2rem;
+                overflow: hidden;
+                border-width: 1px;
+                border-style: solid;
+
+                UL {
+                    LI {
+                        list-style: none;
+                    }
+                }
+
+                // clean up header spacing
+                > DIV {
+                    font-size: 12pt;
+                    line-height: 1;
+                    margin: 0;
+                    border-bottom: 1px solid darken($resolved-navigation-background-color, 15%);
+                }
+
+                // designated linkage
+                A {
+                    padding: 3px;
+                    border-radius: 5px;
+                    border: 1px solid transparent;
+
+                    &.active {
+                    }
+
+                    &:hover {
+                    }
+                }
+
+                // hover motion over menu button
+                &[data-expanded="true"] {
+                    box-shadow: 2px 2px 2px 0px rgba(0, 0, 0, .35);
+                    height: auto;
+                    overflow-y: auto;
+                    margin-bottom: 3px;
+                }
+
+                &[data-expanded="false"] {
+                    height: 0.7 * $collapsedSize;
+                }
+
+            }
+
+        }
+
+        // developer need a debug mode
+        &:not(.debug) {
+            display: none;
+        }
+
+    }
+}
+
+MAIN {
+    $main-background-color: #038;
+    flex-basis: 100%;
+    background-color: mix($main-background-color, $component-background-color, $child-background-color-mix-percent);
+    @extend %standard-layout;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+
+// -------------- theme ---------------------------
+
+
+// theme background shade changes on the demo layout block
+:host-context(.standard-light-theme) {
+    $layout-container-background-color: darken($component-background-color, 10%);
+    $page-header-background-color: lighten($layout-container-background-color, 20%);
+
+    HEADER {
+        background-color: $page-header-background-color;
+        color: mix(#000, $component-background-color, 70%);
+    }
+
+
+    [role="navigationAnchor"] {
+
+        NAV {
+
+            > [role="navigationSectionsContainer"] {
+
+                > [role="navigationSection"] {
+                    background-color: transparentize(darken($resolved-navigation-background-color, 5%), 0.5);
+                    border-color: darken($resolved-navigation-background-color, 15%);
+
+                    // designated linkage
+                    A {
+
+                        &.active {
+                            background-color: #798896;
+                            color: #ddd;
+                            border-color: darken($component-background-color, 15%);
+                        }
+
+                        &:focus, &:hover {
+                            background-color: rgba(0, 0, 0, .1);
+                        }
+                    }
+
+                    // hover motion over menu button
+                    &[data-expanded="true"] {
+                        background-color: mix($resolved-navigation-background-color, $component-background-color, $child-background-color-mix-percent);
+                    }
+
+                    // hover motion over menu button
+                    &[data-expanded="false"] {
+
+                    }
+
+
+                }
+            }
+
+        }
+    }
+
+}
+
+:host-context(.standard-dark-theme) {
+    $layout-container-background-color: darken($component-background-color, 40%);
+    $page-header-background-color: lighten($layout-container-background-color, 10%);
+
+    background-color: $layout-container-background-color;
+
+    HEADER {
+        background-color: $page-header-background-color;
+        color: #ddd;
+    }
+
+
+    [role="navigationAnchor"] {
+
+        NAV {
+
+
+            > [role="navigationSectionsContainer"] {
+
+                > [role="navigationSection"] {
+                    background-color: lighten($layout-container-background-color, 10%);
+                    border-color: lighten($layout-container-background-color, 25%);
+
+                    // designated linkage
+                    A {
+
+                        &.active {
+                            background-color: #144c6a;
+                            border-color: #443c4a;
+                            color: #ddd;
+                        }
+
+                        &:hover {
+                            background-color: rgba(255, 255, 255, .1);
+                        }
+                    }
+
+                    // hover motion over menu button
+                    &[data-expanded="true"] {
+                        background-color: #444444;
+                    }
+
+                    // hover motion over menu button
+                    &[data-expanded="false"] {
+
+                    }
+
+
+                }
+            }
+
+        }
+    }
+}
+
+
+

@@ -1,0 +1,11 @@
+ {
+    "sections": [
+        {
+            "label": "Grid",
+            "links": [
+                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck1"], "label": "Deck 1", "subtitle": "Advanced layout"},
+                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck2"], "label": "Deck 2", "subtitle": "Beginner layout"}
+            ]
+        }
+    ]
+}

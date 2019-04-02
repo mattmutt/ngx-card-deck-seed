@@ -1,0 +1,133 @@
+<ng-container #templates>
+    <ng-container #grid>
+        <!-- qualifier: column headers -->
+        <ng-container #header>
+
+            <ng-template #experiment_header1 let-library="library" let-col="col" let-fieldMetadata="fieldMetadata"
+                         let-i18n="library.alias.cardI18n">
+                <span style="font-style:italic;"
+                      [textContent]="i18n[fieldMetadata.text.header.key]"
+                      [title]="i18n[fieldMetadata.text.header.key]"
+                ></span>
+            </ng-template>
+
+            <ng-template #headerIcon let-library="library" let-col="col" let-fieldMetadata="fieldMetadata"
+                         let-contextVariables="fieldMetadata.view.header.context.variables"
+                         let-i18n="library.alias.cardI18n">
+
+                <!--
+                <span class="text-nowrap"><clr-icon [class]="contextVariables.iconClass"
+                                                    [attr.shape]="contextVariables.iconShape"
+                                                    size="20"></clr-icon><span
+                        [textContent]="i18n[fieldMetadata.text.header.key]"></span></span>
+                        -->
+
+                <span [textContent]="i18n[fieldMetadata.text.header.key]"></span>
+
+
+            </ng-template>
+
+            <!-- inventory summary -->
+
+            <ng-template #inventorySummaryCountItem let-library="library" let-col="col"
+                         let-fieldMetadata="fieldMetadata"
+                         let-contextVariables="fieldMetadata.view.header.context.variables"
+                         let-i18n="library.alias.cardI18n">
+
+                <!--
+                <span class="text-nowrap"><clr-icon [class]="contextVariables.iconClass"
+                                                    [attr.shape]="contextVariables.iconShape"
+                                                    size="20"></clr-icon><span
+                        [textContent]="i18n[fieldMetadata.text.header.key]"></span></span>
+                        -->
+
+                <span [textContent]="i18n[fieldMetadata.text.header.key]"></span>
+
+
+            </ng-template>
+
+
+        </ng-container>
+
+        <ng-container #body>
+
+            <ng-template #standard let-rowData="rowData" let-fieldMetadata="fieldMetadata"></ng-template>
+
+
+            <!-- inventory summary / graph -->
+            <ng-template #inventorySummaryCountGraphItem let-rowData="rowData" let-fieldMetadata="fieldMetadata"
+                         let-library="library">
+
+                <div role="bar-graph-widget">
+                    <div role="bar-graph"
+                         [attr.title]="rowData['inventory_entity_percentage']"
+                         [style.background]="fieldMetadata.view.body.context.variables['bar-foreground-color']"
+                         [style.width.px]="rowData['inventory_entity_percentage']"></div>
+                </div>
+
+            </ng-template>
+
+
+            <!-- inventory summary / count -->
+            <ng-template #inventorySummaryCountItem let-rowData="rowData" let-fieldMetadata="fieldMetadata"
+                         let-library="library">
+
+                <a href="javascript:" role="item-title-link"
+                   (click)="navigateToManagedObject(rowData, fieldMetadata)" [textContent]="rowData[fieldMetadata.id]">
+                </a>
+
+            </ng-template>
+
+            <!-- installed-plugins -->
+            <ng-template #installedPluginsItemName let-rowData="rowData" let-fieldMetadata="fieldMetadata"
+                         let-library="library">
+
+                <!--
+                <clr-icon shape="folder" class="has-info" size="16" [title]="rowData['id']"></clr-icon>
+                <span [textContent]="rowData[fieldMetadata.id]"></span>
+                -->
+
+            </ng-template>
+
+
+        </ng-container>
+
+
+        <!-- bottom footer -->
+        <ng-container #footer>
+
+
+            <!-- inventory summary grid : name -->
+            <ng-template #inventorySummaryNameItem let-fieldMetadata="fieldMetadata" let-records="records"
+                         let-i18n="library.alias.cardI18n" let-library="library">
+
+                <strong [textContent]="i18n[fieldMetadata.text.footer.key]"></strong>
+                <clr-icon shape="check" class="is-success" size="16"></clr-icon>
+
+            </ng-template>
+
+            <!-- inventory grid : counts -->
+            <ng-template #inventorySummaryCountItem let-fieldMetadata="fieldMetadata" let-records="records"
+                         let-model="model" let-library="library">
+
+
+                <span [textContent]="model.response.entity.breakdownTotal.neCountTotal"></span>
+
+            </ng-template>
+
+            <!-- inventory : percentage column - somebody didn't learn to spell -->
+            <ng-template #inventorySummaryPercentageItem let-fieldMetadata="fieldMetadata" let-records="records"
+                         let-model="model" let-library="library">
+
+                <span [textContent]="model.response.entity.breakdownTotal.nePercentAverage"></span>
+
+            </ng-template>
+
+
+        </ng-container>
+
+
+    </ng-container>
+
+</ng-container>
+

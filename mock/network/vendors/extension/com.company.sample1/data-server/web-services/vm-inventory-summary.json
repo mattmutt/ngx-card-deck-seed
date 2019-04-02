@@ -1,0 +1,29 @@
+{
+  "provider": {
+    "serverGuid": "6f965cf2-80cc-49da-8a39-a64265a57c14",
+    "type": "Folder",
+    "value": "group-d1"
+  },
+  "dashboardData": [
+    {
+      "label": "field1",
+      "value": "83",
+      "nestedProperties": null
+    },
+    {
+      "label": "field2",
+      "value": "9",
+      "nestedProperties": null
+    },
+    {
+      "label": "field3",
+      "value": "74",
+      "nestedProperties": null
+    },
+    {
+      "label": "field4",
+      "value": "4",
+      "nestedProperties": null
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+<!-- has layout metadata -->
+<section *ngIf="initialDataModelResponse$| async;" role="billboard-widget">
+
+
+    <section *ngIf="numericTransformedValueItemsList" role="chart-widget" [style.flexBasis.%]="100 / numericTransformedValueItemsList.length" >
+
+        <section *ngFor="let summaryEntity of numericTransformedValueItemsList" role="chart-metric">
+            <h4 role="chart-metric-value" [textContent]="summaryEntity.data"></h4>
+            <div role="chart-metric-label" [textContent]="summaryEntity.message" class="p5"></div>
+        </section>
+
+        <!--
+        <section role="chart-render-container">
+            <ng-template [ngTemplateOutlet]="positionBasedTemplateMap.body['main']"
+                         [ngTemplateOutletContext]="{ summaryEntity: summaryEntity }"
+            ></ng-template>
+        </section>
+        -->
+
+    </section>
+
+
+</section>
+
+<!-- ============= standard template framework for billboard card ================= -->
+
+
+<ng-template #footerSection>
+    {{ library.alias.cardI18n["card.footer"] }}
+</ng-template>
+
+
+<!-- ============= extension points template framework for billboard card ================= -->
+<ng-container [ngIf]="isTemplatePhaseReady"
+              *ngComponentOutlet="templatableComponentClass; ngModuleFactory: templatableModuleFactory"></ng-container>

@@ -1,0 +1,298 @@
+{
+    "id": "deck1",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "deck1-client:i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Sample Deck 1",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ document.id }}/{{ application.i18n.localeLanguageCode }}/dashboard.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "cardsList": [
+            {
+                "resourceId": "remote-plugin1",
+                "type": "card",
+                "component": "card-remote-served",
+                "name": "Example of remote contained app 1",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "remote-plugin2",
+                "type": "card",
+                "component": "card-remote-served",
+                "name": "Example of remote contained app 2",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "remote-plugin3",
+                "type": "card",
+                "component": "card-remote-served",
+                "name": "Example of remote contained app 3",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "local-plugin3",
+                "type": "card",
+                "component": "card-metrics-billboard",
+                "name": "Resource Metrics for CPU, Memory and Storage",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "remote-plugin4",
+                "type": "card",
+                "component": "card-remote-served",
+                "name": "Sample to My Photo Gallery",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "remote-plugin5",
+                "type": "card",
+                "component": "card-remote-served",
+                "name": "Sample to Live weather satellite photo",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "local-grid1",
+                "type": "card",
+                "component": "card-datagrid",
+                "name": "hardware type",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "viewsList": [
+            {
+                "resourceId": "deck1:dashboard-grid-configuration",
+                "type": "dashboard-view-configuration",
+                "component": "grid-container-dashboard-container",
+                "name": "Sample Deck 1 - gridster configuration",
+                "resolver": {
+                    "injector": "dashboard-assembly-grid-configuration",
+                    "node": {
+                        "data": {
+                            "gridType": "fixed",
+                            "minCols": 3,
+                            "maxCols": 3,
+                            "minRows": 1,
+                            "maxRows": 15,
+                            "resizable": {
+                                "enabled": true
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:dashboard-item-layout",
+                "type": "dashboard-view-state",
+                "component": "grid-container-dashboard-container",
+                "name": "Sample Deck 1 - dashboard grid assembly prototype / December 2017",
+                "resolver": {
+                    "injector": "dashboard-assembly-grid-container",
+                    "node": {
+                        "data": {
+                            "dashboard": {
+                                "view": {
+                                    "viewportScalableSizing": true,
+                                    "viewportPositionRelative": false
+                                },
+                                "container": {
+                                    "layoutColumnsBreakpointList": [
+                                        {
+                                            "width": 858,
+                                            "columns": 3
+                                        },
+                                        {
+                                            "width": 1134,
+                                            "columns": 4
+                                        },
+                                        {
+                                            "width": 1686,
+                                            "columns": 6
+                                        }
+                                    ],
+                                    "layoutItemList": [
+                                        {
+                                            "card": {
+                                                "resourceId": "remote-plugin1"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 1,
+                                                        "height": 4
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "remote-plugin2"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 1,
+                                                    "y": 0
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 2,
+                                                        "height": 2
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "remote-plugin3"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 2,
+                                                    "y": 2
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 1,
+                                                        "height": 4
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "remote-plugin4"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 1,
+                                                    "y": 2
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 1,
+                                                        "height": 2
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "local-plugin3"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 0,
+                                                    "y": 4
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 2,
+                                                        "height": 1
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "local-grid1"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 0,
+                                                    "y": 5
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 2,
+                                                        "height": 3
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "card": {
+                                                "resourceId": "remote-plugin5"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 2,
+                                                    "y": 6
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 1,
+                                                        "height": 2
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

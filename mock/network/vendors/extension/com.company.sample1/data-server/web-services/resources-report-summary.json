@@ -1,0 +1,40 @@
+{
+  "provider": {
+    "serverGuid": "company-resource-provider-2017-11-12",
+    "type": "Folder",
+    "value": "group-d1"
+  },
+  "summaryItems": [
+    {
+      "label": "summary.vmCount",
+      "value": 83
+    },
+    {
+      "label": "summary.hostCount",
+      "value": 28
+    }
+  ],
+  "resourceMeters": [
+    {
+      "title": "CpuResourceDataItem.CpuLabel",
+      "free": "450 Packages",
+      "used": "7.33 GHz",
+      "capacity": "93.45 GHz",
+      "progress": 7
+    },
+    {
+      "title": "MemoryResourceDataItem.MemoryLabel",
+      "free": "323 Resources",
+      "used": "23.95 GB",
+      "capacity": "109.77 GB",
+      "progress": 21
+    },
+    {
+      "title": "StorageResourceDataItem.StorageLabel",
+      "free": "44 Orders",
+      "used": "378.48 GB",
+      "capacity": "824.08 GB",
+      "progress": 45
+    }
+  ]
+}

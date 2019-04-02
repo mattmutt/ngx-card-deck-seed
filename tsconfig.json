@@ -1,0 +1,35 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/out-tsc",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitReturns": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "downlevelIteration": true,
+    "importHelpers": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "stripInternal": true,
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "target": "es2017",
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "paths": {
+      "@ssue-ui/dashboard/*": [
+        "./zzzapp/modules/dashboard/*"
+      ]
+    },
+    "module": "es2015"
+  }
+}

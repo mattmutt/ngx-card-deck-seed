@@ -1,0 +1,29 @@
+@import "~ngx-card-deck/styles/theme";
+
+::ng-deep {
+
+    CLR-DATAGRID {
+        > .datagrid > .datagrid-table-wrapper > [role="grid"] {
+
+
+            > [role="rowgroup"] > [role="row"]  [role="cell"]   {
+
+                @import "styles/bar-graph";
+                @import "styles/inventory-summary-grid-column";
+
+            }
+
+        }
+    }
+}
+
+// header icon
+@include selectCardLayoutAspectByComponentType("*", "card-datagrid", "header") {
+    ::ng-deep I.headerIcon {
+        background-size: cover;
+
+        &.datastore {
+            background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-skull.svg");
+        }
+    }
+}

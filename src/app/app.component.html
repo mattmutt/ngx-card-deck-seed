@@ -1,0 +1,37 @@
+<header>
+    <a href="//github.com/mattmutt/ngx-card-deck" tabindex="-1"><div class="projectIcon"></div></a>
+    <div [textContent]="title"></div>
+</header>
+
+<section role="navigationAnchor">
+    <ng-container [ngTemplateOutlet]="navLinks"
+                  [ngTemplateOutletContext]="{ $implicit: navigationLayout.sections }"></ng-container>
+</section>
+
+<main>
+    <router-outlet></router-outlet>
+</main>
+
+
+<ng-template #navLinks let-configuration>
+    <nav [class.debug]="true">
+        <section role="navigationSectionsContainer">
+            <ng-container *ngFor="let section of navigationLayout.sections">
+
+                <section *ngIf="{ expanded: false } as tagState" [attr.data-expanded]="tagState.expanded"
+                         (mouseover)="tagState.expanded = true" (mouseout)="tagState.expanded = false"
+                         (focus)="tagState.expanded = true"
+                         (blur)="tagState.expanded = false"
+                         role="navigationSection" tabindex="0">
+                    <div [textContent]="section.label"></div>
+                    <ul>
+                        <li *ngFor="let link of section.links">
+                            <a [routerLink]="link.path" [queryParams]="link.query" [routerLinkActive]="'active'"
+                               [textContent]="link.label"></a>
+                        </li>
+                    </ul>
+                </section>
+            </ng-container>
+        </section>
+    </nav>
+</ng-template>

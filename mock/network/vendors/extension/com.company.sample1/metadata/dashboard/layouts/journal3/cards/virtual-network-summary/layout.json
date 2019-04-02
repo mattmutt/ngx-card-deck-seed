@@ -1,0 +1,72 @@
+{
+    "id": "virtual-network-summary",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "journal3:virtual-network-summary-i18n",
+                "type": "i18n",
+                "name": "device status translations",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "journal3:virtual-network-summary-service",
+                "type": "service",
+                "name": "device Status summary service layer",
+                "resolver": {
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/data-server/web-services/vm-inventory-summary.json",
+                        "isEvaluated": true,
+                        "isSync": false
+                    }
+                }
+            },
+            {
+                "resourceId": "journal3:virtual-network-summary-configuration",
+                "type": "parameters",
+                "name": "vx network status parameters",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.iconClassesList": [
+                                "clarity-icon-home"
+                            ],
+                            "card.subtitleFieldIdentifier": "vmCount"
+                        }
+                    }
+                }
+            }
+        ],
+        "componentsList": [
+            {
+                "resourceId": "journal3:virtual-network-summary-card",
+                "type": "component-layout-metadata",
+                "component": "journal3:summary-billboard",
+                "name": "Business team 1 card assembly prototype",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "field2"
+                                    },
+                                    {
+                                        "id": "field3"
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

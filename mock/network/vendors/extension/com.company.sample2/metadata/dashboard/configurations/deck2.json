@@ -1,0 +1,100 @@
+{
+    "id": "deck2",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "deck2-client:i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Sample Deck 2",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ document.id }}/{{ application.i18n.localeLanguageCode }}/dashboard.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "cardsList": [
+            {
+                "resourceId": "local-plugin3",
+                "type": "card",
+                "component": "card-metrics-billboard",
+                "name": "Resource Metrics for CPU, Memory and Storage",
+                "resolver": {
+                    "injector": "dashboard-assembly-layout",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/layouts/{{ document.id }}/cards/{{ resource.resourceId }}/layout.json",
+                        "isEvaluated": true
+                    }
+                }
+            }
+        ],
+        "viewsList": [
+            {
+                "resourceId": "deck2:dashboard-grid-configuration",
+                "type": "dashboard-view-configuration",
+                "component": "grid-container-dashboard-container",
+                "name": "Sample Deck 2 - gridster configuration",
+                "resolver": {
+                    "injector": "dashboard-assembly-grid-configuration",
+                    "node": {
+                        "data": {
+                            "gridType": "fixed",
+                            "minCols": 3,
+                            "maxCols": 10,
+                            "minRows": 1,
+                            "maxRows": 5,
+                            "compactType": "none",
+                            "resizable": {
+                                "enabled": true
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "resourceId": "deck2:dashboard-item-layout",
+                "type": "dashboard-view-state",
+                "component": "grid-container-dashboard-container",
+                "name": "Sample Deck 2 - dashboard grid assembly prototype / December 2017",
+                "resolver": {
+                    "injector": "dashboard-assembly-grid-container",
+                    "node": {
+                        "data": {
+                            "dashboard": {
+                                "view": {
+                                    "viewportScalableSizing": true,
+                                    "viewportPositionRelative" : false
+                                },
+                                "container": {
+                                    "layoutItemList": [
+                                        {
+                                            "card": {
+                                                "resourceId": "local-plugin3"
+                                            },
+                                            "layout": {
+                                                "position": {
+                                                    "x": 0,
+                                                    "y": 0
+                                                },
+                                                "dimensions": {
+                                                    "initial": {
+                                                        "width": 3,
+                                                        "height": 1
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

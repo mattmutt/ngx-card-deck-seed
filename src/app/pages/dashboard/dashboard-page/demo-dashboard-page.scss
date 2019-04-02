@@ -1,0 +1,251 @@
+%interaction-dragging {
+    cursor: -webkit-grabbing;
+    cursor: grabbing;
+}
+
+// theme background shade changes on the demo layout block
+:host-context(.standard-light-theme) {
+    $layout-container-background-color: #dde;
+    background-color: $layout-container-background-color;
+}
+
+:host-context(.standard-dark-theme) {
+    $layout-container-background-color: #34444b;
+    background-color: $layout-container-background-color;
+}
+
+
+:host {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1;
+    flex-basis: 100%;
+    width: 100%;
+    height: 100%;
+}
+
+FORM {
+    padding: 0; // reset
+
+    > [role="actionsContainer"] {
+        display: flex;
+        flex: 1;
+        flex-direction: row;
+
+        > ::ng-deep * {
+            padding: 0.5rem;
+
+            &:hover {
+                //outline: 1px solid rgba(0,0,0,.2);
+                background-color: rgba(255, 255, 255, .2);
+                box-shadow: inset 0px -5px 19px 0px rgba(0, 0, 0, .15);
+            }
+        }
+
+        //white-space: nowrap;
+        //overflow: hidden;
+
+        [role="zoomRange"] {
+            width: 2rem;
+            height: 0.5rem;
+            border-radius: 0.4rem;
+            border: 1px solid rgba(0, 0, 0, .2);
+
+            &[type="range"] {
+                -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+                background-color: rgba(0, 0, 0, .2); /* Otherwise white in Chrome */
+            }
+
+            & + span {
+                // zoom value, fixed width
+                width: 3ch;
+                padding-left: 1ch;
+            }
+        }
+
+        SELECT.socketSelection {
+            min-width: 20ch;
+        }
+
+        // yield useful space
+        &.compactMode {
+            height: 1.8rem;
+            overflow: hidden;
+        }
+
+    }
+}
+
+BUTTON.btn {
+    height: auto;
+    line-height: 1;
+    background-color: darken(#ffffff, 20%);
+    color: #333333;
+}
+
+SECTION[role="demoLayoutItemsCoordinateContainer"] {
+    height: 4rem;
+    overflow-y: auto;
+
+    SECTION[role="demoLayoutAccountingEntry"] {
+        background-color: darken(#ffffff, 25%);
+        border: 1px solid darken(#ffffff, 35%);
+
+        TABLE[role="demoLayoutItemsCoordinateTable"] {
+            background-color: darken(#ffffff, 5%);
+            padding: 0 0.5rem;
+            border-collapse: separate;
+            width: 100%;
+
+            TD {
+                padding-right: 0.5rem;
+
+                &.highlight {
+                    background-color: darken(#ffffff, 15%);
+                    font-weight: bold;
+                }
+            }
+
+        }
+    }
+
+}
+
+
+// -------- theming support -----------------------
+:host-context(.standard-light-theme) {
+    NGX-CARD-DECK {
+        // content projected nodes
+        [dashboard-container-header] {
+            background-color: rgba(255, 255, 255, .4);
+        }
+    }
+}
+
+:host-context(.standard-dark-theme) {
+    NGX-CARD-DECK {
+        // content projected nodes
+        [dashboard-container-header] {
+            background-color: rgba(25, 55, 55, .4);
+        }
+    }
+}
+
+SECTION[role="dashboard-outlet"] {
+    display: flex;
+    flex-direction: column;
+    flex: 0 1;
+    flex-basis: 100%;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    position: relative; // coordinate system
+
+
+    NGX-CARD-DECK {
+        will-change: background-color;
+
+        // ~~~~~~~~~ user interaction ~~~~~~~~
+        &.dragging {
+            background-color: rgba(255, 255, 255, .4);
+            transform: translate(0, 0);
+            @extend %interaction-dragging;
+        }
+
+        // ++++++ decoration layouts around dashboard or within grid instance ++++++
+
+        // content projected nodes
+
+        [dashboard-container-header] {
+            text-align: center;
+        }
+
+        [dashboard-container-footer] {
+            font-size: 10pt;
+            color: #003388;
+        }
+
+        [dashboard-container-grid-widget-underlay] {
+            // position: absolute;
+            // opacity: 0.5;
+
+        }
+
+        [dashboard-container-grid-widget-overlay] {
+
+            // popup menu
+            [role="overlayMenuContainer"] {
+
+            }
+
+            // diverges with a fixed layout assembly on top of entire canvas background
+            [role="overlayLayoutContainer"] {
+                position: fixed;
+                background-color: rgba(255, 255, 255, .9);
+                $iconDimension: 100px;
+
+                [role="overlayTitle"] {
+                    background-color: transparentize(lighten(#039a84, 15%), .8);
+                    border: 1px solid transparentize(darken(#039a84, 15%), .7);
+                    padding: 0.5rem;
+                }
+
+                > i.overlay-icon {
+                    color: transparentize(darken(#039a84, 15%), .2);
+                    padding: 0.8rem;
+                    display: inline-block;
+
+                    width: $iconDimension;
+                    height: $iconDimension;
+                    border: 1px solid transparentize(darken(#039a84, 15%), .7);
+
+                    background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-map.svg");
+                    background-size: cover;
+
+                    //transition: width,height 1s;
+                }
+
+                /*
+                // ~~~~~~~ user interaction ~~~~~~~~~~
+
+                // selected icon
+                &.wasClicked {
+                    color: lighten(#039a84, 55%);
+                    background-color: transparentize(lighten(#039a84, 15%), .7);
+                    box-shadow: 0px 0px 5px rgba(0, 0, 0, .5);
+                    > :first-child {
+                        opacity: 0.4;
+                        color: red;
+                    }
+                }
+                */
+
+                // ++++++ container element RWD rule, restrict map icon when collapsing
+                &.minimized {
+
+                    [role="overlayTitle"] {
+                        display: none;
+
+                    }
+
+                    > i.overlay-icon {
+                        width: $iconDimension/2;
+                        height: $iconDimension/2;
+
+                    }
+
+                }
+
+                &.hidden {
+                    border: 12px solid red;
+                    display: none;
+                }
+
+            }
+        }
+
+    }
+
+}
+
+@import "styles/design-themes/standard/demo-iconography";

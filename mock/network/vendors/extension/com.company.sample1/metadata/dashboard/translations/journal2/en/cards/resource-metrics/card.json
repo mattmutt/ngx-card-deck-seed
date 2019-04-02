@@ -1,0 +1,12 @@
+{
+    "card.title": "CPU",
+    "card.subtitle": "Computer processing allocation across the enterprise",
+    "resource.measured_free": "sent",
+    "resource.measured_used": "uptime",
+    "resource.measured_total": "total",
+
+    "CpuResourceDataItem.CpuLabel": "Logistics",
+    "MemoryResourceDataItem.MemoryLabel": "Workforce",
+    "StorageResourceDataItem.StorageLabel": "Capacity Planning"
+}
+

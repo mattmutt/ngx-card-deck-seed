@@ -1,0 +1,67 @@
+[
+  {
+    "id": "com.company.samples.network-wssdk-html",
+    "version": "6.5.0",
+    "name": "network WSSDK",
+    "vendor": "company",
+    "description": "SDK sample using WSSDK to access network data",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.remotePluginExample",
+    "version": "1.0.0",
+    "name": "",
+    "vendor": "",
+    "description": "",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.samples.customobject",
+    "version": "1.0.0",
+    "name": "custom-object",
+    "vendor": "Add vendor",
+    "description": "Add plugin description",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.samples.globalview-html",
+    "version": "6.5.0",
+    "name": "Global View",
+    "vendor": "company",
+    "description": "SDK sample adding a global view and a java service",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.network.client.html",
+    "version": "6.5.0",
+    "name": "UI Platform application",
+    "vendor": "company",
+    "description": "Application hosting company web clients",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.ssoadminui",
+    "version": "6.5.0",
+    "name": "SSO Admin UI plugin",
+    "vendor": "company",
+    "description": "SSO Admin UI plugin",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.samples.chassisA.html",
+    "version": "6.5.0",
+    "name": "ChassisA Client",
+    "vendor": "company",
+    "description": "SDK sample adding chassis objects (simple version)",
+    "state": "enabled"
+  },
+  {
+    "id": "com.company.samples.chassisB.html",
+    "version": "6.5.0",
+    "name": "ChassisB Client",
+    "vendor": "company",
+    "description": "SDK sample adding chassis objects and relations (advanced version)",
+    "state": "enabled"
+  }
+]
+

@@ -1,0 +1,22 @@
+// bar in grid
+[role="bar-graph-widget"] {
+    display: flex;
+    height: 0.8rem;
+
+    > [role="label"] {
+        padding-left: 0.5rem;
+        font-size: smaller;
+    }
+
+    > [role="bar-graph"] {
+        outline: 1px solid rgba(0, 0, 0, .4);
+
+        &:hover {
+            outline: 1px solid rgba(0, 0, 0, .9);
+            transform: scale(1.2);
+            transition: all 200ms 50ms;
+        }
+
+    }
+
+}

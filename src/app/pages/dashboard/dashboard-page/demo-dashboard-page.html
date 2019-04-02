@@ -1,0 +1,110 @@
+<form [formGroup]="debugForm">
+    <div role="actionsContainer" [class.compactMode]="isActionToolbarMinimized">
+
+        <section>
+
+            Zoom:
+            <input type="range" role="zoomRange" step="0.1"
+                   [attr.min]="zoomConfiguration.validation.minimum"
+                   [attr.max]="zoomConfiguration.validation.maximum"
+                   formControlName="zoom"/>
+            <span [textContent]="debugForm.get('zoom')!.value | number:'1.1'"></span>
+
+        </section>
+
+        <section>
+            <button class="btn btn-primary-outline" [class.btn-primary]="isActionToolbarMinimized" (click)="isActionToolbarMinimized=!isActionToolbarMinimized"
+                    title="Toggle compact mode for toolbar">
+                <ng-container *ngIf="!isActionToolbarMinimized; else actionToolbarExpanded">Compact</ng-container>
+                <ng-template #actionToolbarExpanded>Expand</ng-template>
+            </button>
+            <br/>
+            <button class="btn btn-primary-outline" [class.btn-primary]="isDebugMode" (click)="isDebugMode=!isDebugMode"
+                    title="Show list of layout changes over time">
+                Debug
+            </button>
+            <br/>
+
+            <button (click)="onToggleTheme($event)" class="btn btn-primary-outline">Theme {{ (themeChanges$|async) ? "light" : "dark" }}</button>
+            <br/>
+
+            <button *ngIf="layoutItemList"
+                (click)="demoTransaction.onShowVisibleCardsInfo(layoutItemList, $event)"
+                class="btn btn-primary-outline">Items ({{layoutItemList.length}})
+            </button>
+
+
+        </section>
+
+    </div>
+</form>
+
+<section *ngIf="isDebugMode" style="margin: 0 auto">
+
+    <div>
+        <div>
+            Layout Items Coordinate Stream
+            <button class="btn btn-link" [class.btn-primary]="isDebugMode" (click)="onReset()"></button>
+        </div>
+    </div>
+
+
+    <section role="demoLayoutItemsCoordinateContainer">
+        <section role="demoLayoutItemsCoordinateTable" *ngIf="accountingJournalLayoutItemsChangeList.length">
+
+            <section role="demoLayoutAccountingEntry"
+                     *ngFor="let entry of accountingJournalLayoutItemsChangeList; let recordIndex=index">
+                <table role="demoLayoutItemsCoordinateTable" *ngIf="entry">
+
+                    <tr *ngFor="let accountingLayoutItem of entry; let i=index">
+                        <td *ngIf="i == 0" [attr.rowspan]="entry.length" class="highlight">
+                            {{ accountingLayoutItem.tracking }}
+                        </td>
+                        <td *ngIf="i == 0" [attr.rowspan]="entry.length" class="highlight">
+                            {{ accountingLayoutItem.receivedDate | date:"HH:mm:ss" }}
+                        </td>
+                        <td>
+                            {{ accountingLayoutItem.layoutItem.resourceId }}
+                        </td>
+                        <td>
+                            {{ accountingLayoutItem.layoutItem.layout.x }},{{ accountingLayoutItem.layoutItem.layout.y
+                            }}
+                        </td>
+                    </tr>
+                </table>
+            </section>
+        </section>
+
+    </section>
+
+
+</section>
+
+<section role="dashboard-outlet">
+
+    <ng-container [ngSwitch]="routeOrganizerKey">
+        <ng-template *ngSwitchCase="'com_company_sample2'" [ngTemplateOutlet]="comCompanySample2Template"></ng-template>
+    </ng-container>
+
+</section>
+
+
+<!-- ### Example Company Sample 2 Card example -->
+<ng-template #comCompanySample2Template>
+
+    <ngx-card-deck #dashboardInstance [configurationMetadata]="componentConfiguration"
+                    [zoomFactor]="debugForm.get('zoom')!.value"
+                    [class.dragging]="isDragging"
+                    (layoutItemInitialize)="onLayoutItemInitialize($event)"
+                    (layoutItemStartMovementInteraction)="onLayoutItemStartMovementInteraction($event)"
+                    (layoutItemEndMovementInteraction)="onLayoutItemEndMovementInteraction($event)"
+                    (layoutItemDestroy)="onLayoutItemDestroy($event)"
+                    (producedAssemblyStrategy)="onGridContainerCreated($event)"
+                    (layoutItemsChangeList)="onLayoutItemsChange($event)">
+
+        <div dashboard-container-header>Card Project: "{{ componentConfiguration.id }}"</div>
+
+    </ngx-card-deck>
+
+</ng-template>
+

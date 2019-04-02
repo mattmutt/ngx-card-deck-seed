@@ -1,0 +1,114 @@
+
+CLR-DATAGRID {
+    $font-size: 13px;
+
+    // avoid annoyance scrollbar when grid is too narrow to render columns
+    // this seems to fix the last column with "overhang" problem
+    overflow-x: hidden;
+
+    //> .datagrid-overlay-wrapper { height: inherit;
+
+    //> .datagrid-scroll-wrapper { height: inherit;
+
+    > .datagrid {
+        margin: 0; // nasty margin and spacing added to component by lib
+        width: inherit; // allocated by container, not by its own content
+        height: inherit;
+        border: 0; // clean
+
+        > .datagrid-table-wrapper {
+
+            > .datagrid-table {
+
+                > .datagrid-header {
+                    background-color: transparent;
+
+                    > .datagrid-row {
+
+                        > .datagrid-row-master {
+
+
+                            // enclose each header
+                            CLR-DG-COLUMN {
+
+                                // simplify align
+                                .datagrid-column-title {
+                                    // title font restyle
+                                    //font-size: 12px;
+                                    //color: #000000;
+
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .datagrid-column:not(:last-child)::before {
+            // BUGGY BAD
+            background: none; // clr reset - what is this separator doing. WRONG. it completely disrupts grids being contained
+        }
+
+        // fixed footer columns under main grid
+        .datagrid-foot {
+            // reset
+            font-size: inherit;
+            line-height: inherit;
+            padding: 0;
+            display: block;
+
+            // clr
+            > .datagrid-foot-description {
+                -webkit-box-flex: 1;
+                flex: 1 1 auto;
+                display: flex;
+                flex-flow: column nowrap;
+                min-height: 1px;
+
+                // dashboard injected container
+                > .datagrid-footer-container {
+                    flex-shrink: 0;
+                    display: block;
+
+                    > .datagrid-footer-container-master {
+
+                        // footer item cell
+                        > DIV {
+                            flex-shrink: 0; // keep it tight
+                            flex-grow: 0; // more tight
+
+                        }
+
+                    }
+
+                }
+            }
+        }
+
+    }
+
+    // ~~~~~~~~ decorations ~~~~~~~~
+
+    // the filters just annoy
+    &.removeFilters {
+
+        .datagrid-head {
+
+            CLR-DG-STRING-FILTER {
+                display: none;
+            }
+
+        }
+
+    }
+
+    // no col resizing
+    &.removeColumnSeparators {
+        .datagrid-column-separator {
+            display: none;
+        }
+    }
+
+}

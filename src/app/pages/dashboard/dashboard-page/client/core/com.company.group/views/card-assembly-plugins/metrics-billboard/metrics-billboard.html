@@ -1,0 +1,61 @@
+<!-- has layout metadata -->
+<section *ngIf="initialDataModelResponse$ | async" role="billboard-widget">
+
+    <section role="chart-widget">
+
+        <section *ngFor="let metricEntity of numericTransformedValueItemsList" role="chart-metric">
+
+            <section role="chart-metric-title">
+                <h4 [textContent]="metricEntity.message"></h4>
+            </section>
+
+
+            <section role="chart-metric-label">
+                <h2 role="chart-metric-attribute-value" [textContent]="metricEntity.view.attribute.free.value"></h2>
+                <h5 role="chart-metric-attribute-unit">{{ metricEntity.view.attribute.free.unit }} {{ library.alias.cardI18n["resource.measured_free"] }}</h5>
+            </section>
+
+
+            <section role="chart-render-container">
+
+                <ng-template [ngTemplateOutlet]="positionBasedTemplateMap.body['metricsBillboardProgressWidget']"
+                             [ngTemplateOutletContext]="{ metricEntity: metricEntity }"
+                ></ng-template>
+
+
+            </section>
+
+            <section role="chart-metric-informational">
+                <div>{{ metricEntity.model.used }} {{ library.alias.cardI18n["resource.measured_used"] }}</div>
+                <div>{{ metricEntity.model.capacity }} {{ library.alias.cardI18n["resource.measured_total"] }}</div>
+            </section>
+
+
+        </section>
+
+    </section>
+
+
+</section>
+
+<!-- ============= standard template framework for billboard card ================= -->
+
+<ng-template #defaultHeaderTemplate let-fieldMetadata="fieldMetadata">
+    <!--
+    <span [textContent]="library.alias.cardI18n[fieldMetadata.text.header.key]"
+          [title]="library.alias.cardI18n[fieldMetadata.text.header.key]"></span>
+          -->
+    header def
+</ng-template>
+
+
+<ng-template #defaultBodyTemplate let-rowData="rowData" let-fieldMetadata="fieldMetadata">
+    some data
+    <!--
+    {{ rowData[ fieldMetadata.id] }}
+    -->
+</ng-template>
+
+
+<!-- ============= extension points template framework for billboard card ================= -->
+<ng-container [ngIf]="isTemplatePhaseReady" *ngComponentOutlet="templatableComponentClass; ngModuleFactory: templatableModuleFactory"></ng-container>

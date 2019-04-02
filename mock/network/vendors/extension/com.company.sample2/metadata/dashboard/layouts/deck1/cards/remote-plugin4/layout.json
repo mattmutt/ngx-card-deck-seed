@@ -1,0 +1,80 @@
+{
+    "id": "remote-plugin4",
+    "resources": {
+        "modulesList": [
+            {
+                "resourceId": "deck1:remote-plugin4-i18n",
+                "type": "i18n",
+                "name": "General Translation for the dashboard for Sample Deck 1- remote plugin4",
+                "resolver": {
+                    "injector": "dashboard-assembly-translation",
+                    "network": {
+                        "method": "get",
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/metadata/dashboard/translations/{{ route.dashboardConfigurationIdentifier }}/{{ application.i18n.localeLanguageCode }}/cards/{{ document.id }}/card.json",
+                        "isEvaluated": true
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin4-service",
+                "type": "service",
+                "name": "Metadata call for the dashboard for Sample Deck 1 - remote plugin4 to metadata",
+                "resolver": {
+                    "remote-served-service": {
+                        "url": "//www.flickr.com/photos/128294308@N05/sets/72157690116397525/player",
+
+                        "isEvaluated": true,
+                        "mocked": false,
+                        "plugin": {
+                            "identifier": "remote-served-example4",
+                            "route": null
+                        }
+                    }
+                }
+            },
+            {
+                "resourceId": "deck1:remote-plugin4-configuration",
+                "type": "parameters",
+                "name": "General configurations for the dashboard for Sample Deck 1 - remote plugin4",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-parameters",
+                        "data": {
+                            "card.iconClassesList": [
+                                "social-treehouse"
+                            ]
+                        }
+                    }
+                }
+            }
+        ],
+        "componentsList": [
+            {
+                "resourceId": "deck1:remote-plugin4-card",
+                "type": "component-layout-metadata",
+                "component": "deck1:remote-plugin4",
+                "name": "remote plugin 1 instance",
+                "resolver": {
+                    "node": {
+                        "type": "card-assembly-metadata",
+                        "data": {
+                            "card": {
+                                "fields": [
+                                    {
+                                        "id": "remotePlugin4",
+                                        "view": {
+                                            "body": {
+                                                "organization": "sample1",
+                                                "template": "remotePlugin4"
+                                            }
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,260 @@
+@import "~ngx-card-deck/styles/theme";
+
+@include themifyClarity() {
+
+    ::ng-deep SECTION {
+
+
+        &[role="chart-widget"] {
+
+            // internal separator bars
+            [role="chart-metric"] {
+
+                $divider-line-color: call($getThemeProperty, card, shape-divider-segment-color);
+
+                [role="chart-metric-informational"] {
+
+                    > *:nth-of-type(1) {
+                        border-right-color: $divider-line-color;
+                    }
+                }
+
+
+                // +++++ RWD ++++
+                @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                    // divider
+                    border-left-color: $divider-line-color;
+                }
+
+                @include respond-to-rwd-list(('mobile', 'small')) {
+                    // divider
+                    border-top-color: $divider-line-color;
+                }
+
+            }
+        }
+
+    }
+}
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    ::ng-deep SECTION {
+        $rendered-elements-count: 3; // PROPERTY: how many inner card children
+        $chartWidgetGutterWidth: 10%;
+        $divider-line-width: 1px;
+
+        &[role="chart-widget"] {
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+            align-content: flex-start;
+            align-items: baseline; // deviates a bit i know
+
+            // UX: strict conformance of having text fit, despite clippage
+            // overflow: hidden;
+
+            // however, algorithms for wrap can aide
+            flex-wrap: wrap;
+
+            // do not apply divider on first child (element)
+            [role="chart-metric"]:first-child {
+                border: 0;
+            }
+
+            // sub layout
+            [role="chart-metric"] {
+                display: flex;
+                flex-direction: column;
+                flex: 0 1 100%; // IE11
+
+                padding: 0 2%; // proportional to decrease probability of clipping
+
+                [role="chart-metric-title"] {
+                    align-content: flex-start;
+                    display: flex;
+                    flex-direction: row;
+                    align-items: flex-start;
+
+                    H4 {
+                        margin: 0;
+                        padding: 0 1rem;
+                    }
+                }
+
+                [role="chart-metric-label"] {
+
+                    // adaptive spacing over breaks
+                    %attribute-unit-spacing-size-rwd {
+                        // base
+                        $base-size: 0.3rem;
+                        padding-left: $base-size;
+
+                        @include property-mapped-to-rwd("padding-left", (
+                            $base-size * 1.20,
+                            $base-size * 1.40,
+                            $base-size * 1.60,
+                            $base-size * 1.80
+                        ));
+                    }
+
+                    display: flex;
+                    flex-direction: row;
+                    flex: 0 1;
+                    flex-basis: auto; // IE11 - explicit separate notation
+
+                    justify-content: center;
+                    align-items: center; // better chance
+                    margin: 0;
+
+                    [role="chart-metric-attribute-value"] {
+                        line-height: 1.5rem;
+                        margin: 0;
+                    }
+
+                    [role="chart-metric-attribute-unit"] {
+
+                        @extend %attribute-unit-spacing-size-rwd;
+
+                        margin: 0;
+
+                        // show the text at all costs
+                        //  white-space: nowrap;
+                        text-overflow: ellipsis;
+
+                        overflow-x: hidden;
+
+                    }
+                }
+
+                // user interaction
+                // &:hover {
+                //   background-color: rgba(1, 1, 1, .05);
+                // }
+
+                [role="chart-render-container"] {
+                    width: 100%;
+                    padding: 0 20% 0;
+                    position: relative; // IE11
+
+                    // progress widget
+                    [role="chart-render-bar"] {
+                        height: 0.5rem;
+                        margin-top: 0; // CLR reset
+                        position: inherit; // CLR reset
+
+                        // future work : transition in
+                        /*
+                        &.render {
+                          &::before {
+                            transition: all 5s;
+                          }
+
+                          &.start {
+                            &::before {
+                              transition: all 5s;
+                            }
+                          }
+
+                        }
+                        */
+
+                    }
+
+                    /*
+                    [role="tooltip"] {
+                      width: 100%;
+
+                      [role="chart-render-bar"] {
+                        font-size: 4px;
+                      }
+                    }
+                    */
+                }
+
+                // used and capacity metrics
+                [role="chart-metric-informational"] {
+                    display: flex;
+                    justify-content: center;
+                    align-items: stretch;
+                    font-size: 12px;
+                    line-height: 1.5;
+                    padding-top: 0.5rem;
+
+                    > * {
+                        // common children
+                    }
+
+                    // first
+                    > *:nth-of-type(1) {
+                        text-align: right;
+                        margin-right: 0.5rem;
+                        padding-right: 0.5rem;
+                        border-right: $divider-line-width solid;
+                    }
+
+                    // second
+                    > *:nth-of-type(2) {
+                        text-align: left;
+                    }
+
+                }
+
+                // +++++ RWD ++++
+                // determine "card' count before wrapping into single column
+                @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                    flex-basis: (100 / $rendered-elements-count)#{"%"};
+                    // divider
+                    border-left: $divider-line-width solid;
+                }
+
+                @include respond-to-rwd-list(('mobile', 'small')) {
+                    flex-basis: 100%;
+                    // add divider
+                    border-top: $divider-line-width solid;
+                    padding: 1rem 0;
+                }
+
+                // /+++++ RWD ++++
+
+                // /metric
+            }
+
+            // ++++++ RWD +++++++
+
+            // /++++++ RWD +++++++
+            @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                flex-wrap: nowrap;
+            }
+
+            // widget
+        }
+
+    }
+
+}
+
+// header icon
+@include selectCardLayoutAspectByComponentType("*", "card-metrics-billboard", "header") {
+    // styling header background just for this card type
+    background: linear-gradient(to right, rgba(103, 84, 118, .3), rgba(73, 74, 181, 0));
+
+    ::ng-deep I.headerIcon {
+        background-size: cover;
+
+        // for each instance of the metricsa billboard
+        &.datastore {
+            background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-skull.svg");
+        }
+
+        &.social-treehouse {
+            background-image: url("//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/svgs/fi-social-treehouse.svg");
+        }
+
+    }
+}
+

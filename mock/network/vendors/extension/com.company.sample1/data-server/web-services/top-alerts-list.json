@@ -1,0 +1,95 @@
+{
+  "entitiesWithMostAlarms": [
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "HostSystem",
+        "value": "host-38293"
+      },
+      "name": "10.23.66.77",
+      "alerts": 1,
+      "warnings": 1
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "Datacenter",
+        "value": "datacenter-40760"
+      },
+      "name": "DataCenter_ManageDvPgVlanNioc_wVQMr",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "HostSystem",
+        "value": "host-12500"
+      },
+      "name": "10.161.236.167",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "HostSystem",
+        "value": "host-22"
+      },
+      "name": "10.26.249.231",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "Datacenter",
+        "value": "datacenter-40658"
+      },
+      "name": "DataCenter_ManageDvPgVlanNioc_kaBEG",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "Datacenter",
+        "value": "datacenter-38464"
+      },
+      "name": "My Datacenter",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "HostSystem",
+        "value": "host-15993"
+      },
+      "name": "10.26.253.48",
+      "alerts": 1,
+      "warnings": 0
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "ClusterComputeResource",
+        "value": "domain-c32507"
+      },
+      "name": "RK test Cluster",
+      "alerts": 0,
+      "warnings": 1
+    },
+    {
+      "entity": {
+        "serverGuid": "company-alarm-top-alert-2017-11-12",
+        "type": "Datastore",
+        "value": "datastore-10639"
+      },
+      "name": "datastore1",
+      "alerts": 0,
+      "warnings": 1
+    }
+  ]
+}
+

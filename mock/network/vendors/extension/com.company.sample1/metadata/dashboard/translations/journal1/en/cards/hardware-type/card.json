@@ -1,0 +1,9 @@
+{
+    "card.title": "Hardware Health Insights",
+    "card.subtitle": "Hardware Product Type product family",
+    "grid.empty_results": "No Hardware Type records found",
+    "inventory_entity_name": "Equipment",
+    "inventory_entity_count": "Energy (kWh)",
+    "inventory_entity_total": "Total",
+    "inventory_entity_percentage": "%"
+}

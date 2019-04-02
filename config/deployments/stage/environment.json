@@ -1,0 +1,78 @@
+{
+  "deployment": {
+    "page": {
+      "embedded": false,
+      "sandboxed": true
+    }
+  },
+  "services": {
+    "dashboardMetadata": {
+      "mocked": false,
+      "transport": "network",
+      "publicPath": "/test/apps/dashboard-app",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "/network/vendors/extension/{{ dashboardOrganizerPath }}/metadata/dashboard",
+        "extension": ".json",
+        "authentication": null
+      }
+    },
+    "session": {
+      "transport": "service",
+      "mocked": true,
+      "publicPath": "/test/apps/dashboard-app",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "/network/vendors/extension/{{ dashboardOrganizerPath }}/acme/session/usersession",
+        "extension": ".json",
+        "authentication": null
+      }
+    },
+    "remote-served-service": {
+      "transport": "service",
+      "mocked": true,
+      "publicPath": "/test/apps/dashboard-app",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "authentication": {
+          "sameOriginPolicyEnabled": true
+        },
+        "extension": null
+      }
+    },
+    "rest": {
+      "transport": "service",
+      "mocked": true,
+      "publicPath": "/test/apps/dashboard-app",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "extension": null,
+        "authentication": null
+      }
+    },
+    "network": {
+      "transport": "network",
+      "mocked": false,
+      "publicPath": "/test/apps/dashboard-app",
+      "route": {
+        "protocol": null,
+        "host": null,
+        "port": null,
+        "path": "",
+        "extension": null,
+        "authentication": null
+      }
+    }
+
+  }
+}

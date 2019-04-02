@@ -1,0 +1,171 @@
+{
+   "id": "simple-deck",
+   "resources": {
+      "modulesList": [
+         {
+            "resourceId": "simple-deck-client:i18n",
+            "type": "i18n",
+            "name": "General Translation for the dashboard for Simple Deck",
+            "resolver": {
+               "injector": "dashboard-assembly-translation",
+               "node": {
+                  "data": {
+                     "title": "Simple Deck 1 Title"
+                  }
+               }
+            }
+         }
+      ],
+      "cardsList": [
+         {
+            "resourceId": "my-simple-plugin1",
+            "type": "card",
+            "component": "card-metrics-billboard",
+            "name": "My Simple Plugin",
+            "resolver": {
+               "injector": "dashboard-assembly-layout",
+               "node": {
+                  "data": {
+                     "id": "my-simple-plugin1",
+                     "resources": {
+                        "modulesList": [
+                           {
+                              "resourceId": "my-simple-plugin1:resource-metrics-i18n",
+                              "type": "i18n",
+                              "name": "Sample text resources for plugin",
+                              "resolver": {
+                                 "injector": "dashboard-assembly-translation",
+                                 "node": {
+                                    "data": {
+                                       "card.title": "My Simple Plugin"
+                                    }
+                                 }
+                              }
+                           },
+                           {
+                              "resourceId": "my-simple-plugin1:resource-metrics-service",
+                              "type": "service",
+                              "name": "Optional network HTTP call for pre-fetching some mock summary data",
+                              "resolver": {
+                                 "network": {
+                                    "url": "/network/vendors/extension/teamwork/plugins/simple-deck/cards/my-simple-plugin1/data/summary.json",
+                                    "isEvaluated": true
+                                 }
+                              }
+                           },
+                           {
+                              "resourceId": "my-simple-plugin1:resource-metrics-configuration",
+                              "type": "parameters",
+                              "name": "General parameters available to the plugin template component",
+                              "resolver": {
+                                 "node": {
+                                    "type": "card-assembly-parameters",
+                                    "data": {
+                                       "card.isHeaderVisible": true,
+                                       "card.iconClassesList": [
+                                          "datastore"
+                                       ]
+                                    }
+                                 }
+                              }
+                           }
+                        ],
+                        "componentsList": [
+                           {
+                              "resourceId": "my-simple-plugin1:resource-metrics-card",
+                              "type": "component-layout-metadata",
+                              "component": "my-simple-plugin1:resource-metrics-billboard",
+                              "name": "resource metrics development card assembly prototype",
+                              "resolver": {
+                                 "node": {
+                                    "type": "card-assembly-metadata",
+                                    "data": {
+                                       "card": {
+                                          "fields": [
+                                             {
+                                                "id": "metricsBillboardProgressWidget",
+                                                "view": {
+                                                   "body": {
+                                                      "organization": "teamwork-project1",
+                                                      "template": "metricsBillboardProgressWidget"
+                                                   }
+                                                }
+                                             }
+                                          ]
+                                       }
+                                    }
+                                 }
+                              }
+                           }
+                        ]
+                     }
+                  }
+               }
+            }
+         }
+      ],
+      "viewsList": [
+         {
+            "resourceId": "simple-deck:dashboard-grid-configuration",
+            "type": "dashboard-view-configuration",
+            "component": "grid-container-dashboard-container",
+            "name": "Simple Deck - Gridster configuration",
+            "resolver": {
+               "injector": "dashboard-assembly-grid-configuration",
+               "node": {
+                  "data": {
+                     "gridType": "fixed",
+                     "minCols": 3,
+                     "maxCols": 3,
+                     "minRows": 3,
+                     "maxRows": 3,
+                     "compactType": "none",
+                     "resizable": {
+                        "enabled": false
+                     }
+                  }
+               }
+            }
+         },
+         {
+            "resourceId": "simple-deck:dashboard-item-layout",
+            "type": "dashboard-view-state",
+            "component": "grid-container-dashboard-container",
+            "name": "Simple Deck - dashboard grid assembly prototype / January 2018",
+            "resolver": {
+               "injector": "dashboard-assembly-grid-container",
+               "node": {
+                  "data": {
+                     "dashboard": {
+                        "view": {
+                           "viewportScalableSizing": true
+                        },
+                        "container": {
+                           "layoutItemList": [
+                              {
+                                 "card": {
+                                    "resourceId": "my-simple-plugin1"
+                                 },
+                                 "layout": {
+                                    "position": {
+                                       "x": 0,
+                                       "y": 0
+                                    },
+                                    "dimensions": {
+                                       "initial": {
+                                          "width": 3,
+                                          "height": 1
+                                       }
+                                    }
+                                 }
+                              }
+                           ]
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      ]
+   }
+}

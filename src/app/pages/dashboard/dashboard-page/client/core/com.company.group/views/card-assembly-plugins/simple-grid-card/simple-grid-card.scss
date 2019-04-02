@@ -1,0 +1,23 @@
+// framework styling link
+@import "~ngx-card-deck/styles/theme";
+
+
+:host {
+   @import '../base/styles/card-assembly-plugin-base';
+
+   > [role="grid-widget"] {
+
+      // peering into grid fixture
+      ::ng-deep {
+         @import "clarity_datagrid";
+      }
+
+      // /++++++ RWD +++++++
+      @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+         // flex-wrap: nowrap;
+      }
+      // ++++++ RWD +++++++
+
+   }
+
+}
