@@ -1,0 +1,400 @@
+<!-- create dropdown of sockets by type, grouped by node -->
+<div *ngIf="resolvedNodeflow && resolvedNodeflow.gridStateManager.routes"
+     [formGroup]="toolbarNodeflowBehaviorActionForm">
+
+    <!-- extracts emulated catalog and project. Needed for assigning message model contexts during add operation -->
+    <ng-container
+        *ngIf="catalogResourcesCollectionCache$ | async | findCardCatalogResourcesPackage:currentProjectDashboardConfiguration?.id as associatedCatalog">
+        <ng-container
+            *ngIf="projectResourcesCollectionCache$ | async | findNodeflowCardProjectPackage:associatedCatalog.references.projectItemId as associatedProjectPackage">
+
+            <section>
+
+                <!-- reveal details about the scope and organization resources for catalog/project -->
+                <ng-container *ngIf="selectedIsVerboseMode">
+                    <section *ngIf="{ expanded: false} as sectionLayout">
+                        Catalog <b>{{ associatedCatalog.id }}</b>
+                        <button [attr.title]="associatedCatalog.label"
+                                (click)="sectionLayout.expanded = !sectionLayout.expanded">?
+                        </button>
+                        <textarea [hidden]="!sectionLayout.expanded"
+                                  [textContent]="associatedCatalog | json"></textarea>
+                    </section>
+
+                    <section *ngIf="{ expanded: false} as sectionLayout">
+                        Package <b>{{ associatedProjectPackage.project.item.id }}</b>
+                        <button [attr.title]="associatedProjectPackage.project.item.label"
+                                (click)="sectionLayout.expanded = !sectionLayout.expanded">?
+                        </button>
+                        <textarea [hidden]="!sectionLayout.expanded"
+                                  [textContent]="associatedProjectPackage | json"></textarea>
+                    </section>
+                </ng-container>
+
+                <section>
+                    <label *ngIf="selectedIsVerboseMode">
+                        <ng-container *ngIf="currentProjectDashboardConfiguration">
+                            Layout Instance <b>{{ currentProjectDashboardConfiguration!.id }}</b>
+                        </ng-container>
+                    </label>
+                    <label>
+                        <input type="text" role="newCardName" formControlName="newCardName"
+                               placeholder="Enter card title"/>
+                    </label>
+                </section>
+
+                <!-- choose asset type -->
+                <section>
+                    <label *ngIf="selectedIsVerboseMode">
+                        Asset Type
+                        <b *ngIf="toolbarNodeflowBehaviorActionForm.get('assetType')!.value">
+                            (id: {{ toolbarNodeflowBehaviorActionForm.get('assetType')!.value }})
+                        </b>
+                    </label>
+
+                    <select formControlName="assetType">
+                        <option *ngFor="let assetType of availableAssetTypeList | assetTypeOrderBy"
+                                [ngValue]="assetType.assetTypeId"
+                                [textContent]="assetType.localization.name.text"></option>
+                    </select>
+
+                </section>
+
+
+                <section>
+
+                    <section>
+
+                        <section role="addRelationButtonLayout">
+                            &lt; Socket Inputs:
+                            ({{ getSocketRelationFormArray(types.socketConnectorTypeEnum.input).controls.length }})
+                            <button (click)="onAddSocketRelationDetail(types.socketConnectorTypeEnum.input)"
+                                    class="btn-primary btn-outline-warning btn-xs">+
+                            </button>
+                        </section>
+
+                        <table role="socketMessageRelationGroup">
+                            <tbody>
+
+                            <tr
+                                *ngFor="let addConsumerFormGroup of getSocketRelationFormArray(types.socketConnectorTypeEnum.input).controls; let index=index">
+
+                                <td role="groupIndexCounter" [textContent]="index+1"></td>
+
+                                <td role="socketMessageSelection">
+                                    <ng-container [ngTemplateOutlet]="nodeflowSocketMessageRelation"
+                                                  [ngTemplateOutletContext]="{ nodeflowCardProjectPackage: associatedProjectPackage,
+                                          formGroupRef: addConsumerFormGroup, formGroupRefSequence: index,
+                                          opposingSocketDirectionType: types.socketConnectorTypeEnum.output, assigningSocketType: types.socketConnectorTypeEnum.input }"></ng-container>
+
+                                </td>
+
+                                <td role="deleteRelationButtonLayout">
+                                    <button
+                                        (click)="onRemoveSocketRelationDetail(types.socketConnectorTypeEnum.input, index)"
+                                        class="btn-primary btn-outline-warning btn-xs">-
+                                    </button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </section>
+
+
+                    <section>
+
+                        <section role="addRelationButtonLayout">
+                            &gt; Socket Outputs:
+                            ({{ getSocketRelationFormArray(types.socketConnectorTypeEnum.output).controls.length }})
+
+                            <button (click)="onAddSocketRelationDetail(types.socketConnectorTypeEnum.output)"
+                                    class="btn-primary btn-outline-warning btn-xs">+
+                            </button>
+                        </section>
+
+
+                        <table role="socketMessageRelationGroup">
+                            <tbody>
+                            <tr
+                                *ngFor="let addProducerFormGroup of getSocketRelationFormArray(types.socketConnectorTypeEnum.output).controls; let index=index">
+
+                                <td role="groupIndexCounter" [textContent]="index+1"></td>
+
+
+                                <td role="socketMessageSelection">
+                                    <ng-container [ngTemplateOutlet]="nodeflowSocketMessageRelation"
+                                                  [ngTemplateOutletContext]="{ nodeflowCardProjectPackage: associatedProjectPackage,
+                                          formGroupRef: addProducerFormGroup, formGroupRefSequence: index,
+                                          opposingSocketDirectionType: types.socketConnectorTypeEnum.input, assigningSocketType: types.socketConnectorTypeEnum.output }"></ng-container>
+
+                                </td>
+
+                                <td role="deleteRelationButtonLayout">
+                                    <button
+                                        (click)="onRemoveSocketRelationDetail(types.socketConnectorTypeEnum.output, index)"
+                                        class="btn-primary btn-outline-warning btn-xs">-
+                                    </button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+
+                    </section>
+
+
+                </section>
+
+                <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+                    <div [textContent]="processingErrorMessage"></div>
+                </section>
+
+                <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+                    <div [textContent]="processingErrorMessage"></div>
+                </section>
+
+                <!-- warning of circular reference -->
+                <section>
+                    <i *ngIf="toolbarNodeflowBehaviorActionForm.errors">
+                        <ng-container
+                            *ngFor="let complexValidationError of [ toolbarNodeflowBehaviorActionForm.errors.circular_reference_connector ]">
+                            <i *ngIf="complexValidationError" [textContent]="complexValidationError.label"></i>
+                        </ng-container>
+                    </i>
+                </section>
+
+
+                <section>
+                    <button [disabled]="toolbarNodeflowBehaviorActionForm.invalid"
+                            class="btn btn-primary btn-outline-warning"
+                            (click)="onAddNodeAssetEvent()"
+                            title="Add a new node into the deck, capable of wiring up to others">Add
+
+                        <!-- describe the linkage qualifier -->
+                        <!--
+                        <i *ngIf="!(toolbarNodeflowBehaviorActionForm.get('newCardInputReference').value ||toolbarNodeflowBehaviorActionForm.get('newCardOutputReference').value)">
+                            Unlinked
+                        </i>
+                        -->
+
+                        Nodeflow
+                    </button>
+                    <br *ngIf="!selectedIsVerboseMode">
+
+                    <label for="addNodeflowIsVerboseMode">Verbose</label>
+
+                    <input id="addNodeflowIsVerboseMode" type="checkbox" role="isVerboseMode"
+                           formControlName="isVerboseMode"/>
+                </section>
+
+            </section>
+
+
+        </ng-container>
+    </ng-container>
+
+</div>
+
+
+<!-- template declarations -->
+
+<ng-template #nodeflowSocketMessageRelation
+             let-nodeflowCardProjectPackage="nodeflowCardProjectPackage"
+             let-formGroupRef="formGroupRef"
+             let-formGroupRefSequence="formGroupRefSequence"
+             let-opposingSocketDirectionType="opposingSocketDirectionType"
+             let-assigningSocketType="assigningSocketType">
+
+    <ng-container [formGroup]="formGroupRef">
+
+        <ng-container *ngIf="formGroupRef.get('socket')?.value as socketRef">
+            <span [textContent]="socketRef.view.nodeSegmentCoordinate.card.resourceId"></span>
+            <ng-container *ngIf="selectedIsVerboseMode">
+                [Multicast: {{ socketRef.multicast}}]
+            </ng-container>
+        </ng-container>
+
+
+        <!-- socket relation -->
+        <ng-container [ngTemplateOutlet]="nodeflowSocketSelection"
+                      [ngTemplateOutletContext]="{ nodeflowCardProjectPackage: nodeflowCardProjectPackage, formGroupRef: formGroupRef, opposingSocketDirectionType: opposingSocketDirectionType, assigningSocketType: assigningSocketType }"></ng-container>
+        <br/>
+
+        <!-- message relation -->
+        <ng-container [ngTemplateOutlet]="nodeflowMessageSelection"
+                      [ngTemplateOutletContext]="{ nodeflowCardProjectPackage: nodeflowCardProjectPackage, formGroupRef: formGroupRef, formGroupRefSequence:formGroupRefSequence, assigningSocketType: assigningSocketType }"></ng-container>
+    </ng-container>
+
+</ng-template>
+
+
+<ng-template #nodeflowSocketSelection
+             let-nodeflowCardProjectPackage="nodeflowCardProjectPackage"
+             let-formGroupRef="formGroupRef"
+             let-formGroupRefSequence="formGroupRefSequence"
+             let-opposingSocketDirectionType="opposingSocketDirectionType"
+             let-assigningSocketType="assigningSocketType">
+
+
+    <!-- socket linking to remote node -->
+    <section>
+        <input type="checkbox" [formControl]="formGroupRef.get('isSocketLinked')"
+               [attr.id]="'isSocketLinked' + opposingSocketDirectionType + formGroupRefSequence"/>
+        <label [attr.for]="'isSocketLinked' + opposingSocketDirectionType + formGroupRefSequence">
+            Socket connector:
+            <ng-container *ngIf="formGroupRef.get('isSocketLinked').value; else isSocketUnlinked">linked</ng-container>
+            <ng-template #isSocketUnlinked>unlinked</ng-template>
+        </label>
+
+
+        <!-- socket connector when linked -->
+        <label *ngIf="formGroupRef.get('isSocketLinked').value">
+            Link State:
+            <select [formControl]="formGroupRef.get('linkStateType')" role="stateType">
+                <option *ngFor="let stateType of types.stateTypeList" [ngValue]="stateType[1]"
+                        [textContent]="stateType[0]" [ngClass]="stateTypeClass(stateType[1])"></option>
+            </select>
+
+        </label>
+
+    </section>
+
+
+    <!-- having a selected socket, can additionally specify multicast behavior -->
+    <section *ngIf="formGroupRef.get('socket').value">
+        <input type="checkbox" [formControl]="formGroupRef.get('isSocketMulticast')"
+               [attr.id]="'isSocketMulticast' + opposingSocketDirectionType + formGroupRefSequence"/>
+        <label [attr.for]="'isSocketMulticast' + opposingSocketDirectionType + formGroupRefSequence">
+            Multicast:
+            <ng-container *ngIf="formGroupRef.get('isSocketMulticast').value;else isSocketUnicast">Yes
+            </ng-container>
+            <ng-template #isSocketUnicast>No</ng-template>
+        </label>
+    </section>
+
+
+    <select [formControl]="formGroupRef.get('socket')" class="socketSelection">
+        <option [ngValue]="null">Select remote {{ types.socketConnectorTypeEnum[ opposingSocketDirectionType] }}
+            socket
+        </option>
+
+        <ng-container *ngFor="let nodeModel of nodeCollectionCache$ | async">
+
+            <optgroup *ngIf="showSelectListOptionGroup(nodeModel, opposingSocketDirectionType, formGroupRef)"
+                      [attr.label]="nodeModel.id">
+
+                <ng-container
+                    *ngFor="let socket of nodeModel.link?.getCollectionByType( opposingSocketDirectionType)">
+                    <ng-container
+                        *ngIf="{ status: !checkSocketCapabilityValidationErrors(nodeModel, socket, formGroupRef) } as validation">
+
+                        <ng-container
+                            *ngIf="selectedIsVerboseMode || validation.status">
+
+                            <option [disabled]="!validation.status" [ngValue]="socket">
+                                {{ socket.topic }}
+                                <ng-container *ngIf="!validation.status">
+                                    -
+                                    <ng-container
+                                        *ngFor="let validationError of adviseSocketCapabilityValidationErrors(nodeModel, socket, formGroupRef); let last=last">
+                                        {{ validationError.label }}
+
+                                        <ng-container *ngIf="!last"> |</ng-container>
+
+                                    </ng-container>
+                                </ng-container>
+
+                            </option>
+                        </ng-container>
+                    </ng-container>
+
+                </ng-container>
+
+
+            </optgroup>
+
+        </ng-container>
+    </select>
+
+
+</ng-template>
+
+
+<ng-template #nodeflowMessageSelection
+             let-nodeflowCardProjectPackage="nodeflowCardProjectPackage"
+             let-assigningSocketType="assigningSocketType"
+             let-formGroupRef="formGroupRef"
+             let-formGroupRefSequence="formGroupRefSequence">
+
+
+    <section *ngIf="formGroupRef.get('message').value as selectedMessageTemplate">
+
+
+        <!-- extra details of message structure -->
+        <ng-container *ngIf="selectedIsVerboseMode && selectedMessageTemplate.state">
+
+            <ng-container *ngIf="selectedMessageTemplate.state.data">
+
+                <section *ngIf="{ expanded: false} as sectionLayout">
+                    Message <b>Data</b>
+                    <button [attr.title]="selectedMessageTemplate.state.classifier"
+                            (click)="sectionLayout.expanded = !sectionLayout.expanded">?
+                    </button>
+                    <textarea [hidden]="!sectionLayout.expanded"
+                              [textContent]="selectedMessageTemplate.state.data | json"></textarea>
+                </section>
+
+            </ng-container>
+
+        </ng-container>
+
+    </section>
+
+
+    <ng-container *ngFor="let selectedSocket of [formGroupRef.get('socket').value]">
+        <select [formControl]="formGroupRef.get('message')" class="messageSelection">
+
+            <ng-container
+                *ngIf="nodeflowCardProjectPackage.schematic.card.messages | limitMessageBySocket: selectedSocket as availableMessageTemplateList">
+
+                <option [ngValue]="null">
+
+                    <ng-container *ngIf="availableMessageTemplateList.length; else noAvailableMessages">Select
+                        message
+                    </ng-container>
+                    <ng-template #noAvailableMessages>No project message for {{ selectedSocket.topic }}
+                    </ng-template>
+                </option>
+
+                <ng-container *ngFor="let messageTemplate of availableMessageTemplateList">
+                    <option
+                        [disabled]="!checkSocketRelationFormArrayUniqueTopicRule( formGroupRef,  formGroupRefSequence)"
+                        [ngValue]="messageTemplate">
+                        {{ messageTemplate.topic }}
+                    </option>
+                </ng-container>
+
+
+            </ng-container>
+
+        </select>
+    </ng-container>
+
+
+    <!-- message state automatically delivered to other side during add workflow -->
+    <section *ngIf="formGroupRef.get('message').value">
+        <input type="checkbox" [formControl]="formGroupRef.get('isMessageStateSynchronized')"
+               [attr.id]="'isMessageStateSynchronized' + assigningSocketType + formGroupRefSequence"/>
+        <label [attr.for]="'isMessageStateSynchronized' + assigningSocketType + formGroupRefSequence">
+            State Sync:
+            <ng-container
+                *ngIf="formGroupRef.get('isMessageStateSynchronized').value; else isMessageStateUnsynchronized">Yes
+            </ng-container>
+            <ng-template #isMessageStateUnsynchronized>No</ng-template>
+        </label>
+    </section>
+
+
+</ng-template>

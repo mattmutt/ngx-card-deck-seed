@@ -1,0 +1,22 @@
+<section>
+
+    <div role="overlayHeader">
+        <ng-content></ng-content>
+        <div (click)="overlayCommand.close()">X</div>
+    </div>
+
+    <hr/>
+
+    <ol>
+        <li *ngFor="let messageDetail of messages">
+            {{ messageDetail }}
+        </li>
+    </ol>
+
+    <!--
+    <br/>
+    Node: <span [textContent]="socket?.view.nodeSegmentCoordinate.card.resourceId"></span>
+    -->
+
+
+</section>

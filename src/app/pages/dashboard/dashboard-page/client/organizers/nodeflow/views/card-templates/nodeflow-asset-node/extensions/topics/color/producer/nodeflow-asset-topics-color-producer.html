@@ -1,0 +1,143 @@
+<b>Custom Color//Mixer</b>
+<ng-container
+    *ngIf="resourceState.integrator.simulatorProducerFormView.messagesForm.get(resourceState.message.form.component) as subform">
+
+    <table role="messagesFormFieldsGrid" [formGroup]="subform"
+           [attr.data-messageFormComponent]="resourceState.message.form.component"
+           [attr.data-messageStateClassifier]="resourceState.message.state.classifier">
+
+        <thead>
+        <tr>
+            <th role="messageModelTopicLabel">{{ resourceState.message.topic }}</th>
+            <th role="messageModelStateClassifier"
+                [textContent]="resourceState.message.state.classifier"></th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <!-- sliders for color spectrum values -->
+        <ng-container [ngTemplateOutlet]="messageSubform"
+                      [ngTemplateOutletContext]="{ $implicit: subform }"></ng-container>
+
+
+        <!-- emitter playback pattern -->
+        <ng-container [ngTemplateOutlet]="emitterSubform"
+                      [ngTemplateOutletContext]="{ $implicit: subform }"></ng-container>
+
+
+        </tbody>
+
+    </table>
+
+    <ng-container
+        *ngIf="resourceState.integrator.simulatorProducerFormView.findRouteRelationByMessage(resourceState.message) as matchedRouteRelation; else missingRouteRelation">
+
+        <section role="messagesFormFieldsFooter"
+                 [attr.disabled]="resourceState.integrator.simulatorProducerFormView.isRouteRelationDisabled(matchedRouteRelation)">
+
+            <ng-container *ngIf="matchedRouteRelation.connectors.size; else unpairedSocketConnectors">
+                <select
+                    [formControl]="resourceState.integrator.simulatorProducerFormView.findStateTypeControl(subform, resourceState.message)"
+                    [ngClass]="resourceState.integrator.simulatorProducerFormView.stateTypeClass( resourceState.integrator.simulatorProducerFormView.findStateTypeControl(subform, resourceState.message).value)"
+                    role="stateType">
+                    <option [ngValue]="null" class="default-state">
+                        All linked types - ({{ matchedRouteRelation.connectors.size }})
+                    </option>
+
+                    <ng-container
+                        *ngFor="let stateType of (resourceState.integrator.simulatorProducerFormView.types.stateTypeListChange$ | async )">
+
+                        <option
+                            *ngIf="calculateLinkStateTypeBundledSocketConnectorRelationCount(matchedRouteRelation, stateType[1]); let connectorRelationsCount"
+                            [ngValue]="stateType[1]"
+                            [ngClass]="resourceState.integrator.simulatorProducerFormView.stateTypeClass(stateType[1])">
+                            {{ stateType[0] }} : subset type - ({{ connectorRelationsCount }})
+                        </option>
+
+
+                    </ng-container>
+                </select>
+            </ng-container>
+
+            <ng-template #unpairedSocketConnectors>
+                No connectors listening
+            </ng-template>
+
+        </section>
+    </ng-container>
+
+    <ng-template #missingRouteRelation>
+        No route relation associated for "{{ resourceState.message.topic }}"
+    </ng-template>
+
+
+</ng-container>
+
+
+<ng-template #messageSubform let-subform>
+
+    <tr *ngFor="let messageStateDataTuple of resourceState.message.state.data | messageModelStateDataIterable as messageStateTuple"
+        [attr.role]="resourceState.message.form.component">
+        <td>
+            <label>
+                {{ messageStateDataTuple[0] }}
+            </label>
+        </td>
+
+        <td>
+            <div role="control" *ngIf="subform.get( messageStateDataTuple[0]); let fieldBindingFormControl">
+                <section>
+                    <input type="range" role="chromaRange" step="1" min="0" max="255"
+                           [formControl]="fieldBindingFormControl"/>
+
+                    <div role="colorDrop"
+                         [attr.hidden]="isControlAttributeHidden(fieldBindingFormControl)"
+                         [textContent]="( fieldBindingFormControl.value / 255 * 100 ) | number:'1.0-0'"
+                         [style.backgroundColor]="convertToHexColor( messageStateDataTuple[0], fieldBindingFormControl.value)"
+                    ></div>
+
+                </section>
+            </div>
+        </td>
+    </tr>
+</ng-template>
+
+<ng-template #emitterSubform let-subform>
+
+    <tr [formGroup]="emitterForm" role="emitterFormGroup">
+        <td>
+            Emitter?
+            <input type="checkbox" formControlName="active"
+                   [attr.id]="['color-producer-form', 'emitterEnabled', resourceState.nodeModel.id]"/>
+
+            <ng-container *ngIf="periodicEmitterCycleCount > 0">
+                (<span [textContent]="periodicEmitterCycleCount"></span>)
+            </ng-container>
+
+            <ng-container *ngIf="emitterForm.get('active')!.value">
+                <select formControlName="strategyType">
+
+                    <ng-container *ngFor="let stateType of types.emitterPatternTypeList">
+
+                        <option [ngValue]="stateType[1]">
+                            {{ stateType[0] }}
+                        </option>
+
+                    </ng-container>
+                </select>
+            </ng-container>
+
+
+        </td>
+
+        <td *ngIf="emitterForm.get('active')!.value">
+
+            <input type="range" role="emitterIntervalRange" step="200" min="200" value="1000" max="5000"
+                   formControlName="interval" title="Delay of emitter in milliseconds"/>
+            {{ emitterForm.get('interval')!.value }}
+
+        </td>
+
+    </tr>
+
+</ng-template>

@@ -1,0 +1,27 @@
+{
+    "id": "project1-catalog",
+    "label": "Sample Team's Catalog - Project 1",
+    "resources": [
+        {
+            "id": "deck3",
+            "label": "Simple nodeflow",
+            "sourceFile": "deck3.json",
+            "encodingType": "card",
+            "interaction": {
+                "selected": false
+            }
+        },
+        {
+            "id": "deck4",
+            "label": "Advanced nodeflow",
+            "sourceFile": "deck4.json",
+            "encodingType": "card",
+            "interaction": {
+                "selected": false
+            }
+        }
+    ],
+    "references": {
+        "projectItemId": "generic-nodeflow-project-1"
+    }
+}

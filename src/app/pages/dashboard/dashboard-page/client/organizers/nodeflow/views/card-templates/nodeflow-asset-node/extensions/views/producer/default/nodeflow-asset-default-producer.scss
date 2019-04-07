@@ -1,0 +1,99 @@
+:host {
+    display: block;
+}
+
+// holder of fields
+[role="messagesFormFieldsGrid"] {
+    background-color: rgba(32, 22, 22, .1);
+    padding: 0.2rem;
+    width: 100%;
+
+    THEAD > TR {
+        background-color: rgba(83, 43, 43, .15);
+    }
+
+    TBODY > TR > TD {
+        width: 50%;
+        INPUT {
+            width: 90%;
+            background-color: rgba(255, 255, 255, .3);
+            border: none;
+            border-bottom: 2px solid rgba(0, 0, 0, .3);
+        }
+    }
+}
+
+[role="messagesFormFieldsFooter"] {
+    display: flex;
+    padding: 1px;
+
+    &:hover {
+    }
+
+    // filtered by socket connector state type dropdown
+    SELECT[role="stateType"], SELECT[role="stateType"] OPTION {
+
+        &.default-state {
+            background-color: white;
+        }
+
+        &.invalid-state {
+            background-color: lighten(#e89e97, 10%);
+        }
+        &.valid-state {
+            background-color: lighten(#b1e17a, 10%);
+        }
+        &.unknown-state {
+            background-color: lighten(#b9bbb2, 10%);
+        }
+
+    }
+
+    [role="subformActionButtonContainer"] {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+
+        BUTTON {
+            padding: 1px;
+            border-radius: 3px;
+
+            &.subformSubmit {
+                &:hover {
+                    border-color: rgb(120, 120, 140);
+                }
+            }
+
+            &.subformUndo {
+
+            }
+
+            &:hover {
+                background-color: rgba(255, 255, 255, .5);
+            }
+            &[disabled] {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+        }
+
+        &[disabled] {
+            background-color: rgba(0, 0, 0, .2);
+        }
+    }
+
+    [role="mesasgeBroadcastStatus"] {
+        align-self: center;
+        text-align: center;
+        flex: 1;
+
+
+        .delivered {
+            color: green;
+        }
+        .undelivered {
+            color: red;
+        }
+    }
+
+}

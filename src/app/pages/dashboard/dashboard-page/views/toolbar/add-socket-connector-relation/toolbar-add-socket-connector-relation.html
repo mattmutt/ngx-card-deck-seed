@@ -1,0 +1,137 @@
+<!-- create dropdown of sockets by type, grouped by node -->
+<div *ngIf="resolvedNodeflow && resolvedNodeflow.gridStateManager.routes"
+     [formGroup]="toolbarNodeflowBehaviorActionForm">
+
+    <section role="addSocketConnectorForm">
+
+        <section>
+            Link State:
+            <select formControlName="stateType" role="stateType" [ngClass]="stateTypeClass( selectedLinkStateType)">
+                <option *ngFor="let stateType of types.stateTypeList" [ngValue]="stateType[1]"
+                        [textContent]="stateType[0]" [ngClass]="stateTypeClass(stateType[1])"></option>
+            </select>
+
+        </section>
+
+        <section>
+            Model processing
+
+            <label>
+                Clone message data:
+                <select formControlName="isProducerMessageStateCloned" role="isProducerMessageStateCloned">
+                    <option [ngValue]="false">No
+                        <ng-container *ngIf="selectedIsVerboseMode">, producer has to dispatch
+                        </ng-container>
+                    </option>
+                    <option [ngValue]="true">Yes
+                        <ng-container *ngIf="selectedIsVerboseMode">, clone on state consumer side
+                        </ng-container>
+                </select>
+            </label>
+
+        </section>
+
+        <section>
+
+            <ng-container [ngTemplateOutlet]="nodeflowSocketSelection"
+                          [ngTemplateOutletContext]="{ formGroupRef: toolbarNodeflowBehaviorActionForm, opposingSocketDirectionType: types.socketConnectorTypeMap.get('output'),
+                              socketFormControl: toolbarNodeflowBehaviorActionForm.get('producerSocket'), socketTypeLabel:'Producer: link from', socketFormControlName:'producerSocket' }"></ng-container>
+
+
+            <ng-container [ngTemplateOutlet]="nodeflowSocketSelection"
+                          [ngTemplateOutletContext]="{ formGroupRef: toolbarNodeflowBehaviorActionForm, opposingSocketDirectionType: types.socketConnectorTypeMap.get('input'),
+                              socketFormControl: toolbarNodeflowBehaviorActionForm.get('consumerSocket'), socketTypeLabel:'Consumer: link to', socketFormControlName:'consumerSocket', selectedProducerSocket: toolbarNodeflowBehaviorActionForm.get('producerSocket').value }"></ng-container>
+
+            <ul *ngIf="toolbarNodeflowBehaviorActionForm.errors" role="errorsList">
+                <ng-container
+                    *ngFor="let complexValidationError of [ toolbarNodeflowBehaviorActionForm.errors.circular_reference_connector ]">
+                    <li *ngIf="complexValidationError" [textContent]="complexValidationError.label"></li>
+                </ng-container>
+            </ul>
+
+        </section>
+
+        <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+            <div [textContent]="processingErrorMessage"></div>
+        </section>
+
+        <section>
+            <button
+                [disabled]="toolbarNodeflowBehaviorActionForm.invalid"
+                class="btn btn-primary btn-outline-warning" (click)="onAddSocketConnectorRelationEvent()"
+                title="Link two separate node sockets together">Link Connector
+            </button>
+
+            <br *ngIf="!selectedIsVerboseMode">
+
+            <label for="addSocketConnectionRelationIsVerboseMode">Verbose</label>
+            <input id="addSocketConnectionRelationIsVerboseMode" type="checkbox"
+                   role="isVerboseMode"
+                   formControlName="isVerboseMode"/>
+
+        </section>
+
+
+    </section>
+
+</div>
+
+
+<!-- template declarations -->
+
+<ng-template #nodeflowSocketSelection
+             let-formGroupRef="formGroupRef"
+             let-opposingSocketDirectionType="opposingSocketDirectionType"
+             let-socketFormControl="socketFormControl" let-socketTypeLabel="socketTypeLabel"
+             let-socketFormControlName="socketFormControlName"
+             let-selectedProducerSocket="selectedProducerSocket">
+
+    <ng-container [formGroup]="formGroupRef">
+
+        <span *ngIf="socketFormControl.value"
+              [textContent]="socketFormControl.value.view.nodeSegmentCoordinate.card.resourceId"></span>
+
+        <select [attr.role]="socketFormControlName" [formControlName]="socketFormControlName" class="socketSelection">
+            <option [ngValue]="null" [textContent]="socketTypeLabel"></option>
+
+            <ng-container
+                *ngFor="let nodeModel of nodeCollectionChange$ | async | nodeModelMessageSocketCompatible:selectedProducerSocket:opposingSocketDirectionType">
+
+                <optgroup *ngIf="showSelectListOptionGroup(nodeModel, opposingSocketDirectionType)"
+                          [attr.label]="nodeModel.id">
+
+                    <ng-container
+                        *ngFor="let socket of nodeModel.link?.getCollectionByType( opposingSocketDirectionType)">
+                        <ng-container
+                            *ngIf="{ status: !checkSocketCapabilityValidationErrors(nodeModel, socket) } as validation">
+
+                            <ng-container
+                                *ngIf="selectedIsVerboseMode || validation.status">
+
+                                <option [disabled]="!validation.status" [ngValue]="socket">
+                                    {{ socket.topic }}
+                                    <ng-container *ngIf="!validation.status">
+                                        -
+                                        <ng-container
+                                            *ngFor="let validationError of adviseSocketCapabilityValidationErrors(nodeModel, socket); let last=last">
+                                            {{ validationError.label }}
+
+                                            <ng-container *ngIf="!last"> |</ng-container>
+
+                                        </ng-container>
+                                    </ng-container>
+
+                                </option>
+                            </ng-container>
+                        </ng-container>
+
+                    </ng-container>
+
+                </optgroup>
+
+            </ng-container>
+        </select>
+    </ng-container>
+
+</ng-template>
+

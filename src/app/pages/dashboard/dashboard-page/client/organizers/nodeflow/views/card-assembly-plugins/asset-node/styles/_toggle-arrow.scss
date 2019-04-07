@@ -1,0 +1,41 @@
+@mixin toggleArrowIcon() {
+
+    // header toolbar icon to expand/shrink vertically
+    $icon-dimension: 0.7rem;
+    width: $icon-dimension;
+    height: $icon-dimension;
+    border-radius: 1rem;
+    user-select: none;
+    border: 1px solid rgba(1, 1, 1, .2);
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 1;
+        cursor: pointer;
+    }
+
+    &::before {
+        position: absolute;
+        display: inline-block;
+        font-size: $icon-dimension;
+        line-height: $icon-dimension;
+        color: rgba(0, 0, 0, .5);
+    }
+
+    &[data-minimized="true"] {
+        background-color: lighten(#f55, 10%);
+        // small
+        &::before {
+            content: "\25bc";
+        }
+    }
+    &[data-minimized="false"] {
+        // normal
+        background-color: lighten(#919fab, 10%);
+
+        &::before {
+            content: "\25b2";
+        }
+    }
+
+}

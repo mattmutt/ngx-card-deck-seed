@@ -1,0 +1,39 @@
+{
+    "asset": {
+        "arrow": {
+            "layout": {
+                "scalable": false,
+                "width": 15,
+                "height": 15
+            }
+        },
+        "socket": {
+            "layout": {
+                "size": 15,
+                "padding": 1,
+                "smallCondensingFactor": 2
+            }
+        },
+        "connector": {
+            "layout": {
+                "lineProximityThreshold": 100
+            }
+        },
+        "plug": {
+            "layout": {
+                "size": 10
+            }
+        }
+    },
+    "component": {
+        "compositor": {
+            "node": {
+            },
+            "connector": {
+            },
+            "socket": {
+                "orientation": "horizontal"
+            }
+        }
+    }
+}

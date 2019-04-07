@@ -1,0 +1,22 @@
+<section *ngIf="nodeModel.producer?.messageCollection.size">
+    <label class="pane-header"
+           [class.pane-expanded]="integrator.viewState.messagesFormCollectionPane.visible"
+           (click)="integrator.onToggleViewPane(integrator.viewState.messagesFormCollectionPane)">
+        <div class="pane-expando"></div>
+        Producer Forms
+    </label>
+
+    <section #messagesFormCollectionPane *ngIf="integrator.viewState.messagesFormCollectionPane.visible"
+             [formGroup]="integrator.simulatorProducerFormView.messagesForm"
+             role="messagesProducerTable">
+
+        <section
+            *ngFor="let messageModel of nodeModel.producer?.messageCollection | hasMessageModelState; let isLast=last"
+            role="messageModelSubformsContainer">
+
+            <nodeflow-asset-message-producer-outlet [integrator]="integrator"
+                                                    [message]="messageModel"></nodeflow-asset-message-producer-outlet>
+        </section>
+
+    </section>
+</section>

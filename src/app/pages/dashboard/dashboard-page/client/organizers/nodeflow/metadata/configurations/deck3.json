@@ -1,0 +1,286 @@
+{
+    "id": "deck3",
+    "cards": [
+        {
+            "id": "machine-learning-1",
+            "component": "card-asset-node",
+            "header": {
+                "title": "Machine Learning"
+            },
+            "layout": {
+                "x": 0,
+                "y": 4,
+                "width": 1,
+                "height": 1
+            },
+            "metadata": {
+                "provider": {
+                    "business": {
+                        "assetTypeId": "12",
+                        "catalogId": "catalogId-machine-learning-1",
+                        "layoutId": "layoutId-machine-learning-1"
+                    }
+                },
+                "model": {
+                    "producer": null,
+                    "link": {
+                        "sockets": [
+                            {
+                                "id": "machine-learning1-NAME-input",
+                                "type": "input",
+                                "topic": "name",
+                                "multicast": false
+                            }
+                        ]
+                    }
+                }
+            },
+            "templates": [
+                {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "message-layout-2",
+            "component": "card-asset-node",
+            "header": {
+                "title": "Message Layout 2"
+            },
+            "layout": {
+                "x": 2,
+                "y": 4,
+                "width": 1,
+                "height": 1
+            },
+            "metadata": {
+                "provider": {
+                    "business": {
+                        "assetTypeId": "13",
+                        "catalogId": "catalogId-message-layout-2",
+                        "layoutId": "layoutId-message-layout-2"
+                    }
+                },
+                "model": {
+                    "producer": null,
+                    "link": {
+                        "sockets": [
+                            {
+                                "id": "messageLayout2-NAME-input",
+                                "type": "input",
+                                "topic": "name",
+                                "multicast": false
+                            }
+                        ]
+                    }
+                }
+            },
+            "templates": [
+                {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "message-layout-3",
+            "component": "card-asset-node",
+            "header": {
+                "title": "Message Layout 3"
+            },
+            "layout": {
+                "x": 2,
+                "y": 1,
+                "width": 1,
+                "height": 1
+            },
+            "metadata": {
+                "provider": {
+                    "business": {
+                        "assetTypeId": "1",
+                        "catalogId": "catalogId-message-layout-3",
+                        "layoutId": "layoutId-message-layout-3"
+                    }
+                },
+                "model": {
+                    "producer": null,
+                    "link": {
+                        "sockets": [
+                            {
+                                "id": "messageLayout3-NAME-input",
+                                "type": "input",
+                                "topic": "name",
+                                "multicast": false
+                            }
+                        ]
+                    }
+                }
+            },
+            "templates": [
+                {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "message-layout-5",
+            "component": "card-asset-node",
+            "header": {
+                "title": "Message Layout 5"
+            },
+            "layout": {
+                "x": 2,
+                "y": 0,
+                "width": 1,
+                "height": 1
+            },
+            "metadata": {
+                "provider": {
+                    "business": {
+                        "assetTypeId": "1",
+                        "catalogId": "catalogId-message-layout-5",
+                        "layoutId": "layoutId-message-layout-5"
+                    }
+                },
+                "model": {
+                    "producer": null,
+                    "link": {
+                        "sockets": [
+                            {
+                                "id": "message-layout5:ABC-color",
+                                "type": "input",
+                                "topic": "color",
+                                "enabled": true,
+                                "multicast": false
+                            },
+                            {
+                                "id": "messageLayout5-NAME-input",
+                                "type": "input",
+                                "topic": "name",
+                                "multicast": false
+                            }
+                        ]
+                    }
+                }
+            },
+            "templates": [
+                {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "message-layout-4",
+            "component": "card-asset-node",
+            "header": {
+                "title": "Layout 4"
+            },
+            "layout": {
+                "x": 0,
+                "y": 2,
+                "width": 1,
+                "height": 1
+            },
+            "metadata": {
+                "provider": {
+                    "business": {
+                        "assetTypeId": "6",
+                        "catalogId": "catalogId-message-layout-4",
+                        "layoutId": "layoutId-message-layout-4"
+                    }
+                },
+                "model": {
+                    "producer": {
+                        "messages": [
+                            {
+                                "topic": "name",
+                                "form": {
+                                    "component": "leadershipForm"
+                                },
+                                "state": {
+                                    "classifier": "leadershipMessage",
+                                    "data": {
+                                        "firstName": "Dwight",
+                                        "lastName": "Smith",
+                                        "position": "General"
+                                    }
+                                }
+                            },
+                            {
+                                "topic": "temperature",
+                                "form": {
+                                    "component": "temperatureForm"
+                                },
+                                "state": {
+                                    "classifier": "thermalMonitoringMessage",
+                                    "data": {
+                                        "peakTemp": 60,
+                                        "minimumTemp": 45,
+                                        "ambientTemp": 20
+                                    }
+                                }
+                            },
+                            {
+                                "topic": "team",
+                                "form": {
+                                    "component": "teamGroupForm"
+                                },
+                                "state": {
+                                    "classifier": "teamMessage",
+                                    "data": {
+                                        "developers": 2,
+                                        "scientists": 5,
+                                        "managers": 100
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "link": {
+                        "sockets": [
+                            {
+                                "id": "message-layout4:XYZ-output",
+                                "type": "output",
+                                "multicast": true,
+                                "topic": "name",
+                                "subscribers": [
+                                    {
+                                        "id": "machine-learning-1",
+                                        "valid": true
+                                    },
+                                    {
+                                        "id": "message-layout-3",
+                                        "valid": false
+                                    },
+                                    {
+                                        "id": "message-layout-2",
+                                        "valid": null
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                }
+            },
+            "templates": [
+                {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                }
+            ]
+        }
+    ]
+}

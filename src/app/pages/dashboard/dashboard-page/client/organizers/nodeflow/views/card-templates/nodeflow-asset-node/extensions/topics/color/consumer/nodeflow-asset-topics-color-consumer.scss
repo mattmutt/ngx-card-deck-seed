@@ -1,0 +1,22 @@
+
+:host {
+    display: block;
+
+}
+
+[role="canvas"] {
+    $dimension: 100px;
+
+    width: $dimension;
+    height: $dimension;
+
+    padding: 2px;
+    margin: 0 auto;
+    display: block;
+}
+
+
+[role="invalidMessageData"] {
+    background: rgba(255,1,1,.2);
+
+}

@@ -1,0 +1,36 @@
+<section *ngIf="initialDataModelResponse$ | async" role="asset-node-widget">
+
+    <ng-container *ngIf="cardMetadata.assetType; else missingCardMetadata">
+        <ng-template [ngTemplateOutlet]="positionBasedTemplateMap.body['nodePresentation']"
+                     [ngTemplateOutletContext]="{ library: library, metricEntity: metricEntity, cardMetadata: cardMetadata }"></ng-template>
+    </ng-container>
+
+</section>
+
+<!-- ============= standard template framework for node card ================= -->
+
+<ng-template #defaultHeaderTemplate let-fieldMetadata="fieldMetadata">
+    <!--
+    <span [textContent]="library.alias.cardI18n[fieldMetadata.text.header.key]"
+          [title]="library.alias.cardI18n[fieldMetadata.text.header.key]"></span>
+          -->
+    header def
+</ng-template>
+
+<ng-template #missingCardMetadata>
+    AssetTypeId error:
+    <span [textContent]="cardMetadata.businessProvider.assetTypeId"></span>
+</ng-template>
+
+
+<!-- ============= extension points template framework for node card ================= -->
+<ng-container [ngIf]="isTemplatePhaseReady"
+              *ngComponentOutlet="templatableComponentClass; ngModuleFactory: templatableModuleFactory"></ng-container>
+
+<!-- after standard header content -->
+<ng-template #headerSection>
+    <div (click)="collapsibleCardWindowProvider.onToggleCardRollup($event)" role="cardRollupAction"
+         [hidden]="!collapsibleCardWindowProvider.isIconVisible"
+         [attr.data-minimized]="collapsibleCardWindowProvider.cardWindowRollupState"></div>
+</ng-template>
+

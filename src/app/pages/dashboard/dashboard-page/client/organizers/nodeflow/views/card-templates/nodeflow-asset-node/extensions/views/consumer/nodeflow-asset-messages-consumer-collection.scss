@@ -1,0 +1,72 @@
+
+:host {
+
+}
+
+/*
+ * present incoming message / socket details
+ */
+[role="messagesConsumerTable"] {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    flex-wrap: wrap;
+    background-color: rgba(33, 143, 43, .08);
+
+    > * {
+        flex: 1;
+    }
+
+    TABLE[role="messageMetadataGrid"] {
+
+        TBODY > TR > TH {
+            background-color: rgba(88, 88, 88, .1);
+            text-align: left;
+        }
+
+        TBODY > TR > TD {
+            // background-color: rgba(188,88,88, .1);
+            padding: 0 5px;
+
+            &.wrap-identifier {
+                word-break: break-all;
+            }
+
+        }
+
+    }
+
+    [role="messageConsumer"] {
+        padding: 3px;
+        margin: 3px;
+        border: 1px solid rgba(88, 88, 88, .5);
+    }
+
+    [role="messageModelTopicLabel"] {
+        text-align: center;
+    }
+
+    [role="messageModelStateClassifier"] {
+        font-weight: normal;
+        text-align: center;
+        &::before {
+            content: "\00ab";
+        }
+        &::after {
+            content: "\00bb";
+        }
+    }
+
+    // individual subforms per message extracted from node collection
+    [role="messageModelSubform"] {
+        border: 2px rgba(1, 1, 1, .2) solid;
+        margin: 3px;
+        padding: 3px;
+
+        &:hover {
+            // emphasis while focused
+            background-color: rgba(83, 43, 143, .1);
+        }
+    }
+
+}

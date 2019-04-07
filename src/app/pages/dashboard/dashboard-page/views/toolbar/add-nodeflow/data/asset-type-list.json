@@ -1,0 +1,128 @@
+[
+    {
+        "assetTypeId": "1",
+        "iconDecoratorClass": "symbol1",
+        "localization": {
+            "name": {
+                "text": "Message Layout"
+            }
+        }
+    },
+    {
+        "assetTypeId": "5",
+        "iconDecoratorClass": "symbol105",
+        "localization": {
+            "name": {
+                "text": "Security Monitor"
+            }
+        }
+    },
+    {
+        "assetTypeId": "6",
+        "iconDecoratorClass": "symbol6",
+        "localization": {
+            "name": {
+                "text": "Workflow"
+            }
+        }
+    },
+    {
+        "assetTypeId": "8",
+        "iconDecoratorClass": "symbol8",
+        "localization": {
+            "name": {
+                "text": "Streamed Event"
+            }
+        }
+    },
+    {
+        "assetTypeId": "9",
+        "iconDecoratorClass": "symbol9",
+        "localization": {
+            "name": {
+                "text": "Remote Node"
+            }
+        }
+    },
+    {
+        "assetTypeId": "11",
+        "iconDecoratorClass": "symbol11",
+        "localization": {
+            "name": {
+                "text": "Data Layout"
+            }
+        }
+    },
+    {
+        "assetTypeId": "12",
+        "iconDecoratorClass": "symbol12",
+        "localization": {
+            "name": {
+                "text": "Machine Learning"
+            }
+        }
+    },
+    {
+        "assetTypeId": "13",
+        "iconDecoratorClass": "symbol13",
+        "localization": {
+            "name": {
+                "text": "Microservice"
+            }
+        }
+    },
+    {
+        "assetTypeId": "14",
+        "iconDecoratorClass": "symbol14",
+        "localization": {
+            "name": {
+                "text": "Automation Trigger"
+            }
+        }
+    },
+    {
+        "assetTypeId": "15",
+        "iconDecoratorClass": "symbol15",
+        "localization": {
+            "name": {
+                "text": "Inbound Stream"
+            }
+        }
+    },
+    {
+        "assetTypeId": "16",
+        "iconDecoratorClass": "symbol16",
+        "localization": {
+            "name": {
+                "text": "Inventory Add"
+            }
+        }
+    },
+    {
+        "assetTypeId": "17",
+        "iconDecoratorClass": "symbol17",
+        "localization": {
+            "name": {
+                "text": "Manufacturing Assist"
+            }
+        }
+    },
+    {
+        "assetTypeId": "18",
+        "iconDecoratorClass": "symbol18",
+        "localization": {
+            "name": {
+                "text": "Operations Checkpoint"
+            }
+        }
+    },
+    {
+        "assetTypeId": "19",
+        "iconDecoratorClass": "symbol5",
+        "localization": {
+            "name": {
+                "text": "Accounting Flow"
+            }
+        }
+    }
+]

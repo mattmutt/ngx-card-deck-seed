@@ -1,0 +1,162 @@
+<svg:svg #svgCanvasHandle role="canvas" xmlns="http://www.w3.org/2000/svg">
+
+    <svg:g #svgCanvasTransformerGroup role="canvasTransformerGroup" [attr.transform]="deriveViewportOffsetTransform()"
+           [class.smallZoomLevel]="zoomLevel <= .5">
+
+        <ng-container *ngIf="pageComponent.gridLayoutItemsInitialize$ | async">
+
+            <!--
+            <svg:defs> </svg:defs>
+
+        <svg:rect
+            class="panning-rect"
+            [attr.width]="dims.width * 100"
+            [attr.height]="dims.height * 100"
+            [attr.transform]="'translate(' + ((-dims.width || 0) * 50) +',' + ((-dims.height || 0) *50) + ')' "
+            (mousedown)="isPanning = true"/>
+            -->
+
+            <svg:g class="links">
+                <svg:g
+                    *ngFor="let socketConnectorRelation of gridStateManager.routes.socketConnectorRelationList; trackBy: trackConnectorBy">
+
+                    <ng-container [ngTemplateOutlet]="linkConnectorTemplate"
+                                  [ngTemplateOutletContext]="{ $implicit: socketConnectorRelation }"></ng-container>
+                </svg:g>
+            </svg:g>
+
+
+            <svg:g class="sockets">
+                <svg:g
+                    *ngFor="let nodeModel of gridStateManager.nodeList; trackBy: trackNodeBy">
+                    <ng-container [ngTemplateOutlet]="nodeTemplate"
+                                  [ngTemplateOutletContext]="{ $implicit: nodeModel }"></ng-container>
+                </svg:g>
+            </svg:g>
+
+
+        </ng-container>
+    </svg:g>
+</svg:svg>
+
+
+<ng-template #linkConnectorTemplate let-socketConnectorRelation>
+
+    <svg:g (click)="onConnectorRelationPathClickEvent(socketConnectorRelation)" role="segmentConnectorPathGroup"
+           [ngClass]="styleConnectorRelationClasses(socketConnectorRelation)">
+
+
+        <svg:path #linkPathSVG
+                  [attr.d]="socketConnectorRelation.view.nodeSegmentConnector.geometry.path"
+                  [attr.stroke-width]="filterScalarPoint(5, false)"
+                  class="stroked"/>
+
+
+        <svg:g (click)="onConnectorRelationArrowClickEvent(socketConnectorRelation)"
+               role="segmentConnectorArrowVectorGroup"
+               [attr.transform]="shapeLibrary.transformConnectorArrowCentroid( socketConnectorRelation.view.nodeSegmentConnector, linkPathSVG)">
+
+            <svg:polygon (mouseenter)="onConnectorRelationArrowMouseEnterEvent(socketConnectorRelation, $event)"
+                         (mouseleave)="onConnectorRelationArrowMouseLeaveEvent(socketConnectorRelation, $event)"
+                         [attr.points]="shapeLibrary.drawConnectorArrowPoints()"
+                         [attr.transform]="shapeLibrary.transformConnectorArrowRotation( socketConnectorRelation.view.nodeSegmentConnector, linkPathSVG)"
+                         [attr.stroke-width]="filterScalarPoint(1, false)"
+                         class="segmentConnectorArrow"/>
+
+        </svg:g>
+
+
+        <svg:path [attr.d]="socketConnectorRelation.view.nodeSegmentConnector.geometry.path"
+                  [attr.stroke-width]="filterScalarPoint(3, false)"/>
+
+
+    </svg:g>
+
+
+</ng-template>
+
+
+<ng-template #nodeTemplate let-nodeModel>
+
+    <ng-container *ngIf="nodeModel.link">
+        <svg:g *ngFor="let socketTypeCollection of nodeModel.link.managedCollections; index as socketType">
+
+            <svg:path
+                *ngFor="let nodeSocket of socketTypeCollection | orderedSocketList; index as order; trackBy: trackSocketBy; count as size;"
+                role="nodeSocket"
+                (mousedown)="onSocketConnectorDragStartEvent(nodeSocket, nodeModel, $event)"
+                (mouseenter)="onSocketConnectorMouseEnterEvent(nodeSocket, nodeModel, $event)"
+                (mouseleave)="onSocketConnectorMouseLeaveEvent(nodeSocket, nodeModel, $event)"
+                [attr.d]="drawNodeSocketPath(nodeSocket, nodeModel, order, size)"
+                [ngClass]="styleNodeSocketClasses(nodeSocket, nodeModel)"/>
+
+            <!--(mouseleave)="onSocketConnectorMouseLeaveEvent(nodeSocket, nodeModel, $event)"-->
+
+        </svg:g>
+    </ng-container>
+
+
+</ng-template>
+
+
+<ng-template #gridItemMenuOverlayTemplate>
+
+    <nodeflow-studio-menu-overlay>
+        <!--
+        <div> Grid Item Menu</div>
+        <div class="me">special</div>
+
+        <div>
+            Node/Grid Item name: ........
+        </div>
+        -->
+    </nodeflow-studio-menu-overlay>
+
+</ng-template>
+
+<ng-template #segmentConnectorMenuOverlayTemplate>
+
+    <nodeflow-studio-menu-overlay>
+        <!--
+        <div> Connector Menu</div>
+        <div class="me">special</div>
+
+        <div>
+            node path info: ........
+        </div>
+        -->
+    </nodeflow-studio-menu-overlay>
+
+
+</ng-template>
+
+<ng-template #socketConnectorMenuOverlayTemplate>
+    <!--
+    <div> Socket Menu</div>
+
+    <div>
+        socket info: ...
+    </div>
+    -->
+</ng-template>
+
+
+<ng-template #socketConnectorTooltipTemplate>
+
+    <nodeflow-studio-tooltip-overlay [socket]="visibleTooltipContext.socket"
+                                     [node]="visibleTooltipContext.node"
+                                     [triggerElement]="visibleTooltipContext.triggerElement"
+                                     [overlayCommand]="visibleNotificationContext.overlayCommand"></nodeflow-studio-tooltip-overlay>
+
+</ng-template>
+
+
+<ng-template #canvasCardParseErrorOverlayTemplate>
+
+    <nodeflow-studio-notification-overlay [messages]="visibleNotificationContext.messages"
+                                          [overlayCommand]="visibleNotificationContext.overlayCommand">
+        <div role="title">Card Parse Exceptions</div>
+    </nodeflow-studio-notification-overlay>
+
+</ng-template>
+

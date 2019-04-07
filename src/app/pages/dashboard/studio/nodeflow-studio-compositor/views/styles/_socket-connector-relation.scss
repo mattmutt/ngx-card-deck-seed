@@ -1,0 +1,231 @@
+$connector-default-stroke-color: #fff;
+$connector-valid-stroke-color: #00cc00;
+$connector-invalid-stroke-color: #ff3333;
+$connector-unknown-stroke-color: #ddddcc;
+$connector-outline-stroke-color: #000000;
+
+.segmentConnectorEdgeSocket {
+
+    stroke-width: 3px;
+    paint-order: stroke;
+
+    &:hover {
+        cursor: move;
+        stroke: rgba(0, 0, 0, .5);
+    }
+
+    &.segmentConnectorOutput {
+        fill: rgb(158, 78, 58);
+        &:hover {
+            fill: lighten(rgb(158, 78, 58), 10%);
+        }
+    }
+
+    &.segmentConnectorInput {
+        fill: rgb(58, 178, 158);
+
+        &:hover {
+            fill: lighten(rgb(58, 178, 158), 10%);
+        }
+
+    }
+
+}
+
+// rectangle button on the midpoint of the segment connector
+.segmentConnectorButton {
+    stroke-width: 2px;
+    stroke: rgba(94, 12, 2, .8);
+    fill: rgba(244, 182, 22, .5);
+    cursor: pointer;
+
+    &:hover {
+        fill: rgba(244, 182, 22, .9);
+    }
+
+    &:active {
+        fill: rgba(0, 0, 0, .4);
+    }
+}
+
+// path edge
+[role="segmentConnectorPathGroup"] {
+
+    // apply color fill to arrow vector
+    @mixin applyColorToArrow($fillColor) {
+        [role="segmentConnectorArrowVectorGroup"] {
+            // *** warning: pipe has NO white surrounding it
+        > svg|polygon:last-of-type {
+            fill: $fillColor;
+        }
+        }
+    }
+
+    // color the connector segment path
+    @mixin applyColorToSegment($fillColor) {
+        // *** warning: pipe has NO white surrounding it
+    > svg|path:last-of-type {
+        stroke: $fillColor;
+    }
+    }
+
+    // *** warning: pipe has NO white surrounding it
+> svg|path { // XML case sensitive per spec
+    stroke: $connector-default-stroke-color;
+    fill: none;
+
+    &.stroked {
+        // visual contrast since connector is colored
+        stroke: $connector-outline-stroke-color;
+    }
+
+    &:hover {
+
+    }
+
+    .smallZoomLevel & {
+        // too hard for visualizing
+        &:first-of-type {
+        }
+    }
+
+}
+
+    // ~~~~~~~~ user interaction states ~~~~~~~~~~~
+
+    // ======= messaging ===========
+    &.messaging-none {
+
+    }
+
+    &.messaging-connect {
+        > svg|path {
+            stroke: rgba(255, 255, 255, .2);
+            stroke-width: 3px;
+        }
+
+       [role="segmentConnectorArrowVectorGroup"] {
+            display: none;
+       }
+
+
+    }
+
+    // delivering data structure to consumer
+    &.messaging-transmit {
+
+        > svg|path {
+            stroke-dasharray: 20;
+            stroke-dashoffset: 20;
+            stroke: rgba(255, 255, 255, .8);
+            animation: segmentConnectorPathGroup-path-messaging-complete 20s linear reverse infinite;
+
+            @keyframes segmentConnectorPathGroup-path-messaging-complete {
+                from {
+                    stroke-dashoffset: 1000;
+                }
+                to {
+                    stroke-dashoffset: 0;
+                }
+            }
+
+        }
+
+        [role="segmentConnectorArrowVectorGroup"] {
+            display: none;
+        }
+
+
+    }
+
+    &.messaging-error {
+
+    }
+
+
+    // ======= moving ===========
+    &.moving-none {
+
+    }
+
+    // UX affordance that the path segment can be reassigned ( by connecting it to some other node )
+    &.moving-before {
+        // *** warning: pipe has NO white surrounding it
+
+    > svg|path {
+        // transition looks modern
+        stroke: rgba(255,255,255,.5);
+        animation: segmentConnectorPathGroup-path-moving-before 3s linear alternate infinite;
+        }
+
+        @keyframes segmentConnectorPathGroup-path-moving-before {
+            from {
+            }
+            to {
+                stroke-width: 7px;
+            }
+        }
+
+    }
+    &.moving-active {
+
+    }
+    &.moving-after {
+
+    }
+
+    // ======= link state type ===========
+    // link validation
+    // ports on both ends verified for availability ( by backend )
+    &.link-valid {
+        @include applyColorToSegment($connector-valid-stroke-color);
+        @include applyColorToArrow($connector-valid-stroke-color);
+    }
+    // either or both ports are incapable of pass/receiving the message
+    &.link-invalid {
+        @include applyColorToSegment($connector-invalid-stroke-color);
+        @include applyColorToArrow($connector-invalid-stroke-color);
+    }
+    // indeterminate link state. Defer to server validation for the time being
+    &.link-unknown {
+        // *** warning: pipe has NO white surrounding it
+    > svg|path {
+        &:first-of-type {
+            stroke: darken($connector-unknown-stroke-color, 30%);
+        }
+        &:last-of-type {
+            stroke: $connector-unknown-stroke-color;
+            stroke-dasharray: 10, 10;
+        }
+    } @include applyColorToArrow($connector-unknown-stroke-color);
+
+
+      // unknown connector - treatment
+      &.moving-before {
+        > svg|path {
+          &:first-of-type {
+              // transition looks modern
+              stroke: rgba(255, 255, 255, .2);
+          }
+          &:last-of-type {
+              stroke: $connector-unknown-stroke-color;
+          }
+        }
+      }
+
+
+    }
+
+}
+
+@import "arrow";
+
+@keyframes dash {
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+

@@ -1,0 +1,88 @@
+<div *ngIf="resolvedNodeflow && resolvedNodeflow.gridStateManager.routes"
+     [formGroup]="toolbarNodeflowBehaviorActionForm">
+
+    <section role="serializeModelForm">
+
+        <section *ngIf="availableSerializedDocumentList.length">
+
+            <select role="serializedDocumentEntityReference" formControlName="serializedDocumentEntityReference">
+
+                <option [ngValue]="null">Document:
+                    <ng-container *ngIf="availableSerializedDocumentList.length > 1">
+                        Count {{ availableSerializedDocumentList.length }}
+                    </ng-container>
+                </option>
+
+                <ng-container
+                    *ngFor="let doc of availableSerializedDocumentList ">
+
+                    <optgroup
+                        [attr.label]="packagingFormatLabelMap.get(doc.packagingFormatType) + ' | ' + formatShortDateTime( doc.createdDate)">
+                        <option [ngValue]="doc" [textContent]="doc.documentId"></option>
+                    </optgroup>
+
+                </ng-container>
+            </select>
+        </section>
+
+        <section
+            *ngIf="selectedSerializedDocumentEntityReference && selectedSerializedDocumentEntityReference.document">
+
+            <small>
+                {{ selectedSerializedDocumentEntityReference.filename }}
+                :
+                {{ calculateContentSize( selectedSerializedDocumentEntityReference.document?.content) }}
+            </small>
+
+            <textarea role="serializedDocumentContent"
+                      [textContent]="selectedSerializedDocumentEntityReference.document?.content"></textarea>
+
+        </section>
+
+        <section>
+
+            <label>
+                <input type="text" role="newDocumentIdentifier" formControlName="newDocumentIdentifier"
+                       placeholder="Project tag ID"/>
+            </label>
+
+        </section>
+
+        <section>
+
+            <div role="packagingFormatType">
+                Format:
+                <label>
+                    <ng-container *ngFor="let packagingFormatType of packagingFormatTypeList">
+                        <input formControlName="packagingFormatType" type="radio"
+                               [attr.id]="'packagingFormatType' + packagingFormatType[1]"
+                               [value]="packagingFormatType[1]"/>
+                        <label [attr.for]="'packagingFormatType' + packagingFormatType[1]"
+                               [textContent]="packagingFormatLabelMap.get( packagingFormatType[1])"></label>
+                    </ng-container>
+                </label>
+            </div>
+
+        </section>
+
+
+        <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+            <div [textContent]="processingErrorMessage"></div>
+        </section>
+
+        <section>
+
+            <button
+                [disabled]="toolbarNodeflowBehaviorActionForm.invalid"
+                class="btn btn-primary btn-outline-warning" (click)="onSerializeNodeflowProjectModelEvent()"
+                title="Serializes current model layout">Serialize State
+            </button>
+
+            <label for="serializeModelIsVerboseMode">Verbose</label>
+            <input id="serializeModelIsVerboseMode" type="checkbox" role="isVerboseMode"
+                   formControlName="isVerboseMode"/>
+        </section>
+
+    </section>
+
+</div>

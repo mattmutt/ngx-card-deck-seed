@@ -12,10 +12,12 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { DemoDashboardRoutingModule } from "./demo-dashboard-routing.module";
 import { DemoDashboardComponent } from "./demo-dashboard.component";
 import { DemoDashboardPageViewportPanService } from "./dashboard-page/demo-dashboard-page-viewport-pan.service";
+import { NodeflowStudioCompositorModule } from "./studio/nodeflow-studio-compositor/nodeflow-studio-compositor.module";
 import { DashboardModule } from "ngx-card-deck";
 import { ModuleIntegrationTokenBase, PlatformCommunicatorBase } from "ngx-card-deck";
 import { DeploymentConfigurationBase, GlobalStateBase } from "ngx-card-deck";
 import { DemoDashboardTransactionAgentService } from "./dashboard-page/demo-dashboard-transaction-agent.service";
+import { ToolbarNodeflowActionModule } from "./dashboard-page/views/toolbar/toolbar-nodeflow-action.module";
 
 @NgModule({
 
@@ -26,6 +28,8 @@ import { DemoDashboardTransactionAgentService } from "./dashboard-page/demo-dash
         DemoDashboardRoutingModule,
         DemoDashboardOutletSharedProviderModule,
         DashboardModule,
+        NodeflowStudioCompositorModule,
+        ToolbarNodeflowActionModule
     ],
 
     providers: [

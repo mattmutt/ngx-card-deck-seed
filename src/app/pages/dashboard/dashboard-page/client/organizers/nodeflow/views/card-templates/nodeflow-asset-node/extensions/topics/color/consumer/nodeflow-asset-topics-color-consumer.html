@@ -1,0 +1,37 @@
+<ng-container *ngIf="resourceState.socketConnectorRelation.deliveryMessagePublished$ | async; let deliveryMessage">
+
+    Color Streaming
+    <ng-container *ngIf="validateMessageData(deliveryMessage.payload.data); else invalidMessageData">
+
+
+        <b [textContent]="deliveryMessage.payload.classifier"></b>
+
+        <svg:svg role="canvas" xmlns="http://www.w3.org/2000/svg">
+            <svg:circle cx="50" cy="50" r="50"
+                        stroke-width="3"
+                        [attr.fill]="calculateFillColor(deliveryMessage.payload.data)"
+                        [attr.stroke]="calculateStrokeColor(deliveryMessage.payload.data)"/>
+        </svg:svg>
+        <section>
+            <table>
+                <tr>
+                    <td>
+                        color
+                    </td>
+                    <td>
+                        {{ showMessageData(deliveryMessage.payload.data) }}
+                    </td>
+                </tr>
+            </table>
+
+        </section>
+    </ng-container>
+
+    <ng-template #invalidMessageData>
+        <section role="invalidMessageData">
+            Invalid color:
+            {{ deliveryMessage.payload.data | json }}
+        </section>
+    </ng-template>
+
+</ng-container>

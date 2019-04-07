@@ -24,6 +24,7 @@ export interface DemoDashboardVendorClassificationMap extends VendorClassificati
     0: DemoDashboardVendorClassificationItem;
     1: DemoDashboardVendorClassificationItem;
     2: DemoDashboardVendorClassificationItem;
+    nodeflow_sample: DemoDashboardVendorClassificationItem;
 
     [identifier: string]: DemoDashboardVendorClassificationItem;
 }

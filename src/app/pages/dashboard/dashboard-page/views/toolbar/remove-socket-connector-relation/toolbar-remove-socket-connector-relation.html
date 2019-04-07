@@ -1,0 +1,177 @@
+<div *ngIf="resolvedNodeflow && resolvedNodeflow.gridStateManager.routes"
+     [formGroup]="toolbarNodeflowBehaviorActionForm">
+
+    <section role="removeSocketConnectorForm">
+
+
+        <section *ngIf="selectedIsVerboseMode">
+            Message Route Relation collection:
+
+            <div *ngIf="selectedRouteRelation">
+                <div>Producer edge:</div>
+
+                <ng-container *ngIf="selectedRouteRelation.connectors.size > 1">
+                    Part of {{ selectedRouteRelation.connectors.size }}-way multicast set
+                </ng-container>
+                <ng-container *ngIf="selectedRouteRelation.connectors.size === 1">
+                    Single item ( last remaining ) in set
+                </ng-container>
+
+            </div>
+            <div *ngIf="!selectedRouteRelation">
+                (unselected)
+            </div>
+
+        </section>
+
+
+        <section>
+            Link State:
+            <select formControlName="stateType" role="stateType" [ngClass]="stateTypeClass( selectedLinkStateType)">
+                <option [ngValue]="null" class="default-state">any</option>
+                <option *ngFor="let stateType of types.stateTypeList" [ngValue]="stateType[1]"
+                        [textContent]="stateType[0]" [ngClass]="stateTypeClass(stateType[1])"></option>
+            </select>
+        </section>
+
+        <section>
+            Model processing (Empty route relation):
+            <select formControlName="isEmptyRouteRelationModelDereference" role="isEmptyRouteRelationModelDereference">
+                <option [ngValue]="false">No
+                    <ng-container *ngIf="selectedIsVerboseMode">, keep the empty collection</ng-container>
+                </option>
+                <option [ngValue]="true">Yes
+                    <ng-container *ngIf="selectedIsVerboseMode">, destroy collection and dereference</ng-container>
+                </option>
+            </select>
+        </section>
+
+
+        <section>
+
+            <!--
+            <select formControlName="socketConnectorType" role="socketConnectorType">
+                <option *ngFor="let socketConnectorType of types.socketConnectorTypeList"
+                        [ngValue]="socketConnectorType[1]" [textContent]="socketConnectorType[0]"></option>
+            </select>
+            -->
+
+
+            <div role="socketConnectorType">
+                Grouped by:
+                <ng-container *ngFor="let socketConnectorType of types.socketConnectorTypeList">
+                    <input type="radio"
+                           [attr.id]="'socketConnectorType' + socketConnectorType[1]"
+                           formControlName="socketConnectorType"
+                           [value]="socketConnectorType[1]"/>
+                    <label [attr.for]="'socketConnectorType' + socketConnectorType[1]">
+
+                        {{ socketConnectorType[0] }}
+                    </label>
+                </ng-container>
+            </div>
+
+        </section>
+
+        <section>
+
+            <div
+                *ngIf="toolbarNodeflowBehaviorActionForm.get('socketConnectorRelation').value as selectedSocketConnectorRelation">
+                {{ selectedSocketConnectorRelation.view.nodeSegmentConnector.start.card.resourceId }}
+            </div>
+
+            <select role="socketConnectorRelation" formControlName="socketConnectorRelation"
+                    class="socketConnectorRelationSelection">
+                <option [ngValue]="null"> Link connector: Count
+                    (
+                    {{ (socketConnectorRelationModelCollection$ | async |
+                    socketConnectorRelationStateFilter:selectedLinkStateType)?.length }}
+                    )
+                </option>
+
+                <ng-container
+                    *ngFor="let nodeToSocketConnectorRelation of socketConnectorRelationModelCollection$ | async | socketConnectorRelationStateFilter: selectedLinkStateType | composeNodeToSocketConnectorRelation: selectedSocketConnectorType">
+
+                    <optgroup [attr.label]="nodeToSocketConnectorRelation.node.id">
+
+
+                        <ng-container
+                            *ngFor="let socketConnectorRelation of nodeToSocketConnectorRelation.socketConnectorRelationCollection">
+
+                            <option [ngValue]="socketConnectorRelation">
+
+                                <ng-container *ngIf="!selectedIsVerboseMode">
+
+                                    {{ socketConnectorRelation.producer.topic }}
+
+                                    <!-- directional perspective (show opposing resource) -->
+                                    <ng-container
+                                        *ngIf="selectedSocketConnectorType === types.socketConnectorTypeEnum.input">
+                                        <-
+                                        {{ socketConnectorRelation.producer.view.nodeSegmentCoordinate.card
+                                        .resourceId }}
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="selectedSocketConnectorType === types.socketConnectorTypeEnum.output">
+                                        ->
+                                        {{ socketConnectorRelation.consumer.view.nodeSegmentCoordinate.card
+                                        .resourceId }}
+                                    </ng-container>
+
+                                </ng-container>
+
+
+                                <ng-container
+                                    *ngIf="selectedIsVerboseMode">
+
+                                    <ng-container
+                                        *ngIf="selectedSocketConnectorType === types.socketConnectorTypeEnum.input">
+                                        {{ socketConnectorRelation.consumer.id }}
+                                        <-
+                                        {{ socketConnectorRelation.producer.id }}
+                                    </ng-container>
+                                    <ng-container
+                                        *ngIf="selectedSocketConnectorType === types.socketConnectorTypeEnum.output">
+                                        {{ socketConnectorRelation.producer.id }}
+                                        ->
+                                        {{ socketConnectorRelation.consumer.id }}
+                                    </ng-container>
+
+
+                                    : ({{ types.stateTypeEnum[ socketConnectorRelation.state] }})
+                                </ng-container>
+
+
+                            </option>
+                        </ng-container>
+
+
+                    </optgroup>
+
+                </ng-container>
+            </select>
+
+        </section>
+
+        <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+            <div [textContent]="processingErrorMessage"></div>
+        </section>
+
+        <section>
+            <button
+                [disabled]="toolbarNodeflowBehaviorActionForm.invalid"
+                class="btn btn-primary btn-outline-warning" (click)="onRemoveSocketConnectorRelationEvent()"
+                title="Destroy a functioning link between two nodes">Unlink Connector
+            </button>
+            <br *ngIf="!selectedIsVerboseMode">
+
+            <label for="removeSocketConnectionRelationIsVerboseMode">Verbose</label>
+            <input id="removeSocketConnectionRelationIsVerboseMode" type="checkbox"
+                   role="isVerboseMode"
+                   formControlName="isVerboseMode"/>
+
+        </section>
+
+    </section>
+
+</div>

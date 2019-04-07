@@ -152,7 +152,8 @@
                 "ui",
                 "demo",
                 "dash",
-                "gridster"
+                "gridster",
+                "nodeflow"
             ],
             "kebab-case"
         ],

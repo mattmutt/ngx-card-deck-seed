@@ -1,0 +1,14 @@
+<section>
+
+    <ul>
+        <li>Type: <span [textContent]="displaySocketConnectorType(socket?.type)"></span></li>
+        <li>Topic: <span [textContent]="socket.topic"></span></li>
+        <li>Node: <span [textContent]="socket.view.nodeSegmentCoordinate.card.resourceId"></span></li>
+        <li>Socket: <span [textContent]="socket.id"></span></li>
+        <li>Multicast: <span [textContent]="socket.multicast"></span></li>
+        <li>Connected: <span [textContent]="isSocketConnectorEstablished"></span></li>
+    </ul>
+
+    <ng-content></ng-content>
+
+</section>

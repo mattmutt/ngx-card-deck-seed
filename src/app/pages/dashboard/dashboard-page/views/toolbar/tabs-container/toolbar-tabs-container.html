@@ -1,0 +1,32 @@
+
+
+<!-- create document format snapshot of current model -->
+<nodeflow-toolbar-serialize-model
+    [nodeflow]="nodeflow"
+    [toolbarForm]="toolbarForm"
+    role="serializeModelForm"></nodeflow-toolbar-serialize-model>
+
+<!-- add a new node item -->
+<nodeflow-toolbar-add-nodeflow
+    [nodeflow]="nodeflow"
+    [toolbarForm]="toolbarForm"
+    role="newNodeflowAssetForm"></nodeflow-toolbar-add-nodeflow>
+
+<!-- remove a new node item -->
+<nodeflow-toolbar-remove-nodeflow
+    [nodeflow]="nodeflow"
+    [toolbarForm]="toolbarForm"
+    role="removeNodeflowAssetForm"></nodeflow-toolbar-remove-nodeflow>
+
+<!-- add a link relation between a pair of existing sockets -->
+<nodeflow-toolbar-add-socket-connector-relation
+    [nodeflow]="nodeflow"
+    [toolbarForm]="toolbarForm"
+    role="addSocketConnectorRelationForm"></nodeflow-toolbar-add-socket-connector-relation>
+
+<!-- remove a link relation between a pair of existing sockets -->
+<nodeflow-toolbar-remove-socket-connector-relation
+    [nodeflow]="nodeflow"
+    [toolbarForm]="toolbarForm"
+    role="removeSocketConnectorRelationForm"></nodeflow-toolbar-remove-socket-connector-relation>
+

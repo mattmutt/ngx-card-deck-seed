@@ -1,0 +1,101 @@
+@import "~ngx-card-deck/styles/theme";
+@import "./styles/toggle-arrow";
+
+$componentType: "card-asset-node";
+
+%filled-layout {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@mixin box-outline($size, $color, $alpha) {
+    box-shadow: 0 0 0px $size rgba($color, $alpha);
+}
+
+:host {
+    @import "../../../../../common/standard/card-outlet/card-assembly-plugins/base/styles/standard-card-assembly-plugin-base";
+
+    // slightly darker
+    background: rgba(0,0,0,.2);
+
+    //$node-background-color: #fff;
+    //$node-background-shade: darken($node-background-color, 20%);
+
+    /*
+    background: linear-gradient(180deg,
+        $node-background-color 0,
+        $node-background-shade 2rem,
+        $node-background-shade 20%,
+        $node-background-color 100%
+    );
+    */
+
+    > [role="asset-node-widget"] {
+
+        // /++++++ RWD +++++++
+        @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+            // flex-wrap: nowrap;
+        }
+        // ++++++ RWD +++++++
+
+    }
+
+}
+
+// highlight grid item with a defined shadow
+@include selectGridLayoutItemByComponentType("*", $componentType) {
+    //border: 2px solid red;
+    box-sizing: content-box;
+
+    $focused-selecting-background-color: #09f; // theme needed
+    $transition-selecting-duration: 0ms;
+
+    &.selectingState- {
+        // do override transition to preserve gridster
+
+        &none {
+        }
+
+        &focused {
+            // transition: $transition-selecting-duration border;
+            animation: nodeflowAssetGlowingFadeInOut 2s alternate-reverse infinite;
+            outline: 1px dashed rgba(#000, 0.7);
+            outline-offset: -1px;
+
+            @keyframes nodeflowAssetGlowingFadeInOut {
+
+                0% {
+                    @include box-outline(10px, $focused-selecting-background-color, 0.3);
+                }
+                50%, 100% {
+                    @include box-outline(3px, $focused-selecting-background-color, 1);
+                }
+
+            }
+
+        }
+
+    }
+}
+
+// blueprint for all node template instances
+@include selectCardLayoutAspectByComponentType("*", "card-asset-node", "header") {
+    padding: .125rem .25rem;
+    font-size: 12pt;
+    line-height: normal;
+
+    [role="cardRollupAction"] {
+        @include toggleArrowIcon();
+    }
+
+}
+
+@include selectCardLayoutAspectByComponentType("*", "card-asset-node", "body") {
+    padding: 0;
+}
+
+

@@ -6,6 +6,8 @@ export enum StandardDashboardOrganizerPackageEnumeration {
 
    // enhanced projects to showcase the power of the dashboard engine
 
+   // represents the APIs and services to render a node flow based rendering toolkit
+   nodeflow = 1000
 }
 
 

@@ -11,9 +11,14 @@ import { DemoDashboardOrganizerPackageEnumeration } from './demo-dashboard-organ
 import { demoDashboardVendorClassificationMap } from "./demo-dashboard-vendor-classification.class";
 import { DemoClientMetricsBillboardTemplateComponent } from "../../client/common/com.company.sample1/views/card-templates/components/demo-client-metrics-billboard/demo-client-metrics-billboard-template.component";
 import { DemoClientSummaryBillboardTemplateComponent } from "../../client/common/com.company.sample1/views/card-templates/components/demo-client-summary-billboard/demo-client-summary-billboard-template.component";
+import { NodeflowAssetNodeTemplateComponent } from "../../client/organizers/nodeflow/views/card-templates/nodeflow-asset-node/nodeflow-asset-node-template.component";
+import { NodeflowAssetNodeParserService } from "../../client/organizers/nodeflow/views/card-assembly-plugins/asset-node/nodeflow-asset-node-parser.service";
+import { NodeflowAssetNodeService } from "../../client/organizers/nodeflow/views/card-assembly-plugins/asset-node/nodeflow-asset-node.service";
 import { MetricsParserService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/metrics-billboard/metrics-parser.service";
+import { NodeflowAssetNodeComponent } from "../../client/organizers/nodeflow/views/card-assembly-plugins/asset-node/nodeflow-asset-node.component";
 import { SummaryParserService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/summary-billboard/summary-parser.service";
 import { ComCompanySample1TemplateModule } from "../../client/common/com.company.sample1/views/card-templates/modules/com_company_sample1_template.module";
+import { NodeflowProject1CardTemplatesModule } from "../../client/organizers/nodeflow/views/card-templates/nodeflow-asset-node/modules/nodeflow-project1-card-templates.module";
 import {
     DashboardCardPluggable,
     ServiceRenderClass
@@ -24,6 +29,8 @@ import { SimpleGridParserService } from "../../client/common/com.company.sample1
 import { InventorySummaryTransformerService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/inventory-summary-transformer.service";
 import { InstalledPluginsDashboardTransformerService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/installed-plugins-dashboard-transformer.service";
 import { DemoClientGridCardTemplateComponent } from "../../client/common/com.company.sample1/views/card-templates/components/demo-client-grid-card/demo-client-grid-card-template.component";
+
+//export class AssetNodeComponent extends LayoutAssemblyCardBase<NodeflowAssetNodeDataModel> implements OnInit, AfterViewInit, AfterContentInit {
 
 
 // promise contract fails with AoT due to complex expression
@@ -42,6 +49,11 @@ export function demoClientMetricsBillboardTemplateTransport() {
 // summary billboard
 export function demoClientSummaryBillboardTemplateTransport() {
     return Promise.resolve(DemoClientSummaryBillboardTemplateComponent);
+}
+
+// asset node
+export function nodeflowAssetNodeTemplateTransport() {
+    return Promise.resolve(NodeflowAssetNodeTemplateComponent);
 }
 
 
@@ -63,6 +75,22 @@ export const demoClientGridCardViewRenderCompartment: DemoDashboardCardOutletExt
 
 
 // ------------- Business Client Business Team --------------------
+
+// ====== Nodeflow ==========
+export const nodeflowAssetNodeCardViewRenderCompartment: DemoDashboardCardOutletExtensionViewRender<any> = {
+    identifier: 'card-asset-node',
+    organizerPackage: DemoDashboardOrganizerPackageEnumeration.com_company_sample1,
+    componentClass: NodeflowAssetNodeComponent,
+    viewProviders: [NodeflowAssetNodeService, NodeflowAssetNodeParserService],
+
+    // optional template association
+    resolveTemplatableClassesList: [{
+        classification: demoDashboardVendorClassificationMap.nodeflow_sample,
+        load: nodeflowAssetNodeTemplateTransport,
+        //loadModuleRoute: demoModuleRouteMap.demoClientMetricsBillboard // lazy module bundles DemoClientMetricsBillboardTemplateComponent
+    }]
+};
+
 
 // ====== metrics billboard ==========
 export const demoClientMetricsBillboardCardViewRenderCompartment: DemoDashboardCardOutletExtensionViewRender<any> = {
@@ -101,6 +129,7 @@ export const demoClientSummaryBillboardCardViewRenderCompartment: DemoDashboardC
 // arranged set of definitions
 export const demoDashboardAllocatedCardOutletExtensionViewRenderDefinitionsList: Array<DemoDashboardCardOutletExtensionViewRender<any>> = [
     demoClientGridCardViewRenderCompartment,
+    nodeflowAssetNodeCardViewRenderCompartment,
     demoClientMetricsBillboardCardViewRenderCompartment, // resource metrics at top
     demoClientSummaryBillboardCardViewRenderCompartment // now for summary of inventory
 ];
@@ -113,6 +142,7 @@ export function demoGetAllocatedModulesList(): Array<Type<NgModule>> {
     return [
         ClrDatagridModule, // SimpleGrid
         ComCompanySample1TemplateModule, // eagerly instantiated template collection samples components and services
+        NodeflowProject1CardTemplatesModule // Nodeflow project
     ];
 
 }
@@ -121,6 +151,7 @@ export function demoGetAllocatedModulesList(): Array<Type<NgModule>> {
 export function demoGetAllocatedComponentsList(): Array<Type<DashboardCardPluggable<any>>> {
     return [
         demoClientGridCardViewRenderCompartment.componentClass,
+        nodeflowAssetNodeCardViewRenderCompartment.componentClass,
         demoClientMetricsBillboardCardViewRenderCompartment.componentClass,
         demoClientSummaryBillboardCardViewRenderCompartment.componentClass
     ];
@@ -131,6 +162,7 @@ export function demoGetAllocatedServicesList(): Array<ServiceRenderClass<any>> {
     // fix later as multiple services are added
     return [
         ...demoClientGridCardViewRenderCompartment.viewProviders,
+        ...nodeflowAssetNodeCardViewRenderCompartment.viewProviders,
         ...demoClientMetricsBillboardCardViewRenderCompartment.viewProviders,
         ...demoClientSummaryBillboardCardViewRenderCompartment.viewProviders
     ];

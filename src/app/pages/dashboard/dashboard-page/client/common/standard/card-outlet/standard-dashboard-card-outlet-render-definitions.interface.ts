@@ -19,6 +19,8 @@ export interface StandardDashboardVendorClassificationItem extends VendorClassif
 /* used in card outlet render definitions */
 export interface StandardDashboardVendorClassificationMap extends VendorClassificationMap {
 
+    nodeflow_sample: StandardDashboardVendorClassificationItem;
+
     [identifier: string]: StandardDashboardVendorClassificationItem;
 }
 

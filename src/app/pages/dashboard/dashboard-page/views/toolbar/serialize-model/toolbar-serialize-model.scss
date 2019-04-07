@@ -1,0 +1,28 @@
+:host {
+    display: flex;
+    flex: 0;
+    align-items: flex-end;
+
+
+    [role="newDocumentIdentifier"] {
+        margin-bottom: 0.5rem;
+    }
+
+    [role="errorsList"] {
+        background-color: rgba(255, 2, 2, .15);
+    }
+
+    [role="processingErrorMessage"] {
+        padding: 0.2rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, .2);
+        background-color: rgba(255, 2, 2, .3);
+    }
+
+    [role="serializedDocumentContent"] {
+        font-family: monospace;
+        font-size: 10pt;
+        height: 4rem;
+    }
+
+}

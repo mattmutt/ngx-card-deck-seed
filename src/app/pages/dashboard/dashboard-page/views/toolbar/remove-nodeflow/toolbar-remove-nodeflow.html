@@ -1,0 +1,80 @@
+<div *ngIf="resolvedNodeflow && resolvedNodeflow.gridStateManager.routes"
+     [formGroup]="toolbarNodeflowBehaviorActionForm">
+
+    <section role="removeNodeflowAssetForm">
+
+        <section>
+
+            <ng-container [ngTemplateOutlet]="nodeflowNodeSelection"
+                          [ngTemplateOutletContext]="{ formGroupRef: toolbarNodeflowBehaviorActionForm, nodeFormControlName: 'removeCardNodeReference', nodeFormControlDefaultLabel :'Node to remove' }"></ng-container>
+
+        </section>
+
+        <section *ngIf="processingErrorMessage" role="processingErrorMessage">
+            <div [textContent]="processingErrorMessage"></div>
+        </section>
+
+        <section>
+            <button
+                [disabled]="toolbarNodeflowBehaviorActionForm.invalid"
+                class="btn btn-primary btn-outline-warning" (click)="onRemoveNodeAssetEvent()"
+                title="Remove a node and all of its connected dependencies">Remove Nodeflow
+            </button>
+
+            <label for="removeNodeflowIsVerboseMode">Verbose</label>
+            <input id="removeNodeflowIsVerboseMode" type="checkbox" role="isVerboseMode"
+                   formControlName="isVerboseMode"/>
+
+        </section>
+
+    </section>
+
+</div>
+
+
+<!-- listing of active nodeflow plugins -->
+<ng-template #nodeflowNodeSelection
+             let-formGroupRef="formGroupRef"
+             let-nodeFormControlName="nodeFormControlName"
+             let-nodeFormControlDefaultLabel="nodeFormControlDefaultLabel"
+             let-opposingSocketDirectionType="opposingSocketDirectionType">
+
+    <ng-container [formGroup]="formGroupRef">
+
+        <span *ngIf="formGroupRef.get(nodeFormControlName).value"
+              [textContent]="formGroupRef.get(nodeFormControlName).value.resourceToken.outlet.title"></span>
+
+        <select [attr.role]="nodeFormControlName" [formControlName]="nodeFormControlName">
+            <option [ngValue]="null">{{ nodeFormControlDefaultLabel }}</option>
+
+            <ng-container *ngFor="let cardPlugin of nodeflowPluginList">
+                <option *ngIf="cardPlugin.viewModel?.nodeModel as nodeModel; else brokenPluginMenuItemText" [ngValue]="cardPlugin">
+                    {{ nodeModel.id }}
+
+                    <ng-container *ngIf="selectedIsVerboseMode">
+                        <ng-container *ngIf="nodeModel.link; else noNodeModelLink">
+                        [
+                        In: {{ nodeModel.link.consumerSocketCollection.size }} |
+                        Out: {{ nodeModel.link.producerSocketCollection.size }}
+                        ]
+                    </ng-container>
+                    </ng-container>
+
+                    <ng-template #noNodeModelLink>
+                        (Unlinkable)
+                    </ng-template>
+
+                </option>
+                <ng-template #brokenPluginMenuItemText>
+                    Plugin Invalid
+                </ng-template>
+
+            </ng-container>
+
+        </select>
+
+    </ng-container>
+
+</ng-template>
+
+

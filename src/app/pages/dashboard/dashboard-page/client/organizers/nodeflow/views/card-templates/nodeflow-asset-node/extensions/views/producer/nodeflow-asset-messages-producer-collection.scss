@@ -1,0 +1,48 @@
+:host {
+}
+
+/*
+ * Ability to view, edit and dispatch message objects across the virtual connectors to listeners
+ */
+[role="messagesProducerTable"] {
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    flex-wrap: wrap;
+    background-color: rgba(83, 43, 143, .1);
+
+    > * {
+        flex: 1;
+    }
+
+    [role="messageModelTopicLabel"] {
+        text-align: center;
+    }
+
+    [role="messageModelStateClassifier"] {
+        font-weight: normal;
+        text-align: center;
+        &::before {
+            content: "\00ab";
+        }
+        &::after {
+            content: "\00bb";
+        }
+    }
+
+    // individual subforms per message extracted from NodeProducer collection
+    [role="messageModelSubformsContainer"] {
+        border: 2px rgba(1, 1, 1, .2) solid;
+        margin: 3px;
+        padding: 3px;
+
+        &:hover {
+            // emphasis while focused
+            background-color: rgba(83, 43, 143, .1);
+        }
+    }
+
+
+
+}
+

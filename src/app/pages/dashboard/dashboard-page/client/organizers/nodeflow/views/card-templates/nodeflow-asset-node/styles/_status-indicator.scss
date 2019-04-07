@@ -1,0 +1,59 @@
+// status indicator line along left edge
+@include selectCardByComponentType("*", "card-asset-node") {
+
+    $unknown-status-background-color: rgba(123, 123, 123, .5);
+    $valid-status-background-color: #3d9850;
+    $invalid-status-background-color: #cc0000;
+    $busy-status-background-color: #ffa;
+
+    $card-border-radius: 2px;
+    $card-border-edge-darken-percentage: 50%;
+    $indicator-width: 4px;
+
+    border: 0;
+
+    &::before {
+
+        content: "";
+        position: absolute;
+        width: $indicator-width;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        border-top-left-radius: $card-border-radius;
+        border-bottom-left-radius: $card-border-radius;
+        border-right: 1px solid black;
+    }
+
+    // `statusFlag-xxx` triggered on the card to designate node current status
+    &.statusFlag- {
+
+        &unknown {
+            &::before {
+                background-color: $unknown-status-background-color;
+                border-right-color: darken($unknown-status-background-color, $card-border-edge-darken-percentage);
+            }
+        }
+        &valid {
+            &::before {
+                background-color: $valid-status-background-color;
+                border-right-color: darken($valid-status-background-color, $card-border-edge-darken-percentage/4);
+            }
+        }
+        &invalid {
+            &::before {
+                background-color: $invalid-status-background-color;
+                border-right-color: darken($invalid-status-background-color, $card-border-edge-darken-percentage);
+            }
+        }
+        &busy {
+            &::before {
+                background-color: $busy-status-background-color;
+                border-right-color: darken($busy-status-background-color, $card-border-edge-darken-percentage);
+            }
+        }
+
+    }
+
+}
+

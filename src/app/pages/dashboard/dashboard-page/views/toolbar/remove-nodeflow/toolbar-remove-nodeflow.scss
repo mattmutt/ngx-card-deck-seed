@@ -1,0 +1,16 @@
+
+:host {
+    display: flex;
+    flex: 0;
+    align-items: flex-end;
+
+    [role="processingErrorMessage"] {
+        padding: 0.2rem;
+        border-radius: 0.5rem;
+        border: 1px solid rgba(0, 0, 0, .2);
+        background-color: rgba(255, 2, 2, .3);
+    }
+
+    // Remove
+
+}

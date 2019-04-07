@@ -6,6 +6,13 @@
                 {"path": ["/dashboard/dashboard-page/com_company_sample2/deck1"], "label": "Deck 1", "subtitle": "Advanced layout"},
                 {"path": ["/dashboard/dashboard-page/com_company_sample2/deck2"], "label": "Deck 2", "subtitle": "Beginner layout"}
             ]
+        },
+        {
+            "label": "Nodeflow",
+            "links": [
+                {"path": ["/dashboard/dashboard-page/nodeflow/deck3"], "label": "Nodeflow Graph 3", "subtitle": "Beginner 3 nodes"},
+                {"path": ["/dashboard/dashboard-page/nodeflow/deck4"], "label": "Nodeflow Graph 4", "subtitle" : "Complex 7 nodes"}
+            ]
         }
     ]
 }

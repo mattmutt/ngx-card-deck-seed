@@ -1,0 +1,79 @@
+$socketFill: #0a8;
+
+$producerFill: $socketFill;
+$consumerFill: $socketFill;
+
+$disabledFill: #777777;
+$emptyStroke: #ffffff;
+$hoverStroke: #222333;
+$focusStroke: #ffffff;
+
+[role="nodeSocket"] {
+    paint-order: stroke;
+
+    &.nodeSocketProducer {
+        fill: $producerFill;
+        stroke: darken($producerFill, 80%);
+
+        // forced highlighting producer, by an indirect interaction
+        &.nodeSocketFocusedAction {
+            fill: lighten($producerFill, 5%);
+        }
+
+    }
+
+    &.nodeSocketConsumer {
+        fill: $consumerFill;
+        stroke: darken($consumerFill, 80%);
+
+        // forced highlighting consumer, by an indirect interaction
+        &.nodeSocketFocusedAction {
+            fill: lighten($consumerFill, 5%);
+        }
+
+    }
+
+    &.nodeSocketDisabled {
+        fill: $disabledFill;
+    }
+
+    // no attached subscribers
+    &.nodeSocketEmpty {
+        stroke-opacity: 0.4;
+        stroke: $emptyStroke;
+        fill-opacity: 0.2;
+    }
+
+    // has connection(s)
+    &:not(.nodeSocketEmpty) {
+        stroke-opacity: 1;
+    }
+
+    // forced highlighting producer, by an indirect interaction
+    &.nodeSocketFocusedAction {
+        stroke-opacity: 1;
+        stroke-width: 3px;
+        stroke: $focusStroke;
+        animation: glowingFadeInOut 2s infinite;
+    }
+
+    &:hover {
+        stroke-opacity: 1;
+        stroke: $hoverStroke;
+    }
+
+    @keyframes glowingFadeInOut {
+        0% {
+            stroke-width: 1px;
+            stroke-opacity: 1;
+        }
+        50%, 100% {
+            stroke-width: 10px;
+            stroke-opacity: 0;
+        }
+
+    }
+
+}
+
+

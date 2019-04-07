@@ -1,0 +1,105 @@
+<!--experiment to use pipe to derive sockets-->
+<section *ngIf="nodeModel.link?.consumerSocketCollection as consumerSocketModelList">
+    <label class="pane-header"
+           [class.pane-expanded]="integrator.viewState.messagesConsumerCollectionPane.visible"
+           (click)="integrator.onToggleViewPane(integrator.viewState.messagesConsumerCollectionPane)">
+        <div class="pane-expando"></div>
+        Consumer Messages
+    </label>
+
+    <section #messagesConsumerCollectionPane
+             *ngIf="integrator.viewState.messagesConsumerCollectionPane.visible"
+             role="messagesConsumerTable">
+
+
+        <section *ngFor="let consumerSocketModel of consumerSocketModelList; let isLast=last" role="messageConsumer">
+
+            <ng-container
+                *ngIf="integrator.cardAssemblyPlugin.viewModel.onNodeConsumerRelationsChange$ | async | routeRelationBySocketFilter:consumerSocketModel as socketBasedRouteRelationList">
+
+                <table role="messageMetadataGrid">
+
+                    <tbody>
+                    <tr>
+                        <th>Socket</th>
+                        <td>{{ consumerSocketModel.topic }}</td>
+                        <td>{{ consumerSocketModel.id }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Transmission</th>
+                        <td colspan="2">
+                            <ng-container *ngIf="consumerSocketModel.multicast">
+                                multicast
+                            </ng-container>
+                            <ng-container *ngIf="!consumerSocketModel.multicast">
+                                unicast
+                            </ng-container>
+                        </td>
+                        <!-- route relations count -->
+                        <td *ngIf="consumerSocketModel.multicast">
+                            Over ({{ socketBasedRouteRelationList.length }}) trunk routes
+                        </td>
+
+                    </tr>
+
+
+                    <!-- route resolution support complex consumer-socket bound multicast use case -->
+                    <ng-container *ngFor="let routeRelation of socketBasedRouteRelationList">
+
+                        <tr>
+                            <th>
+                                Trunk routing
+                            </th>
+                            <td class="wrap-identifier" colspan="2">
+                                <div [textContent]="routeRelation.id"></div>
+                            </td>
+                        </tr>
+
+                        <ng-container
+                            *ngFor="let consumerSocketConnector of routeRelation | extractSocketConnectorRelationListBySocket:consumerSocketModel">
+
+
+                            <tr>
+                                <th>
+                                    Producer
+                                </th>
+                                <td class="wrap-identifier" colspan="2">
+                                    <div [textContent]="consumerSocketConnector.producer.id"></div>
+                                </td>
+                            </tr>
+
+                            <!-- message details -->
+                            <tr>
+                                <td colspan="3">
+                                    <nodeflow-asset-delivery-message-outlet [integrator]="integrator"
+                                                                            [routeRelation]="routeRelation"
+                                                                            [socketConnectorRelation]="consumerSocketConnector"></nodeflow-asset-delivery-message-outlet>
+                                </td>
+                            </tr>
+
+                        </ng-container>
+
+
+                        <section role="messagesConsumerFieldsFooter"></section>
+                    </ng-container>
+
+
+                    <!-- /data struct -->
+                </table>
+
+
+                <ng-container *ngIf="!socketBasedRouteRelationList.length">
+                    <i>
+                        No connectors on socket
+                    </i>
+                </ng-container>
+
+            </ng-container>
+
+        </section>
+
+    </section>
+</section>
+
+

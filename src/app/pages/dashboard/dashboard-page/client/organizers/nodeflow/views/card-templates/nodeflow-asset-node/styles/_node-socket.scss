@@ -1,0 +1,108 @@
+[role="nodeSocket"] {
+
+    [role="nodeSocketLabel"] {
+
+    }
+
+    [role="nodeSocketIcon"] {
+        $socket-dimension: 0.5rem;
+
+        width: $socket-dimension;
+        border-radius: $socket-dimension*2;
+        height: $socket-dimension;
+        //display: inline-block;
+        display:inline-flex;
+        align-items:center;
+        justify-content: space-around;
+
+        $socketFill: #0a8;
+
+        $producerFill: $socketFill;
+        $consumerFill: $socketFill;
+
+        $disabledFill: #777777;
+        $emptyStroke: #ffffff;
+        $hoverStroke: #222333;
+        $focusStroke: #ffffff;
+        $emptyOpacity: 0.3;
+
+        &::before {
+            font-size: 0.4rem;
+            font-style: normal;
+            content: " ";
+        }
+
+        &.nodeSocketProducer {
+            &::before {
+                content: "\25b6";
+            }
+
+            background-color: $producerFill;
+            border-color: darken($producerFill, 80%);
+
+            // forced highlighting producer, by an indirect interaction
+            &.nodeSocketFocusedAction {
+                background-color: lighten($producerFill, 5%);
+            }
+
+        }
+
+        &.nodeSocketConsumer {
+            &::before {
+                content: "\25c0";
+            }
+
+            background-color: $consumerFill;
+            border-color: darken($consumerFill, 80%);
+
+            // forced highlighting consumer, by an indirect interaction
+            &.nodeSocketFocusedAction {
+                background-color: lighten($consumerFill, 5%);
+            }
+
+        }
+
+        &.nodeSocketDisabled {
+            background-color: $disabledFill;
+        }
+
+        // no attached subscribers
+        &.nodeSocketEmpty {
+            border-color: $emptyStroke;
+            opacity: $emptyOpacity;
+        }
+
+        // has connection(s)
+        &:not(.nodeSocketEmpty) {
+            opacity: 1;
+        }
+
+        // forced highlighting producer, by an indirect interaction
+        &.nodeSocketFocusedAction {
+            opacity: 1;
+            border-width: 3px;
+            border-color: $focusStroke;
+            animation: glowingFadeInOut 2s infinite;
+        }
+
+        /*
+        &:hover {
+            opacity: 1;
+            border: $hoverStroke;
+        }
+        */
+
+        @keyframes glowingFadeInOut {
+            0% {
+                border-width: 1px;
+                opacity: 1;
+            }
+            50%, 100% {
+                border-width: 10px;
+                opacity: 0;
+            }
+
+        }
+    }
+
+}

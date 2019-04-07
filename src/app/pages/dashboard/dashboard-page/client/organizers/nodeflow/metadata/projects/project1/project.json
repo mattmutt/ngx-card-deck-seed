@@ -1,0 +1,163 @@
+{
+    "project": {
+        "item": {
+            "id": "generic-nodeflow-project-1",
+            "label": "Nodeflow Concepts 1",
+            "interaction": {
+                "selected": false
+            }
+        }
+    },
+    "schematic": {
+        "card": {
+            "components": [
+                {
+                    "id": "card-asset-node",
+                    "label": "Nodeflow generic form/message",
+                    "interaction": {
+                        "selected": true
+                    }
+                }
+            ],
+            "messages": [
+                {
+                    "topic": "capacity",
+                    "form": {
+                        "component": "capacityForm"
+                    },
+                    "state": {
+                        "classifier": "capacityMessage",
+                        "data": {
+                            "budget": null,
+                            "location": null,
+                            "staff": null,
+                            "policyStartDate": null
+                        }
+                    }
+                },
+                {
+                    "topic": "color",
+                    "form": {
+                        "component": "chromaForm"
+                    },
+                    "state": {
+                        "classifier": "chromaMessage",
+                        "data": {
+                            "red": null,
+                            "green": null,
+                            "blue": null
+                        }
+                    }
+                },
+                {
+                    "topic": "customer",
+                    "form": {
+                        "component": "customerForm"
+                    },
+                    "state": {
+                        "classifier": "customerMessage",
+                        "data": {
+                            "customerNumber": "1234",
+                            "customerCity": "San Jose"
+                        }
+                    }
+                },
+                {
+                    "topic": "funding",
+                    "form": {
+                        "component": "fundingForm"
+                    },
+                    "state": {
+                        "classifier": "fundingMessage",
+                        "data": {
+                            "fiscalYearBudget": null,
+                            "fundingOrganizer": null,
+                            "fundingStakeholder": "CFO",
+                            "recurringRenewal": true
+                        }
+                    }
+                },
+                {
+                    "topic": "name",
+                    "form": {
+                        "component": "leadershipForm"
+                    },
+                    "state": {
+                        "classifier": "leadershipMessage",
+                        "data": {
+                            "firstName": null,
+                            "lastName": null,
+                            "position": null
+                        }
+                    }
+                },
+                {
+                    "topic": "team",
+                    "form": {
+                        "component": "teamGroupForm"
+                    },
+                    "state": {
+                        "classifier": "teamMessage",
+                        "data": {
+                            "developers": null,
+                            "scientists": null,
+                            "managers": null
+                        }
+                    }
+                },
+                {
+                    "topic": "temperature",
+                    "form": {
+                        "component": "temperatureForm"
+                    },
+                    "state": {
+                        "classifier": "thermalMonitoringMessage",
+                        "data": {
+                            "peakTemp": null,
+                            "minimumTemp": null,
+                            "ambientTemp": null
+                        }
+                    }
+                }
+            ],
+            "assetTypes": [
+                {
+                    "id": "4",
+                    "label": "Some Icon X",
+                    "interaction": {
+                        "selected": true
+                    }
+                },
+                {
+                    "id": "6",
+                    "label": "Some Icon Y",
+                    "interaction": {
+                        "selected": false
+                    }
+                },
+                {
+                    "id": "9",
+                    "label": "Some Icon Z",
+                    "interaction": {
+                        "selected": false
+                    }
+                }
+            ]
+        },
+        "templates": [
+            {
+                "id": "nodeflow-standard-template",
+                "label": "Nodeflow Asset Component Asset Component default",
+                "data": {
+                    "body": {
+                        "organization": "nodeflow_sample",
+                        "template": "nodePresentation"
+                    }
+                },
+                "interaction": {
+                    "selected": true
+                }
+            }
+        ]
+    }
+}

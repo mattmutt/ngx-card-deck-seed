@@ -1,0 +1,25 @@
+
+:host {
+    display: flex;
+    overflow-x: auto;
+    $separator-color: rgba(44,44,66,.1);
+    // $separator-color: rgba(255,255,255,.9);
+    $separator-width: 4px;
+
+    > * {
+        border-right: $separator-width solid $separator-color;
+        margin-right: 0.2rem;
+        transition: background-color .2s;
+        background-color: $separator-color;
+
+        &:hover {
+            background-color: transparentize($separator-color, .15);
+            transition: background-color .2s;
+        }
+
+        &:last-child {
+            border-right: 0;
+            margin-right: 0;
+        }
+    }
+}

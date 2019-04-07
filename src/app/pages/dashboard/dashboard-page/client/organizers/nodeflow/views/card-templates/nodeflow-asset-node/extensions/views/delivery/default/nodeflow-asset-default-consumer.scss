@@ -1,0 +1,22 @@
+// holder of fields
+[role="messagesConsumerFieldsGrid"] {
+    background-color: rgba(32, 22, 22, .1);
+    padding: 0.2rem;
+    width: 100%;
+    margin: 10px 0;
+
+    THEAD > TR {
+        background-color: rgba(83, 43, 43, .15);
+    }
+
+    TBODY > TR > TD {
+        width: 50%;
+        INPUT {
+            width: 90%;
+            background-color: rgba(255, 255, 255, .2);
+            border: none;
+        }
+    }
+}
+
+

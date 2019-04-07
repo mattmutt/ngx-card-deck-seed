@@ -8,6 +8,7 @@
 
 ## Summary
 [![dependencies Status](https://david-dm.org/mattmutt/ngx-card-deck/status.svg)](https://david-dm.org/mattmutt/ngx-card-deck-seed)
+[![build status](https://travis-ci.com/mattmutt/ngx-card-deck-seed.svg?branch=master)](https://travis-ci.com/mattmutt/ngx-card-deck-seed)
 [![downloads](https://img.shields.io/npm/dm/ngx-card-deck.svg)](https://www.npmjs.com/package/ngx-card-deck)
 
 

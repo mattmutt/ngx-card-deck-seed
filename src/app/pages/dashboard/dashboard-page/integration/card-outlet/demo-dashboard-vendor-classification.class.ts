@@ -1,6 +1,7 @@
 // multiple groups within the vendors supported
 import { DemoDashboardVendorClassificationMap } from "./demo-dashboard-card-outlet-render-definitions.interface";
 import { DemoDashboardOrganizerPackageEnumeration } from "./demo-dashboard-organizer-package.class";
+import { standardDashboardVendorClassificationMap } from "../../client/common/standard/card-outlet/standard-dashboard-vendor-classification.class";
 
 export const demoDashboardVendorClassificationMap: DemoDashboardVendorClassificationMap = {
     // 0 represents contributor's framework
@@ -21,6 +22,9 @@ export const demoDashboardVendorClassificationMap: DemoDashboardVendorClassifica
         organization: 'project2',
         description: 'Sample testing dashboard #2 - 1 summary billboard'
     },
+
+    // augment with examples
+    nodeflow_sample: standardDashboardVendorClassificationMap.nodeflow_sample
 
 };
 

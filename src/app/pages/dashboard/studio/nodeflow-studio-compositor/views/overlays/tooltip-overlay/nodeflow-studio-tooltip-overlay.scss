@@ -1,0 +1,49 @@
+$tooltip-color-background: #fff;
+$tooltip-color-border: #567;
+$tooltip-color-foreground: #000;
+
+:host {
+    display: block;
+    position: absolute; // removed from flow
+    background: $tooltip-color-background;
+    color: $tooltip-color-foreground;
+    border: 1px $tooltip-color-border solid;
+    border-radius: 0.5rem;
+    box-shadow: 0px 5px 4px 2px rgba(0, 0, 0, .3);
+    padding: 0.5rem;
+    white-space: nowrap;
+    transition: opacity .2s;
+    opacity: 0;
+
+    &.show {
+        opacity: 1;
+    }
+
+    &::before {
+        $pointer-size: .7rem;
+        content: "";
+        position: absolute;
+        // should accommodate pointer-size
+        left: 50%;
+        width: $pointer-size;
+        height: $pointer-size;
+        bottom: -1 * $pointer-size/2;
+        clip-path: polygon(100% 20%, 100% 100%, 20% 100%);
+        background: $tooltip-color-background;
+        border: 1px darken($tooltip-color-border, 20%) solid;
+        padding: 3px;
+        transform: rotate(45deg);
+        transform-origin: top;
+        pointer-events: none;
+    }
+}
+
+UL {
+    padding: 0;
+    margin: 0 1rem;
+
+    LI {
+        font-size: 10pt;
+    }
+}
+

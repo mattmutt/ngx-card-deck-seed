@@ -1,0 +1,31 @@
+$arrow-default-foreground-color: #fff;
+
+[role="segmentConnectorArrowVectorGroup"] {
+
+    // centroid directional vector tangential to edge
+    .segmentConnectorArrow {
+        fill: $arrow-default-foreground-color;
+        stroke: $connector-outline-stroke-color; // inherit
+
+        // too hard for visualizing
+        .smallZoomLevel & {
+            display: none;
+        }
+    }
+
+    [role="segmentConnectorPathGroup"] & {
+
+        &:hover {
+            // *** warning: pipe has NO white surrounding it
+            > svg|polygon:last-of-type {
+                fill: gold;
+                cursor: pointer;
+                stroke-width: 2px;
+            }
+        }
+    }
+
+}
+
+
+

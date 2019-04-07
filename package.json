@@ -20,7 +20,7 @@
     "build:prod:local": "ng build --prod --base-href=/ngx-card-deck-seed/ --configuration=production --aot --preserve-symlinks --build-optimizer=true --common-chunk=false --source-map=false --output-hashing=none",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "test": "ng test"
+    "test": "ng test --source-map=false"
   },
   "dependencies": {
     "@angular/animations": "7.2.11",

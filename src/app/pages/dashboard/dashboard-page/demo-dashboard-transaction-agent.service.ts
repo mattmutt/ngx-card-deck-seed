@@ -4,6 +4,7 @@ import {
     ViewAssemblyTypeStateResourceLayoutItemSchema
 } from "ngx-card-deck";
 import { Injectable } from "@angular/core";
+import { NodeflowConfigurationPreprocessor } from "./client/organizers/nodeflow/lib/models/parsers/dashboard/integration/nodeflow-configuration-preprocessor.class";
 
 
 const resources = {
@@ -17,9 +18,10 @@ export class DemoDashboardTransactionAgentService {
 
     private component: DemoDashboardPageComponent;
 
+    private cardConfigurationPreprocessor: NodeflowConfigurationPreprocessor;
 
     constructor(private configurationFacadeService: DashboardConfigurationFacadeService) {
-
+        this.cardConfigurationPreprocessor = new NodeflowConfigurationPreprocessor();
     }
 
     setComponent(c: DemoDashboardPageComponent) {

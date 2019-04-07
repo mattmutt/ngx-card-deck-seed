@@ -36,6 +36,10 @@
 
         </section>
 
+
+        <!-- specialization of action buttons -->
+        <nodeflow-toolbar-tabs-container [hidden]="!canvasWidgetViewContainerRef" [nodeflow]="canvasWidgetViewContainerRef" [toolbarForm]="debugForm"></nodeflow-toolbar-tabs-container>
+
     </div>
 </form>
 
@@ -84,9 +88,63 @@
 
     <ng-container [ngSwitch]="routeOrganizerKey">
         <ng-template *ngSwitchCase="'com_company_sample2'" [ngTemplateOutlet]="comCompanySample2Template"></ng-template>
+        <ng-template *ngSwitchCase="'nodeflow'" [ngTemplateOutlet]="nodeflowTemplate"></ng-template>
     </ng-container>
 
 </section>
+
+<!-- ### Nodeflow socket connector layout example -->
+<ng-template #nodeflowTemplate>
+
+    <ngx-card-deck #dashboardInstance [configurationMetadata]="componentConfiguration"
+                    [zoomFactor]="debugForm.get('zoom')!.value"
+                    [class.dragging]="isDragging"
+                    (layoutItemInitialize)="onLayoutItemInitialize($event)"
+                    (layoutItemStartMovementInteraction)="onLayoutItemStartMovementInteraction($event)"
+                    (layoutItemEndMovementInteraction)="onLayoutItemEndMovementInteraction($event)"
+                    (layoutItemDestroy)="onLayoutItemDestroy($event)"
+                    (producedAssemblyStrategy)="onGridContainerCreated($event)"
+                    (layoutItemsChangeList)="onLayoutItemsChange($event)">
+
+        <div dashboard-container-header>Project: "{{ componentConfiguration.id }}"</div>
+
+        <nodeflow-studio-compositor #canvasWidget
+                                    dashboard-container-grid-widget-underlay
+                                    [style.width.px]="canvasWidget.calculatedLayoutWidth"
+                                    [style.height.px]="canvasWidget.calculatedLayoutHeight"
+                                    [zoomLevel]="debugForm.get('zoom')!.value">
+        </nodeflow-studio-compositor>
+
+        <div dashboard-container-grid-widget-overlay>
+
+            <div role="overlayMenuContainer">
+                <ng-template [ngTemplateOutlet]="canvasWidget.visibleOverlayTemplate"></ng-template>
+                <ng-template [ngTemplateOutlet]="canvasWidget.visibleTooltipTemplate"></ng-template>
+                <ng-template [ngTemplateOutlet]="canvasWidget.visibleNotificationTemplate"></ng-template>
+            </div>
+
+            <div #pinnedOverlayLayout
+                 [style.left.px]="gridWidgetBoundingClientRect.right - pinnedOverlayLayout.offsetWidth - 20"
+                 [style.top.px]="gridWidgetBoundingClientRect.bottom - pinnedOverlayLayout.offsetHeight - 20"
+                 [class.minimized]="gridWidgetBoundingClientRect.width < 150 || gridWidgetBoundingClientRect.height < 150"
+                 [class.old-hidden]="gridWidgetElement?.clientHeight < 50"
+                 [class.hidden]="true"
+                 role="overlayLayoutContainer">
+                <div role="overlayTitle">Project Map</div>
+                <i #overlayShape class="overlay-icon"></i>
+            </div>
+
+        </div>
+
+
+        <div dashboard-container-footer>Status: Nodes
+            (<span [textContent]="(gridLayoutItemsInitialize$ | async)?.length"></span>)
+        </div>
+
+    </ngx-card-deck>
+
+
+</ng-template>
 
 
 <!-- ### Example Company Sample 2 Card example -->

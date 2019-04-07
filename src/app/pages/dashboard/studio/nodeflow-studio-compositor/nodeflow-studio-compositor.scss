@@ -1,0 +1,30 @@
+@namespace svg url(http://www.w3.org/2000/svg);
+
+:host {
+    display: block;
+    position: absolute; // taken out of flow for under pinning
+    width: 100%;
+    height: 100%;
+}
+
+[role="canvas"] {
+
+    // consider theme without distracting colors
+    background-image: linear-gradient( rgba(12,12,12,.2), rgba(255,255,255, .2));
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+
+    width: inherit;
+    height: inherit;
+}
+
+
+@import "views/styles/socket-connector-relation";
+@import "views/styles/node-socket";
+
+

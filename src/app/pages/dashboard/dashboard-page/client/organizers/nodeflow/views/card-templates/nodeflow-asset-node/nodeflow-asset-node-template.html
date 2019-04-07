@@ -1,0 +1,136 @@
+<ng-container #templates>
+    <ng-container #presentation>
+        <ng-container #header></ng-container>
+
+        <ng-container #body>
+
+
+            <ng-template #nodePresentation let-metricEntity="metricEntity" let-cardMetadata="cardMetadata"
+                         let-library="library">
+
+                <section role="container">
+
+                    <section role="assetDetails">
+
+                        <!--<div [textContent]="cardMetadata.assetType.localization.name.text"></div>-->
+                        <section *ngIf="cardAssemblyPlugin.viewModel?.nodeModel as nodeModel; else notReady">
+
+                            <ng-template
+                                [ngTemplateOutlet]="nodeDetails"
+                                [ngTemplateOutletContext]="{ $implicit: nodeModel }"></ng-template>
+
+                        </section>
+
+                    </section>
+
+                    <section role="icon" [class.pane-shrink]="viewState.detailsPane.visible">
+                        <div class="iconButtonShape"
+                             [class.active]="viewState.detailsPane.visible"
+                             (click)="onToggleViewPane(viewState.detailsPane)">
+                            <i [ngClass]="cardMetadata.derived.assetTypeIconClass"></i>
+                        </div>
+                    </section>
+
+                </section>
+
+                <!-- building blocks -->
+                <ng-template #nodeDetails let-nodeModel>
+
+                    <ng-container *ngIf="viewState.detailsPane.visible">
+                        <ng-template
+                            [ngTemplateOutlet]="socketCollectionTemplate"
+                            [ngTemplateOutletContext]="{ $implicit: nodeModel }"></ng-template>
+
+                        <nodeflow-asset-messages-producer-collection
+                            [nodeModel]="nodeModel"></nodeflow-asset-messages-producer-collection>
+
+                        <nodeflow-asset-messages-consumer-collection
+                            [nodeModel]="nodeModel"></nodeflow-asset-messages-consumer-collection>
+
+                    </ng-container>
+
+
+                </ng-template>
+
+                <ng-template #notReady>
+                    Loading....
+                </ng-template>
+
+
+            </ng-template>
+
+
+            <ng-template #socketCollectionTemplate let-nodeModel>
+
+                <section *ngIf="nodeModel.link">
+
+                    <label class="pane-header"
+                           [class.pane-expanded]="viewState.socketCollectionPane.visible"
+                           (click)="onToggleViewPane(viewState.socketCollectionPane)">
+                        <div class="pane-expando"></div>
+                        Socket Inventory
+                    </label>
+
+                    <ng-container #socketCollectionPane *ngIf="viewState.socketCollectionPane.visible">
+
+                        <section role="socketsTable">
+
+                            <ng-container
+                                *ngFor="let socketConnectorType of [ types.socketConnectorTypeMap.get('input') ,types.socketConnectorTypeMap.get('output')]">
+
+
+                                <section
+                                    *ngIf="nodeModel.link.getCollectionByType( socketConnectorType) as directedSocketCollection"
+                                    [attr.role]="socketConnectorType === types.socketConnectorTypeEnum.input ? 'consumerSocketList' : 'producerSocketList'">
+
+                                    <b>
+                                        <ng-container
+                                            *ngIf="socketConnectorType === types.socketConnectorTypeMap.get('input')">
+                                            Input Consumer
+                                        </ng-container>
+                                        <ng-container
+                                            *ngIf="socketConnectorType === types.socketConnectorTypeMap.get('output')">
+                                            Output Producer
+                                        </ng-container>
+
+                                        <ng-container *ngIf="directedSocketCollection.size > 1">
+                                            ({{ directedSocketCollection.size }})
+                                        </ng-container>
+                                    </b>
+
+                                    <ol>
+                                        <li *ngFor="let socket of directedSocketCollection | orderedSocketList"
+                                            [attr.title]="socket.id"
+                                            (mouseover)="onTogglePreviewSocket(socket, true )"
+                                            (mouseout)="onTogglePreviewSocket(socket, false )"
+                                            role="nodeSocket">
+                                            <span [textContent]="socket.topic" role="nodeSocketLabel"></span>
+                                            <i [ngClass]="styleNodeSocketClasses(socket, nodeModel)"
+                                               role="nodeSocketIcon"></i>
+
+                                        </li>
+                                        <ng-container *ngIf="!directedSocketCollection.size">
+                                            <i>Empty</i>
+                                        </ng-container>
+                                    </ol>
+
+                                </section>
+
+                            </ng-container>
+
+
+                        </section>
+                    </ng-container>
+                </section>
+
+            </ng-template>
+
+        </ng-container>
+
+        <ng-container #footer></ng-container>
+
+    </ng-container>
+</ng-container>
+
+
+

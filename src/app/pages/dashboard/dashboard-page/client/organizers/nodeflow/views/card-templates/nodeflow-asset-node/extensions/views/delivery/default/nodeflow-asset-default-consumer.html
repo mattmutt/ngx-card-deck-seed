@@ -1,0 +1,37 @@
+<ng-container *ngIf="resourceState.socketConnectorRelation.deliveryMessagePublished$ | async; let deliveryMessage">
+
+    <table role="messagesConsumerFieldsGrid"
+           [attr.data-messageFormComponent]="resourceState.message.form.component"
+           [attr.data-messageStateClassifier]="resourceState.message.state.classifier">
+        <thead>
+        <tr>
+            <th role="messageModelTopicLabel">{{ resourceState.message.topic }}</th>
+            <th role="messageModelStateClassifier" [textContent]="resourceState.message.state.classifier"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <ng-container
+            *ngIf="resourceState.socketConnectorRelation.deliveryMessagePublished$ | async; let deliveryMessage">
+
+            <tr *ngFor="let stateData of deliveryMessage.payload.data | messageModelStateDataIterable as messageStateTuple">
+                <td>
+                    <label>
+                        {{ stateData[0] }}
+                    </label>
+                </td>
+                <td>
+                    <input type="text" readonly [value]="stateData[1]"/>
+                </td>
+
+            </tr>
+
+        </ng-container>
+
+
+        </tbody>
+
+    </table>
+
+</ng-container>
