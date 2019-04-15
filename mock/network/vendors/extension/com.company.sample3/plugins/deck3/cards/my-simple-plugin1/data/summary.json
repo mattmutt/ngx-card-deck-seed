@@ -1,0 +1,47 @@
+{
+    "provider": {
+        "serverGuid": "deck3-server",
+        "type": "Folder",
+        "value": "animals"
+    },
+    "summaryItems": [
+        {
+            "label": "Dogs",
+            "value": 100
+        },
+        {
+            "label": "Cats",
+            "value": 200
+        }
+    ],
+    "resourceMeters": [
+        {
+            "title": "felines",
+            "free": "40 Cats",
+            "used": "10 kittens",
+            "capacity": "30 litters",
+            "progress": 20
+        },
+        {
+            "title": "canines",
+            "free": "77 Dogs",
+            "used": "50 puppies",
+            "capacity": "10 litters",
+            "progress": 59
+        },
+        {
+            "title": "headcount",
+            "free": "8 Staff",
+            "used": "3 groomers",
+            "capacity": "5 veterinarians",
+            "progress": 34
+        },
+        {
+            "title": "foods",
+            "free": "60 Treats",
+            "used": "30 catnips",
+            "capacity": "90 bones",
+            "progress": 30
+        }
+    ]
+}

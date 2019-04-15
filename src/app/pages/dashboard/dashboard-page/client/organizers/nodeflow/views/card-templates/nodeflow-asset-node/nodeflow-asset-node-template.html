@@ -64,12 +64,12 @@
 
                 <section *ngIf="nodeModel.link">
 
-                    <label class="pane-header"
+                    <button class="pane-header"
                            [class.pane-expanded]="viewState.socketCollectionPane.visible"
                            (click)="onToggleViewPane(viewState.socketCollectionPane)">
                         <div class="pane-expando"></div>
                         Socket Inventory
-                    </label>
+                    </button>
 
                     <ng-container #socketCollectionPane *ngIf="viewState.socketCollectionPane.visible">
 

@@ -21,7 +21,6 @@
                 "name": "Metadata call for the dashboard for Sample Deck 1 - remote plugin3 to metadata",
                 "resolver": {
                     "remote-served-service": {
-                        "xurl": "//google-developers.appspot.com/chart/interactive/docs/gallery/controls_18c6e3317c87b3b7eed0e49b3544d19a.frame?hl=en",
                         "url": "//watson-conversation-duo-dev.ng.bluemix.net",
                         "isEvaluated": true,
                         "mocked": false,

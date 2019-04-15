@@ -146,6 +146,11 @@ export class ToolbarSerializeModelComponent extends ToolbarNodeflowActionBase {
 
     protected createForm(): FormGroup {
 
+        // sequencing, guard if triggered early
+        if (this.toolbarForm.contains("serializeModel")) {
+            return this.toolbarForm.get("serializeModel") as FormGroup;
+        }
+
         const form = this.fb.group({
                 serializedDocumentEntityReference: [resources.form.serializedDocumentEntityReference.default, []],
 
@@ -162,6 +167,12 @@ export class ToolbarSerializeModelComponent extends ToolbarNodeflowActionBase {
     }
 
     private bindDocumentIdentifier(defaultDocumentId: string) {
+
+        if (!this.toolbarNodeflowBehaviorActionForm) {
+            this.socketConnectorRelationModelCollection$ = this.gridStateManagerService.routes.socketConnectorRelationCollectionChange$;
+            this.toolbarNodeflowBehaviorActionForm = this.createForm();
+        }
+
         this.toolbarNodeflowBehaviorActionForm.get("newDocumentIdentifier")!.patchValue(defaultDocumentId);
     }
 }

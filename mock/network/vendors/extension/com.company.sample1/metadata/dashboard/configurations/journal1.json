@@ -36,7 +36,7 @@
                 "resourceId": "journal1:dashboard",
                 "type": "dashboard-view-state",
                 "component": "rows-list-dashboard-container",
-                "name": "Journal 1 - dashboard assembly prototype / December 2017",
+                "name": "Journal 1 - dashboard assembly prototype",
                 "resolver": {
                     "injector": "dashboard-assembly-rows-list",
                     "node": {

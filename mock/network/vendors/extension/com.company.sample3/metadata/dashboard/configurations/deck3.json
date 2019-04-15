@@ -1,0 +1,80 @@
+{
+    "id": "deck3",
+    "cards": [
+        {
+            "id": "my-simple-plugin1",
+            "component": "card-metrics-billboard",
+            "header": {
+                "title": "Animal Store",
+                "icon": "social-treehouse"
+            },
+            "layout": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 1
+            },
+            "services": [
+                {
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/data/summary.json"
+                    }
+                }
+            ],
+            "templates": [
+                {
+                    "body": {
+                        "organization": "project2",
+                        "template": "metricsBillboardProgressWidget"
+                    }
+                }
+            ]
+        },
+
+        {
+            "id": "my-simple-embed",
+            "component": "card-remote-served",
+            "header": {
+                "title": "remote simple",
+                "icon": "map"
+            },
+            "layout": {
+                "x": 0,
+                "y": 1,
+                "width": 1,
+                "height": 3
+            },
+            "services": [
+                {
+                    "remote-served-service": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/view/embed.html"
+                    }
+                }
+            ],
+            "templates": []
+        },
+        {
+            "id": "earth-satellite",
+            "component": "card-remote-served",
+            "header": {
+                "title": "Satellite - USA",
+                "icon": "map"
+            },
+            "layout": {
+                "x": 2,
+                "y": 1,
+                "width": 2,
+                "height": 2
+            },
+            "services": [
+                {
+                    "remote-served-service": {
+                        "url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/GIFS/GOES16-CONUS-GEOCOLOR-625x375.gif"
+                    }
+                }
+            ],
+            "templates": []
+        }
+    ]
+}
+

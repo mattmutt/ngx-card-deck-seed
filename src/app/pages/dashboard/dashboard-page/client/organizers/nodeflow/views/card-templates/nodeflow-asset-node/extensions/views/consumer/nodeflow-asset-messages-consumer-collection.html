@@ -1,11 +1,11 @@
 <!--experiment to use pipe to derive sockets-->
 <section *ngIf="nodeModel.link?.consumerSocketCollection as consumerSocketModelList">
-    <label class="pane-header"
+    <button class="pane-header"
            [class.pane-expanded]="integrator.viewState.messagesConsumerCollectionPane.visible"
            (click)="integrator.onToggleViewPane(integrator.viewState.messagesConsumerCollectionPane)">
         <div class="pane-expando"></div>
         Consumer Messages
-    </label>
+    </button>
 
     <section #messagesConsumerCollectionPane
              *ngIf="integrator.viewState.messagesConsumerCollectionPane.visible"

@@ -22,6 +22,13 @@ export const demoDashboardVendorClassificationMap: DemoDashboardVendorClassifica
         organization: 'project2',
         description: 'Sample testing dashboard #2 - 1 summary billboard'
     },
+    // sample 3 derived from com_company_sample3
+    '3': {
+        organizerPackage: DemoDashboardOrganizerPackageEnumeration.com_company_sample3,
+        organization: 'project3',
+        description: 'Sample testing dashboard #3 - 1 summary billboard'
+    },
+
 
     // augment with examples
     nodeflow_sample: standardDashboardVendorClassificationMap.nodeflow_sample

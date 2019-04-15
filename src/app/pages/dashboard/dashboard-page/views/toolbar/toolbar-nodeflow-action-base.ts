@@ -2,7 +2,7 @@ import { NodeflowAssetNodeComponent } from "../../client/organizers/nodeflow/vie
 import { NodeflowStudioCompositorComponent } from "../../../studio/nodeflow-studio-compositor/nodeflow-studio-compositor.component";
 import { Injector, Input, OnChanges, OnDestroy, OnInit, SimpleChanges, ViewContainerRef } from "@angular/core";
 import { FormGroup } from "@angular/forms";
-import { Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { NodeModel } from "../../../studio/nodeflow-studio-compositor/state/model/node.model";
 import { NodeflowStudioGridStateManagerService } from "../../../studio/nodeflow-studio-compositor/nodeflow-studio-grid-state-manager.service";
 import {
@@ -38,6 +38,8 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
 
     toolbarNodeflowBehaviorActionForm: FormGroup; // each action component subclass will create its own stateful form
     resolvedNodeflow: NodeflowStudioCompositorComponent; // resolves via VCR
+    resolvedNodeflowReady$: BehaviorSubject<boolean> = new BehaviorSubject(false); // after wrapper injects the Nodeflow directly
+
     nodeCollectionChange$: Observable<Array<NodeModel>>; //surfaced from NodeflowStudioGridStateManagerService
     nodeCollectionCache$: Observable<Array<NodeModel>>;
     processingErrorMessage: string | undefined; // propagate processing error strings
@@ -57,9 +59,11 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
         this.types.socketConnectorTypeList = Array.from(this.types.socketConnectorTypeMap);
     }
 
-    // list of non-destroyed plugins
+    // list of non-destroyed plugins, yields empty set if the `gridContainerAssemblyInstance` hasn't yet resolved
     get nodeflowPluginList(): Array<NodeflowAssetNodeComponent<any, any, any, any>> {
-        return this.resolvedNodeflow.pageComponent.gridContainerAssemblyInstance.cardAssemblyPluginList as Array<NodeflowAssetNodeComponent<any, any, any, any>>;
+        return !!this.resolvedNodeflow.pageComponent.gridContainerAssemblyInstance
+            ? this.resolvedNodeflow.pageComponent.gridContainerAssemblyInstance.cardAssemblyPluginList as Array<NodeflowAssetNodeComponent<any, any, any, any>>
+            : [];
     }
 
 
@@ -94,10 +98,12 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
         if (changes.nodeflow && changes.nodeflow.currentValue) {
             this.resolvedNodeflow = (changes.nodeflow.currentValue.injector as Injector).get<NodeflowStudioCompositorComponent>(NodeflowStudioCompositorComponent);
 
+            // when current project switches
             this.projectConfigurationSubscription = this.resolvedNodeflow.pageComponent.dashboardConfiguration$
                 .subscribe((dashboardConfigurationSchema: DashboardConfigurationSchema) =>
                     this.onDashboardConfigurationChange(dashboardConfigurationSchema));
 
+            this.resolvedNodeflowReady$.next(true);
             this.onResolveNodeflowComponent(this.resolvedNodeflow);
         }
     }
@@ -105,9 +111,7 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
     ngOnInit() {
         // observe modeled socket connector changes
         this.socketConnectorRelationModelCollection$ = this.gridStateManagerService.routes.socketConnectorRelationCollectionChange$;
-
         this.toolbarNodeflowBehaviorActionForm = this.createForm();
-
     }
 
     ngOnDestroy() {
@@ -115,6 +119,7 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
         if (this.projectConfigurationSubscription) {
             this.projectConfigurationSubscription.unsubscribe();
         }
+        this.resolvedNodeflowReady$.next(false);
     }
 
     // extend for reacting to route changes that imply a project configuration change

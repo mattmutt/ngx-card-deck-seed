@@ -1,0 +1,52 @@
+
+html {
+    font-family: Arial, Helvetica;
+}
+
+body {
+    padding: 3px;
+    margin: 0;
+}
+
+h5 {
+    font-size: 12pt;
+    font-weight:normal;
+    text-align:center;
+    margin:0;
+}
+
+#chartApplication {
+
+}
+
+/* ------- themes ---------- */
+
+/* ------- light theme ---------- */
+html.light body {
+    color: #333;
+    background-color: transparent;
+}
+
+html.light h5 {
+    color: #225;
+}
+
+html.light #chartApplication {
+
+}
+
+
+/* ------- dark theme ---------- */
+html.dark body {
+    color: #cccccc;
+    background-color: #333;
+}
+
+html.dark h5 {
+    color: #ff3;
+}
+
+html.dark #chartApplication {
+    background-color: #666;
+
+}

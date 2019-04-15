@@ -24,7 +24,7 @@
             "metadata": {
                 "provider": {
                     "business": {
-                        "assetTypeId": "19",
+                        "assetTypeId": "14",
                         "catalogId": "catalogId-temperature-monitor",
                         "layoutId": "layoutId-temperature-monitor"
                     }
@@ -82,7 +82,7 @@
             "metadata": {
                 "provider": {
                     "business": {
-                        "assetTypeId": "11",
+                        "assetTypeId": "16",
                         "catalogId": "catalogId-machine-learning-1",
                         "layoutId": "layoutId-machine-learning-1"
                     }
@@ -177,7 +177,7 @@
             "metadata": {
                 "provider": {
                     "business": {
-                        "assetTypeId": "11",
+                        "assetTypeId": "19",
                         "catalogId": "catalogId-message-layout-3",
                         "layoutId": "layoutId-message-layout-3"
                     }
@@ -257,7 +257,7 @@
             "metadata": {
                 "provider": {
                     "business": {
-                        "assetTypeId": "15",
+                        "assetTypeId": "8",
                         "catalogId": "catalogId-message-layout-4",
                         "layoutId": "layoutId-message-layout-4"
                     }
@@ -592,7 +592,7 @@
                 }
             ],
             "header": {
-                "title": "Deep House 6"
+                "title": "Farm House 6"
             },
             "layout": {
                 "x": 2,

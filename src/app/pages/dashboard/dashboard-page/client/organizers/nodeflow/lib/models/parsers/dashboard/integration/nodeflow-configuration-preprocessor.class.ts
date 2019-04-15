@@ -147,9 +147,9 @@ export class NodeflowConfigurationPreprocessor implements ConfigurationStructure
                     // minRows: 4,
                     // maxRows: 10,
 
-                    minRows: Math.max(Math.max(...inputStructure.cards.map((card) => card.layout.y)) + baseOne , baseOne), // minimal at least a postive integer
+                    minRows: Math.max(Math.max(...inputStructure.cards.map((card) => card.layout.y)) + baseOne, baseOne), // minimal at least a positive integer
                     // tslint:disable-next-line:no-bitwise
-                    maxRows: (Math.max(inputStructure.cards.length, Math.max(...inputStructure.cards.map((card) => card.layout.y))) + baseOne) * maximumSizeGrowthFactor >> 0,
+                    maxRows: (Math.max(inputStructure.cards.length, Math.max(...inputStructure.cards.map((card) => card.layout.y + card.layout.height))) + baseOne) * maximumSizeGrowthFactor >> 0,
 
                     mobileBreakpoint: 0,
 
@@ -321,14 +321,15 @@ export class NodeflowConfigurationPreprocessor implements ConfigurationStructure
         // ================ template binding to card assembly ===========
         if (card.templates) {
 
-            const cardTemplateModuleResource: ResourceFacade<ResourceModuleSchema, ResourceModuleSchema> = {} as any;
-            cardAssemblyLayout.resources.componentsList.push(cardTemplateModuleResource);
-
-            cardTemplateModuleResource.resourceId = `${card.id}:resource-card-assembly`;
-            cardTemplateModuleResource.type = "component-layout-metadata";
-            cardTemplateModuleResource.component = `${card.id}:resource-component`;
-
             if (this.isArrayWithItems(card.templates)) {
+
+                const cardTemplateModuleResource: ResourceFacade<ResourceModuleSchema, ResourceModuleSchema> = {} as any;
+                cardAssemblyLayout.resources.componentsList.push(cardTemplateModuleResource);
+
+                cardTemplateModuleResource.resourceId = `${card.id}:resource-card-assembly`;
+                cardTemplateModuleResource.type = "component-layout-metadata";
+                cardTemplateModuleResource.component = `${card.id}:resource-component`;
+
 
                 const cardFields = [];
 

@@ -7,7 +7,8 @@ export enum DemoDashboardOrganizerPackageEnumeration {
     // customized
     com_company_acme_shared_library, // team shared framework, shared stuff
     com_company_sample1, // Example group 1:  client is one of the "vendor" consumer of the specification
-    com_company_sample2 // Example group 2: extension samples, how to roll a new grouping
+    com_company_sample2, // Example group 2: extension samples, how to roll a new grouping
+    com_company_sample3 // Example group 3: show simple preprocessing
 
 }
 

@@ -59,7 +59,7 @@
                 "resourceId": "deck2:dashboard-item-layout",
                 "type": "dashboard-view-state",
                 "component": "grid-container-dashboard-container",
-                "name": "Sample Deck 2 - dashboard grid assembly prototype / December 2017",
+                "name": "Sample Deck 2 - dashboard grid assembly prototype",
                 "resolver": {
                     "injector": "dashboard-assembly-grid-container",
                     "node": {

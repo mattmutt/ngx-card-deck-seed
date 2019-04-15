@@ -38,7 +38,9 @@
 
 
         <!-- specialization of action buttons -->
-        <nodeflow-toolbar-tabs-container [hidden]="!canvasWidgetViewContainerRef" [nodeflow]="canvasWidgetViewContainerRef" [toolbarForm]="debugForm"></nodeflow-toolbar-tabs-container>
+        <ng-container *ngIf="canvasWidgetViewContainerRef">
+            <nodeflow-toolbar-tabs-container [nodeflow]="canvasWidgetViewContainerRef" [toolbarForm]="debugForm"></nodeflow-toolbar-tabs-container>
+        </ng-container>
 
     </div>
 </form>
@@ -88,6 +90,7 @@
 
     <ng-container [ngSwitch]="routeOrganizerKey">
         <ng-template *ngSwitchCase="'com_company_sample2'" [ngTemplateOutlet]="comCompanySample2Template"></ng-template>
+        <ng-template *ngSwitchCase="'com_company_sample3'" [ngTemplateOutlet]="comCompanySample3Template"></ng-template>
         <ng-template *ngSwitchCase="'nodeflow'" [ngTemplateOutlet]="nodeflowTemplate"></ng-template>
     </ng-container>
 
@@ -161,6 +164,25 @@
                     (layoutItemsChangeList)="onLayoutItemsChange($event)">
 
         <div dashboard-container-header>Card Project: "{{ componentConfiguration.id }}"</div>
+
+    </ngx-card-deck>
+
+</ng-template>
+
+<!-- ### Example Company Sample 3 Card example -->
+<ng-template #comCompanySample3Template>
+
+    <ngx-card-deck #dashboardInstance [configurationMetadata]="componentConfiguration"
+                   [zoomFactor]="debugForm.get('zoom')!.value"
+                   [class.dragging]="isDragging"
+                   (layoutItemInitialize)="onLayoutItemInitialize($event)"
+                   (layoutItemStartMovementInteraction)="onLayoutItemStartMovementInteraction($event)"
+                   (layoutItemEndMovementInteraction)="onLayoutItemEndMovementInteraction($event)"
+                   (layoutItemDestroy)="onLayoutItemDestroy($event)"
+                   (producedAssemblyStrategy)="onGridContainerCreated($event)"
+                   (layoutItemsChangeList)="onLayoutItemsChange($event)">
+
+        <div dashboard-container-header>Preprocessed Project: "{{ componentConfiguration.id }}" ({{ componentConfiguration.resources.cardsList.length }} cards)</div>
 
     </ngx-card-deck>
 

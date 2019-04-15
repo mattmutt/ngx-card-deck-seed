@@ -1,10 +1,10 @@
 <section *ngIf="nodeModel.producer?.messageCollection.size">
-    <label class="pane-header"
+    <button class="pane-header"
            [class.pane-expanded]="integrator.viewState.messagesFormCollectionPane.visible"
            (click)="integrator.onToggleViewPane(integrator.viewState.messagesFormCollectionPane)">
         <div class="pane-expando"></div>
         Producer Forms
-    </label>
+    </button>
 
     <section #messagesFormCollectionPane *ngIf="integrator.viewState.messagesFormCollectionPane.visible"
              [formGroup]="integrator.simulatorProducerFormView.messagesForm"
