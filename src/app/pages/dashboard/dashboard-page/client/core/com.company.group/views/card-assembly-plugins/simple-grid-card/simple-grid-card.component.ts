@@ -112,7 +112,7 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
         protected _cd: ChangeDetectorRef,
         private _dashboardComponent: DashboardComponent,
         private _element: ElementRef,
-        private _parser: SimpleGridParserService,
+        private _parser: SimpleGridParserService<RelationalDataFieldMetadata>,
         private _renderer: Renderer2,
         private _service: SimpleGridCardService<SimpleGridDataModel>) {
 
@@ -157,38 +157,42 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
         this.layout.availableScrollHeightMetric = this.layout.availableWidthMetric = -1; // flicker artifact restraint. Zero would have hidden erroneously
 
         // reflow algorithm
-        this.streamCardLayoutDimension("height").pipe(
-            debounceTime(clientTicksBetweenLayoutDelay)
-        )
-            .subscribe((height: number) => {
-                const calculatedHeight = this.calculateAvailableScrollHeightMetric(height);
+        this.assemblySubscriptionList.push(
+            this.streamCardLayoutDimension("height").pipe(
+                debounceTime(clientTicksBetweenLayoutDelay)
+            )
+                .subscribe((height: number) => {
+                    const calculatedHeight = this.calculateAvailableScrollHeightMetric(height);
 
-                if (calculatedHeight > 0) {
-                    this.layout.availableScrollHeightMetric = calculatedHeight;
-                } else {
-                    // saw it happen on release server few times. more of a sequencing incident
-                    // console.warn("zero height allocation");
-                }
+                    if (calculatedHeight > 0) {
+                        this.layout.availableScrollHeightMetric = calculatedHeight;
+                    } else {
+                        // saw it happen on release server few times. more of a sequencing incident
+                        // console.warn("zero height allocation");
+                    }
 
-                // sensitive change requires CD. else grid won't fit the container
-                this._cd.markForCheck();
-            });
+                    // sensitive change requires CD. else grid won't fit the container
+                    this._cd.markForCheck();
+                })
+        );
 
         // reflow algorithm / on the headers
-        this.streamCardLayoutDimension("width").pipe(
-            debounceTime(clientTicksBetweenLayoutDelay * 2)
-        )
-            .subscribe((width: number) => {
+        this.assemblySubscriptionList.push(
+            this.streamCardLayoutDimension("width").pipe(
+                debounceTime(clientTicksBetweenLayoutDelay * 2)
+            )
+                .subscribe((width: number) => {
 
-                const scrollbarWidth = 0; // inset when scrollbar
-                this.layout.availableWidthMetric = width + scrollbarWidth;
-                // may not be fully initialized
-                if (this.gridComponent) {
-                    this.gridComponent.resize();
-                    // relayout caused the height to change, which would require resizing calc
-                    this._cd.markForCheck();
-                }
-            });
+                    const scrollbarWidth = 0; // inset when scrollbar
+                    this.layout.availableWidthMetric = width + scrollbarWidth;
+                    // may not be fully initialized
+                    if (this.gridComponent) {
+                        this.gridComponent.resize();
+                        // relayout caused the height to change, which would require resizing calc
+                        this._cd.markForCheck();
+                    }
+                })
+        );
 
     }
 
@@ -273,25 +277,27 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
         // todo: discover why do titles not show up unless stream is delayed?
         const o$ = (this._service.streamInitialDataModel(this.resourceToken.card, this._dashboardComponent) as Observable<SimpleGridDataModel>).pipe(delay(0));
 
-        o$.subscribe((d) => {
+        this.assemblySubscriptionList.push(
+            o$.subscribe((d) => {
 
-            // ETL processing, DAO load and prep
-            const responseParser = this._parser.register(this.resourceToken.card, this.library, this.fieldMetadataList);
-            if (responseParser) {
-                this.simpleGridRecords = responseParser.extract(d);
-                this.transformedSimpleGridRecords = responseParser.transform(this.simpleGridRecords);
-            } else {
-                // Transformer unavail
-                console.error("no transformer linkage supported for", this.resourceToken.card);
-            }
-            this.initialDataModelResponseModel = d;
+                // ETL processing, DAO load and prep
+                const responseParser = this._parser.register(this.resourceToken.card, this.library, this.fieldMetadataList);
+                if (responseParser) {
+                    this.simpleGridRecords = responseParser.extract(d) as Array<any>;
+                    this.transformedSimpleGridRecords = responseParser.transform(this.simpleGridRecords);
+                } else {
+                    // Transformer unavail
+                    console.error("no transformer linkage supported for", this.resourceToken.card);
+                }
+                this.initialDataModelResponseModel = d;
 
-            // resolve and map to pointer used by view reference
-            this.loadedFlag = true;
-            this.updateCardCountView();
-            this.synchronizeFooterLayout();
-            this.forceViewRelayout();
-        });
+                // resolve and map to pointer used by view reference
+                this.loadedFlag = true;
+                this.updateCardCountView();
+                this.synchronizeFooterLayout();
+                this.forceViewRelayout();
+            })
+        );
 
         return o$;
     }

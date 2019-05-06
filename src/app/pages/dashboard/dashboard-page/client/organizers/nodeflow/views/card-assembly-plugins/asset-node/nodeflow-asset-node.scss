@@ -1,7 +1,7 @@
 @import "~ngx-card-deck/styles/theme";
 @import "./styles/toggle-arrow";
 
-$componentType: "card-asset-node";
+$componentType: "card-asset-node"; // annotation used
 
 %filled-layout {
     content: "";
@@ -83,7 +83,7 @@ $componentType: "card-asset-node";
 }
 
 // blueprint for all node template instances
-@include selectCardLayoutAspectByComponentType("*", "card-asset-node", "header") {
+@include selectCardLayoutAspectByComponentType("*", $componentType, "header") {
     padding: .125rem .25rem;
     font-size: 12pt;
     line-height: normal;
@@ -94,7 +94,7 @@ $componentType: "card-asset-node";
 
 }
 
-@include selectCardLayoutAspectByComponentType("*", "card-asset-node", "body") {
+@include selectCardLayoutAspectByComponentType("*", $componentType, "body") {
     padding: 0;
 }
 

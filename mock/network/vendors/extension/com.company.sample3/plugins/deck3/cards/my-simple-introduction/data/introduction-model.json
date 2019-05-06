@@ -1,0 +1,54 @@
+{
+    "product": "XYZ-9876-000",
+    "organization": "Automotive",
+    "name": "Lowrider Car 10x",
+    "collections": {
+        "devices": [
+            {
+                "id": "device1",
+                "name": "engine",
+                "categoryId": "category2"
+            },
+            {
+                "id": "device3",
+                "name": "core",
+                "categoryId": "category2"
+            },
+            {
+                "id": "device4",
+                "name": "battery",
+                "categoryId": "category2"
+            },
+            {
+                "id": "device5",
+                "name": "steering",
+                "categoryId": "category1"
+            },
+            {
+                "id": "device7",
+                "name": "shifter",
+                "categoryId": "category1"
+            },
+            {
+                "id": "device6",
+                "name": "wheel",
+                "categoryId": "category3"
+            }
+        ],
+        "categories": [
+            {
+                "id": "category1",
+                "name": "driver"
+            },
+            {
+                "id": "category2",
+                "name": "transmission"
+            },
+            {
+                "id": "category3",
+                "name": "exterior"
+            }
+        ]
+    }
+}
+

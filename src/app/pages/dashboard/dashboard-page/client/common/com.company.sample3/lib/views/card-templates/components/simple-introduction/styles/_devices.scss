@@ -1,0 +1,17 @@
+.devicesList {
+
+    // nested table
+    TABLE {
+        width: 100%;
+        border: 1px solid rgba(0, 0, 0, .3);
+
+        THEAD > TH {
+            background-color: rgba(255, 255, 255, .15);
+        }
+
+        TBODY > TR > TD {
+            padding: 0 0.2rem;
+
+        }
+    }
+}

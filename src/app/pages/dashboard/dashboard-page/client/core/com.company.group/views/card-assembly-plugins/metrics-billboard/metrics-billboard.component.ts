@@ -133,15 +133,17 @@ export class MetricsBillboardComponent extends LayoutAssemblyCardBase<MetricsBil
 
       const o$ = this._service.streamInitialDataModel(this.resourceToken.card, this._dashboardComponent) as Observable<MetricsBillboardDataModel>;
 
-      o$.subscribe((mbdm) => {
-         this.billboardEntity = mbdm.response.entity;
-         const resourceMetersEntries = Array.prototype.slice.call(this.billboardEntity.resourceMeters);
-         this.numericTransformedValueItemsList = this._parser.deriveVisibleModelItemsList(resourceMetersEntries);
+       this.assemblySubscriptionList.push(
+           o$.subscribe((mbdm) => {
+               this.billboardEntity = mbdm.response.entity;
+               const resourceMetersEntries = Array.prototype.slice.call(this.billboardEntity.resourceMeters);
+               this.numericTransformedValueItemsList = this._parser.deriveVisibleModelItemsList(resourceMetersEntries);
 
-         this.loadedFlag = true;
-         this.forceViewRelayout();
-         this.resourceToken.outlet.forceViewRelayout();
-      });
+               this.loadedFlag = true;
+               this.forceViewRelayout();
+               this.resourceToken.outlet.forceViewRelayout();
+           })
+       );
 
       return o$;
    }

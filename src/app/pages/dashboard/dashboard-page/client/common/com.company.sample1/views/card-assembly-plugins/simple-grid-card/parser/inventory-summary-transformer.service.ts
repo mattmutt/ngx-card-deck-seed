@@ -1,15 +1,13 @@
 import { Injectable } from "@angular/core";
-import { ParsedResponseTransformBase } from "../../../../../../core/com.company.group/lib/services/sample-product/dataservice/response-parser-base.class";
+import { ParsedResponseTransformBase } from "../../../../../../core/com.company.group/lib/services/sample-product/dataservice/parsed-response-transform-base.class";
+import { RelationalDataFieldMetadata } from "../../../../../../core/com.company.group/views/card-assembly-plugins/simple-grid-card/grid-relational-data-field-model.interface";
 
 
 // strategies based upon some token
 @Injectable()
-export class InventorySummaryTransformerService extends ParsedResponseTransformBase {
+export class InventorySummaryTransformerService extends ParsedResponseTransformBase<RelationalDataFieldMetadata> {
 
-
-   constructor() {
-      super();
-   }
+   // constructor() { super(); }
 
    public getStrategyIdentifier() {
       return "InventorySummaryTransformerService";

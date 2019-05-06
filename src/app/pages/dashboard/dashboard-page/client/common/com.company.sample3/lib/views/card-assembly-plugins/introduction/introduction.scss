@@ -1,0 +1,55 @@
+@import "~ngx-card-deck/styles/theme";
+
+$componentType: "card-introduction";
+$widgetType: "introduction-widget";
+$gridResizeHandleSize: 10px;
+
+%filled-layout {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+@mixin box-outline($size, $color, $alpha) {
+    box-shadow: 0 0 0px $size rgba($color, $alpha);
+}
+
+:host {
+    @import "../../../../../standard/card-outlet/card-assembly-plugins/base/styles/standard-card-assembly-plugin-base";
+
+    // slightly darker
+    background: rgba(0, 0, 0, .1);
+    padding: $gridResizeHandleSize; // accommodate bounding handles around perimeter of card
+
+    > .#{$widgetType} {
+
+        // /++++++ RWD +++++++
+        @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+            // flex-wrap: nowrap;
+        }
+        // ++++++ RWD +++++++
+
+    }
+
+}
+
+// highlight grid item with a defined shadow
+@include selectGridLayoutItemByComponentType("*", $componentType) {
+    border: 1px solid rgba(0, 0, 0, .2);
+    border-radius: 0.5rem;
+}
+
+// common style applied to header of all instances of the introduction card
+@include selectCardLayoutAspectByComponentType("*", $componentType, "header") {
+    padding: .125rem .25rem;
+    box-shadow: inset 0 -2px 0px 0px rgba(0, 0, 0, .2);
+}
+
+// common style applied to body of all instances of the introduction card
+@include selectCardLayoutAspectByComponentType("*", $componentType, "body") {
+    padding: 0;
+}
+

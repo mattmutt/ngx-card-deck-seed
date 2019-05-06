@@ -1,0 +1,48 @@
+{
+    "product": "ABC-1234-000",
+    "organization": "Computing",
+    "name": "Apollo workstation",
+    "collections": {
+        "devices": [
+            {
+                "id": "device1",
+                "name": "monitor",
+                "categoryId": "category3"
+            },
+            {
+                "id": "device2",
+                "name": "router",
+                "categoryId": "category2"
+            },
+            {
+                "id": "device3",
+                "name": "terminal",
+                "categoryId": "category1"
+            },
+            {
+                "id": "device4",
+                "name": "keyboard",
+                "categoryId": "category1"
+            },
+            {
+                "id": "device5",
+                "name": "trackball",
+                "categoryId": "category1"
+            }
+        ],
+        "categories": [
+            {
+                "id": "category1",
+                "name": "peripheral"
+            },
+            {
+                "id": "category2",
+                "name": "networking"
+            },
+            {
+                "id": "category3",
+                "name": "visual"
+            }
+        ]
+    }
+}

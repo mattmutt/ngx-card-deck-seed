@@ -25,7 +25,7 @@ export abstract class StandardLayoutAssemblyCardBase<T extends DashboardCardMode
     // position-based view mapping
     public positionBasedTemplateMap = {
         header: {} as { [identifier: string]: TemplateRef<any> },
-        body: {}  as { [identifier: string]: TemplateRef<any> },
+        body: {} as { [identifier: string]: TemplateRef<any> },
         footer: {} as { [identifier: string]: TemplateRef<any> }
     };
 

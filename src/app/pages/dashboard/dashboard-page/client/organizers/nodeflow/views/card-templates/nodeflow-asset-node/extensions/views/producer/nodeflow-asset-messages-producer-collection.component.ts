@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Inject, Input, OnInit } from "@angular/core";
+import { Component, forwardRef, Inject, Input, OnInit } from "@angular/core";
 import { NodeModel } from "../../../../../../../../../../studio/nodeflow-studio-compositor/state/model/node.model";
 import { NodeflowAssetNodeTemplateComponent } from "../../../nodeflow-asset-node-template.component";
-import { SocketConnectorRelationStateType } from "../../../../../../../../../../studio/nodeflow-studio-compositor/state/model/relation/socket-connector-relation.model";
-import { MessageConnectorsRouteRelationModel } from "../../../../../../../../../../studio/nodeflow-studio-compositor/state/model/relation/message-connectors-route-relation.model";
 
 @Component({
     selector: "nodeflow-asset-messages-producer-collection",

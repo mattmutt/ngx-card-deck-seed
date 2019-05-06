@@ -108,7 +108,8 @@ export class NodeflowStudioGridStateManagerService {
                 }
             }
         } else {
-            // an error or buggy edge case when navigating ( returning to ) an existing grid view. Likely has subscriptions that haven't been torn down
+            // an error or buggy edge case when navigating ( returning to ) an existing grid view
+            // todo: has subscriptions that haven't been removed thoroughly or at the right time. needs rework
             console.error("connector links recalculated with uninitialized nodeList");
         }
 

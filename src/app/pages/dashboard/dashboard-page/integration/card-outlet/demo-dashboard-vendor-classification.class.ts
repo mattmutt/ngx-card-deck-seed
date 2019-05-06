@@ -3,6 +3,7 @@ import { DemoDashboardVendorClassificationMap } from "./demo-dashboard-card-outl
 import { DemoDashboardOrganizerPackageEnumeration } from "./demo-dashboard-organizer-package.class";
 import { standardDashboardVendorClassificationMap } from "../../client/common/standard/card-outlet/standard-dashboard-vendor-classification.class";
 
+// used in template mappings
 export const demoDashboardVendorClassificationMap: DemoDashboardVendorClassificationMap = {
     // 0 represents contributor's framework
     '0': {
@@ -29,6 +30,12 @@ export const demoDashboardVendorClassificationMap: DemoDashboardVendorClassifica
         description: 'Sample testing dashboard #3 - 1 summary billboard'
     },
 
+    // custom sample packaging classification
+    custom_sample: {
+        organizerPackage: DemoDashboardOrganizerPackageEnumeration.com_company_sample3,
+        organization: 'custom_sample', // per card metadata "templates > body > organization"
+        description: 'custom sample in com_company_sample3'
+    },
 
     // augment with examples
     nodeflow_sample: standardDashboardVendorClassificationMap.nodeflow_sample

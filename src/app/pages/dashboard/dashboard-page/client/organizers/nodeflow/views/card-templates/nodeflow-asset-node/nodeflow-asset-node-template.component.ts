@@ -1,4 +1,4 @@
-import { Component, ElementRef, forwardRef, Inject, OnInit, Renderer2 } from "@angular/core";
+import { Component, ElementRef, forwardRef, Inject, OnDestroy, OnInit, Renderer2 } from "@angular/core";
 import { demoDashboardVendorClassificationMap } from "../../../../../../integration/card-outlet/demo-dashboard-vendor-classification.class";
 import { NodeflowAssetNodeComponent } from "../../card-assembly-plugins/asset-node/nodeflow-asset-node.component";
 import { StandardCardPluginTemplateBase } from "../../../../../common/standard/card-outlet/card-assembly-plugins/base/standard-card-plugin-template-base";
@@ -56,12 +56,10 @@ const resources = {
 
 
 @Component({
-    selector: 'nodeflow-asset-node-template',
-    templateUrl: './nodeflow-asset-node-template.html',
+    templateUrl: 'nodeflow-asset-node-template.html',
     viewProviders: [SimulatorProducerFormViewProvider, SimulatorConsumerFormViewProvider],
-//    changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class NodeflowAssetNodeTemplateComponent extends StandardCardPluginTemplateBase implements OnInit {
+export class NodeflowAssetNodeTemplateComponent extends StandardCardPluginTemplateBase implements OnInit, OnDestroy {
     // annotation stamped at class level
     static classification: DashboardCardTemplatableClassMetadata = {
         organization: new TemplateCreatorOrganization(demoDashboardVendorClassificationMap.nodeflow_sample, "nodeflow presentation template")
@@ -129,6 +127,13 @@ export class NodeflowAssetNodeTemplateComponent extends StandardCardPluginTempla
         super.ngOnInit();
         this.initialize();
     }
+
+    /*
+    remember to call back to base class
+    ngOnDestroy() {
+        super.ngOnDestroy();
+    }
+    */
 
     // -------- user interaction ------------
     onToggleViewPane(viewStateItemRef: { visible: boolean }) {
@@ -199,25 +204,28 @@ export class NodeflowAssetNodeTemplateComponent extends StandardCardPluginTempla
         this.types.socketConnectorTypeList = Array.from(this.types.socketConnectorTypeMap);
 
         // load the generator form platform for modeling the message
-        this.cardAssemblyPlugin.onCompositorNodeChange$.subscribe((nodeModel) => {
-            // provision data transfer and delivery form views
-            ([this.simulatorProducerFormView, this.simulatorConsumerFormView] as Array<SimulatorFormViewBase>)
-                .map((directedMessageFormView) => {
-                    directedMessageFormView.setMessageConnectivityDelegate(this.cardAssemblyPlugin.viewModel.messageConnectivityDelegate);
-                    directedMessageFormView.createViewForm(nodeModel);
-                });
-
-        });
+        this.templateSubscriptionList.push(
+            this.cardAssemblyPlugin.onCompositorNodeChange$.subscribe((nodeModel) => {
+                // provision data transfer and delivery form views
+                ([this.simulatorProducerFormView, this.simulatorConsumerFormView] as Array<SimulatorFormViewBase>)
+                    .map((directedMessageFormView) => {
+                        directedMessageFormView.setMessageConnectivityDelegate(this.cardAssemblyPlugin.viewModel.messageConnectivityDelegate);
+                        directedMessageFormView.createViewForm(nodeModel);
+                    });
+            })
+        );
 
         // mark template as compact when RWD breakpoint less than reasonable size
-        this.cardAssemblyPlugin.onCardDimensionCompactViewChange$.subscribe((isTinyCardSize) => {
-            if (isTinyCardSize) {
-                this.viewState.detailsPane.visible = false;
-            } else {
-                // may enforce?
-                this.viewState.detailsPane.visible = true;
-            }
-        });
+        this.templateSubscriptionList.push(
+            this.cardAssemblyPlugin.onCardDimensionCompactViewChange$.subscribe((isTinyCardSize) => {
+                if (isTinyCardSize) {
+                    this.viewState.detailsPane.visible = false;
+                } else {
+                    // may enforce?
+                    this.viewState.detailsPane.visible = true;
+                }
+            })
+        );
 
 
         // demonstration

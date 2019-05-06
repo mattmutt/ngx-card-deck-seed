@@ -30,13 +30,12 @@
                 }
             ]
         },
-
         {
             "id": "my-simple-embed",
             "component": "card-remote-served",
             "header": {
-                "title": "remote simple",
-                "icon": "map"
+                "title": "Remote App",
+                "icon": "lightbulb"
             },
             "layout": {
                 "x": 0,
@@ -54,6 +53,76 @@
             "templates": []
         },
         {
+            "id": "my-simple-introduction",
+            "component": "card-introduction",
+            "header": {
+                "title": "Simple Introduction",
+                "icon": "book-bookmark"
+            },
+            "layout": {
+                "x": 1,
+                "y": 1,
+                "width": 1,
+                "height": 2
+            },
+            "providers": {
+                "introduction": {
+                    "assetTypeId": "1",
+                    "channelTopic": "card-introduction-chat123"
+                }
+            },
+            "services": [
+                {
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/data/introduction-model.json"
+                    }
+                }
+            ],
+            "templates": [
+                {
+                    "body": {
+                        "organization": "custom_sample",
+                        "template": "introductionView"
+                    }
+                }
+            ]
+        },
+        {
+            "id": "my-advanced-introduction",
+            "component": "card-introduction",
+            "header": {
+                "title": "Yet Another Introduction",
+                "icon": "mountain"
+            },
+            "layout": {
+                "x": 1,
+                "y": 3,
+                "width": 2,
+                "height": 2
+            },
+            "providers": {
+                "introduction": {
+                    "assetTypeId": "2",
+                    "channelTopic": "card-introduction-chat123"
+                }
+            },
+            "services": [
+                {
+                    "network": {
+                        "url": "/network/vendors/extension/{{ route.dashboardOrganizerPath }}/plugins/{{ route.dashboardConfigurationIdentifier }}/cards/{{ document.id }}/data/introduction-model.json"
+                    }
+                }
+            ],
+            "templates": [
+                {
+                    "body": {
+                        "organization": "custom_sample",
+                        "template": "introductionView"
+                    }
+                }
+            ]
+        },
+        {
             "id": "earth-satellite",
             "component": "card-remote-served",
             "header": {
@@ -69,7 +138,7 @@
             "services": [
                 {
                     "remote-served-service": {
-                        "url": "https://cdn.star.nesdis.noaa.gov/GOES16/ABI/GIFS/GOES16-CONUS-GEOCOLOR-625x375.gif"
+                        "url": "//cdn.star.nesdis.noaa.gov/GOES16/ABI/CONUS/GEOCOLOR/625x375.jpg"
                     }
                 }
             ],

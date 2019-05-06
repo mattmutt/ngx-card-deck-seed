@@ -9,7 +9,7 @@ import {
     OnInit,
     Renderer2
 } from "@angular/core";
-import { combineLatest, merge, Observable, Subject, Subscription } from "rxjs";
+import { combineLatest, merge, Observable, Subject } from "rxjs";
 import {
     AssetNodeCardMetadataSchema,
     AssetTypeConfigurationSchema,
@@ -87,7 +87,6 @@ export class NodeflowAssetNodeComponent<T extends NodeflowAssetNodeDataModel, F 
     private _cardDimensionCompactResponsiveViewChange$: Observable<boolean>; // when card is unreasonably small
 
     private _nodeflowCompositorViewModel: NodeflowViewModelFacade;
-    private relayoutMonitoringSubscription: Subscription;
 
 
     constructor(// interface token conformance requirement
@@ -139,11 +138,13 @@ export class NodeflowAssetNodeComponent<T extends NodeflowAssetNodeDataModel, F 
         this._cd.markForCheck();
 
         // coalesces any relationship changes into a CD trigger
-        this.relayoutMonitoringSubscription = merge(viewModelFacade.onNodeConsumerRelationsChange$, viewModelFacade.messageConnectivityDelegate.onSocketConnectorRelationCollectionChange())
-            .pipe(debounceTime(0))
-            .subscribe((obs$) => {
-                this.forceViewRelayout();
-            });
+        this.assemblySubscriptionList.push(
+            merge(viewModelFacade.onNodeConsumerRelationsChange$, viewModelFacade.messageConnectivityDelegate.onSocketConnectorRelationCollectionChange())
+                .pipe(debounceTime(0))
+                .subscribe((obs$) => {
+                    this.forceViewRelayout();
+                })
+        );
 
     }
 
@@ -182,18 +183,20 @@ export class NodeflowAssetNodeComponent<T extends NodeflowAssetNodeDataModel, F 
         const o$ = this._service.streamInitialDataModel(this.resourceToken.card, this._dashboardComponent)
             .pipe(map((val) => val as T)); // unwrap cast
 
-        o$.subscribe((data) => {
+        this.assemblySubscriptionList.push(
+            o$.subscribe((data) => {
 
-            if (data.response) {
-                this.widgetDataEntity = <E>((data as T).response.entity);
-            } else {
-                // missing data case
-            }
+                if (data.response) {
+                    this.widgetDataEntity = <E>((data as T).response.entity);
+                } else {
+                    // missing data case
+                }
 
-            this.loadedFlag = true;
-            this.forceViewRelayout();
-            this.resourceToken.outlet.forceViewRelayout();
-        });
+                this.loadedFlag = true;
+                this.forceViewRelayout();
+                this.resourceToken.outlet.forceViewRelayout();
+            })
+        );
 
         return o$;
     }
@@ -210,9 +213,6 @@ export class NodeflowAssetNodeComponent<T extends NodeflowAssetNodeDataModel, F 
         // not dereference it manually, ViewDestroyError will occur
         // this._nodeflowCompositorViewModel = undefined as any;
 
-        if (this.relayoutMonitoringSubscription) {
-            this.relayoutMonitoringSubscription.unsubscribe(); // async stream teardown safety
-        }
         this._compositorNodeChange$.complete();
     }
 

@@ -28,42 +28,5 @@ export class NodeflowAssetNodeService<T extends NodeflowAssetNodeDataModel> exte
         return of(<T> (model as any));
     }
 
-
-    /*
-    // network service fetch and data assembly
-    streamInitialDataModel(dcrf: DashboardConfigurationResourceFacade<DashboardConfigurationResourceCardSchema, DashboardConfigurationResourceCardSchema>,
-                           dashboardFacade: DashboardComponent): Observable<DashboardGridDataReaderResponseDeliverable<T>> {
-
-      const dals = dcrf.resolver.injectorInstance.state() as DashboardAssemblyLayoutState;
-      const serviceResourceFacade = dals.findConfigurationResourceByType("modulesList", "service")!;
-
-      const o$ = this._templateTransporter.awaitingResourceStream(serviceResourceFacade).pipe(
-        map((d: boolean) => {
-          const entity: AssetNodeDataRecordEntitySchema = serviceResourceFacade.resolver.getSnapshotData();
-          return {response: {entity: entity}};
-        }),
-        share());
-
-      return o$;
-    }
-    */
-
-
-    /*
-    // preferred screen shot size
-    getBitmap$(resourceId: string, width: number, height: number): Observable<any> {
-        return this.apiService.getProperty$(resourceId, ["screenshot"], {
-            propertyParams: [{
-                propertyName: "bitmap",
-                parameterType: "paramtype",
-                parameter: {
-                    width: width,
-                    height: height
-                }
-            }]
-        });
-    }
-    */
-
 }
 

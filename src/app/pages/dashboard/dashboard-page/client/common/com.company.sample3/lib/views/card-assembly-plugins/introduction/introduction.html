@@ -1,0 +1,22 @@
+<section *ngIf="initialDataModelResponse$ | async" class="introduction-widget">
+
+    <ng-container *ngIf="cardModel.model.assetType; else missingCardMetadata">
+        <ng-template [ngTemplateOutlet]="positionBasedTemplateMap.body['introductionView']"
+                     [ngTemplateOutletContext]="{ library: library, cardModel: cardModel }"></ng-template>
+    </ng-container>
+
+</section>
+
+
+<ng-template #missingCardMetadata>
+    AssetTypeId error: <span [textContent]="cardModel.providers.introduction.assetTypeId"></span>
+</ng-template>
+
+
+<!-- ============= standard template framework for billboard card ================= -->
+<ng-template #defaultHeaderTemplate let-fieldMetadata="fieldMetadata"></ng-template>
+<ng-template #defaultBodyTemplate let-fieldMetadata="fieldMetadata"></ng-template>
+
+<!-- ============= extension for introduction template card ================= -->
+<ng-container [ngIf]="isTemplatePhaseReady"
+              *ngComponentOutlet="templatableComponentClass; ngModuleFactory: templatableModuleFactory"></ng-container>

@@ -1,5 +1,5 @@
 <header>
-    <a href="//github.com/mattmutt/ngx-card-deck-seed" tabindex="-1"><div class="projectIcon"></div></a>
+    <a href="//github.com/mattmutt/ngx-card-deck" tabindex="-1"><div class="projectIcon"></div></a>
     <div [textContent]="title"></div>
 </header>
 
@@ -28,6 +28,7 @@
                         <li *ngFor="let link of section.links">
                             <a [routerLink]="link.path" [queryParams]="link.query" [routerLinkActive]="'active'"
                                [textContent]="link.label"></a>
+                            <span [textContent]="link.subtitle"></span>
                         </li>
                     </ul>
                 </section>

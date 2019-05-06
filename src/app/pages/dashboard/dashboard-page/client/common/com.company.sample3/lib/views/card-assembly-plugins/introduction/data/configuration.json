@@ -1,0 +1,38 @@
+[
+    {
+        "assetTypeId": "1",
+        "iconDecoratorClass": "symbol1",
+        "localization": {
+            "name": {
+                "text": "Message Layout"
+            }
+        }
+    },
+    {
+        "assetTypeId": "2",
+        "iconDecoratorClass": "symbol105",
+        "localization": {
+            "name": {
+                "text": "Security Monitor"
+            }
+        }
+    },
+    {
+        "assetTypeId": "3",
+        "iconDecoratorClass": "symbol6",
+        "localization": {
+            "name": {
+                "text": "Workflow"
+            }
+        }
+    },
+    {
+        "assetTypeId": "4",
+        "iconDecoratorClass": "symbol8",
+        "localization": {
+            "name": {
+                "text": "Streamed Event"
+            }
+        }
+    }
+]

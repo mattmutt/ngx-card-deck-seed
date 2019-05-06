@@ -1,0 +1,151 @@
+@import "~ngx-card-deck/styles/theme";
+
+$componentType: "card-introduction";
+$widgetType: "introduction-widget";
+
+:host {
+    width: 100%;
+    height: 100%;
+    display: block;
+
+    ::ng-deep SECTION {
+        $rendered-elements-count: 3; // PROPERTY: how many inner card children
+        $chartWidgetGutterWidth: 10%;
+        $divider-line-width: 1px;
+        $divider-line-color: #cecece;
+
+        &.#{$widgetType} {
+            display: flex;
+            flex-direction: row;
+            height: 100%;
+
+            justify-content: center;
+            align-content: flex-start;
+            align-items: baseline; // deviates a bit i know
+
+            flex-wrap: wrap;
+
+            [role="container"] {
+                border: 0;
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                height: 100%;
+
+                .details {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 0;
+                    padding-right: 2px;
+
+                    font-size: 10pt;
+                    overflow-y: auto;
+                    box-shadow: 2px 0 0px 0px rgba(0, 0, 0, 0.1);
+
+                    // tab scroll only the contents
+                    > clr-tabs {
+                        display: flex;
+                        flex-direction: column;
+                        overflow: hidden;
+                        flex-basis: 100%;
+
+                        > [role="tabslist"] {
+                            flex: 0;
+                        }
+
+                        > [role="tabpanel"] {
+                            display: flex;
+                            flex: 1;
+                            overflow-y: auto;
+                        }
+                    }
+
+
+                    @import "styles/devices";
+                    @import "styles/discussions";
+                }
+
+                .icon {
+                    flex: 0 1;
+
+                    height: 100%;
+                    padding-left: 0.5rem;
+
+                    display: flex;
+                    align-content: center;
+
+                    @import "styles/icons";
+
+                    > .iconButtonShape {
+                        $buttonSize: 1.3rem;
+
+                        margin: auto;
+                        border: 1px solid #0097d9;
+                        border-radius: 1.5rem;
+                        width: $buttonSize + 0.02rem;
+                        height: $buttonSize;
+                        display: flex;
+
+
+                        // simulate icon blue chromatic
+                        > I {
+                            filter: brightness(0.4) sepia(1) hue-rotate(173deg) saturate(3.5);
+                            margin: auto;
+                        }
+
+                        &:hover {
+                            border-color: darken(#0097d9, 5%);
+                            background-color: mix(#0097d9, #ffffff, 10%);
+                            cursor: pointer;
+                        }
+
+                        // toggle
+                        &.active {
+                            border-color: darken(#0097d9, 15%);
+                            background-color: mix(#0097d9, #ffffff, 30%);
+                        }
+
+
+                    }
+
+                    // reclaim extra space when inventory/messages pane visible
+                    &.pane-shrink {
+                        min-width: 1rem;
+
+                        > .iconButtonShape {
+                            $buttonSize: 1.3rem / 2;
+                            padding: 0.1rem;
+                            width: $buttonSize + 0.02rem;
+                            height: $buttonSize;
+                        }
+                    }
+                }
+
+            }
+
+            // ++++++ RWD +++++++
+            @include respond-to-rwd-list(('medium', 'large', 'maximum')) {
+                flex-wrap: nowrap;
+            }
+            // /++++++ RWD +++++++
+
+            // widget
+        }
+
+    }
+
+}
+
+// header icon visual design
+@include selectCardLayoutAspectByComponentType("*", $componentType, "header") {
+    // visual design: styling header background just for this card type
+    background: linear-gradient(to right, rgba(135, 85, 218, .2), rgba(73, 74, 81, 0));
+
+    // visual design: slight rounded badge shape on icon
+    ::ng-deep I.headerIcon {
+        border-radius: 1rem;
+        border: 1px solid rgba(0, 0, 0, .2);
+        background-color: rgba(255, 255, 255, .3);
+    }
+}
+

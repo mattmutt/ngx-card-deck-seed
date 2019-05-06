@@ -141,159 +141,161 @@ export class SummaryBillboardComponent extends LayoutAssemblyCardBase<SummaryBil
 
         const o$ = this._service.streamInitialDataModel(this.resourceToken.card, this._dashboardComponent) as Observable<SummaryBillboardDataModel>;
 
-        o$.subscribe((mbdm) => {
-            this.billboardEntity = mbdm.response.entity;
+        this.assemblySubscriptionList.push(
+            o$.subscribe((mbdm) => {
+                this.billboardEntity = mbdm.response.entity;
 
-            // view layer
-            const billboardDashboardEntity = Array.prototype.slice.call(this.billboardEntity.dashboardData);
+                // view layer
+                const billboardDashboardEntity = Array.prototype.slice.call(this.billboardEntity.dashboardData);
 
-            this.numericTransformedValueItemsList = this._parser.deriveVisibleModelItemsList(billboardDashboardEntity);
-
-            // example structure
-            this.fieldMetadataList = [
-                {
-                    "id": "inventory_entity_name",
-                    "type": {
-                        "classifier": "string"
-                    },
-                    "text": {
-                        "header": {
-                            "key": "inventory_entity_name"
-                        }
-                    },
-                    "layout": {
-                        "alignment": "left",
-                        "dimensions": {
-                            "width": {
-                                "initial": {
-                                    "value": 50,
-                                    "metric": "%"
-                                }
-                            }
-                        }
-                    },
-                    "view": {
-                        "body": {
-                            "organization": "project1",
-                            "template": "inventorySummaryNameItem",
-                            "context": {
-                                "schema": "",
-                                "variables": {
-                                    "color": "blue"
-                                }
-                            }
-                        }
-                    }
-                },
-                {
-                    "id": "inventory_entity_count_graph",
-                    "type": {
-                        "classifier": "number"
-                    },
-                    "text": {
-                        "header": {
-                            "key": "inventory_entity_count"
-                        }
-                    },
-                    "layout": {
-                        "alignment": "left",
-                        "dimensions": {
-                            "width": {
-                                "initial": {
-                                    "value": 20,
-                                    "metric": "%"
-                                }
-                            }
-                        }
-                    },
-                    "view": {
-                        "body": {
-                            "organization": "project1",
-                            "template": "inventorySummaryCountGraphItem",
-                            "context": {
-                                "schema": "",
-                                "variables": {
-                                    "bar-foreground-color": "#fd8c7f"
-                                }
-                            }
-                        }
-                    }
-                },
-                {
-                    "id": "inventory_entity_count",
-                    "type": {
-                        "classifier": "number"
-                    },
-                    "text": {
-                        "header": {
-                            "key": ""
-                        }
-                    },
-                    "layout": {
-                        "alignment": "right",
-                        "dimensions": {
-                            "width": {
-                                "initial": {
-                                    "value": 20,
-                                    "metric": "%"
-                                }
-                            }
-                        }
-                    },
-                    "view": {
-                        "body": {
-                            "organization": "project1",
-                            "template": "inventorySummaryCountItem",
-                            "context": {
-                                "schema": "",
-                                "variables": {}
-                            }
-                        }
-                    }
-                },
-                {
-                    "id": "inventory_entity_percentage",
-                    "type": {
-                        "classifier": "number"
-                    },
-                    "text": {
-                        "header": {
-                            "key": "inventory_entity_percentage"
-                        }
-                    },
-                    "layout": {
-                        "alignment": "left",
-                        "dimensions": {
-                            "width": {
-                                "initial": {
-                                    "value": 0,
-                                    "metric": "%"
-                                }
-                            }
-                        }
-                    },
-                    "view": {
-                        "body": {
-                            "organization": "project1",
-                            "template": "inventorySummaryPercentageItem"
-                        }
-                    }
-                }
-            ];
-
-
-            if (this.fieldMetadataList) {
-                const fieldIdsList = this.fieldMetadataList.map((o) => o.id);
                 this.numericTransformedValueItemsList = this._parser.deriveVisibleModelItemsList(billboardDashboardEntity);
-                //    .filter((o) => fieldIdsList.indexOf(o.model["label"]) >= 0); // specific inclusion
-            }
 
-            this.loadedFlag = true;
+                // example structure
+                this.fieldMetadataList = [
+                    {
+                        "id": "inventory_entity_name",
+                        "type": {
+                            "classifier": "string"
+                        },
+                        "text": {
+                            "header": {
+                                "key": "inventory_entity_name"
+                            }
+                        },
+                        "layout": {
+                            "alignment": "left",
+                            "dimensions": {
+                                "width": {
+                                    "initial": {
+                                        "value": 50,
+                                        "metric": "%"
+                                    }
+                                }
+                            }
+                        },
+                        "view": {
+                            "body": {
+                                "organization": "project1",
+                                "template": "inventorySummaryNameItem",
+                                "context": {
+                                    "schema": "",
+                                    "variables": {
+                                        "color": "blue"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "inventory_entity_count_graph",
+                        "type": {
+                            "classifier": "number"
+                        },
+                        "text": {
+                            "header": {
+                                "key": "inventory_entity_count"
+                            }
+                        },
+                        "layout": {
+                            "alignment": "left",
+                            "dimensions": {
+                                "width": {
+                                    "initial": {
+                                        "value": 20,
+                                        "metric": "%"
+                                    }
+                                }
+                            }
+                        },
+                        "view": {
+                            "body": {
+                                "organization": "project1",
+                                "template": "inventorySummaryCountGraphItem",
+                                "context": {
+                                    "schema": "",
+                                    "variables": {
+                                        "bar-foreground-color": "#fd8c7f"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "inventory_entity_count",
+                        "type": {
+                            "classifier": "number"
+                        },
+                        "text": {
+                            "header": {
+                                "key": ""
+                            }
+                        },
+                        "layout": {
+                            "alignment": "right",
+                            "dimensions": {
+                                "width": {
+                                    "initial": {
+                                        "value": 20,
+                                        "metric": "%"
+                                    }
+                                }
+                            }
+                        },
+                        "view": {
+                            "body": {
+                                "organization": "project1",
+                                "template": "inventorySummaryCountItem",
+                                "context": {
+                                    "schema": "",
+                                    "variables": {}
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "id": "inventory_entity_percentage",
+                        "type": {
+                            "classifier": "number"
+                        },
+                        "text": {
+                            "header": {
+                                "key": "inventory_entity_percentage"
+                            }
+                        },
+                        "layout": {
+                            "alignment": "left",
+                            "dimensions": {
+                                "width": {
+                                    "initial": {
+                                        "value": 0,
+                                        "metric": "%"
+                                    }
+                                }
+                            }
+                        },
+                        "view": {
+                            "body": {
+                                "organization": "project1",
+                                "template": "inventorySummaryPercentageItem"
+                            }
+                        }
+                    }
+                ];
 
-            this.updateCardCountView();
 
-            this.forceViewRelayout();
-        });
+                if (this.fieldMetadataList) {
+                    const fieldIdsList = this.fieldMetadataList.map((o) => o.id);
+                    this.numericTransformedValueItemsList = this._parser.deriveVisibleModelItemsList(billboardDashboardEntity);
+                    //    .filter((o) => fieldIdsList.indexOf(o.model["label"]) >= 0); // specific inclusion
+                }
+
+                this.loadedFlag = true;
+
+                this.updateCardCountView();
+
+                this.forceViewRelayout();
+            })
+        );
 
         return o$;
     }

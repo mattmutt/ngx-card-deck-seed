@@ -1,18 +1,18 @@
- {
+{
     "sections": [
         {
             "label": "Grid",
             "links": [
-                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck1"], "label": "Deck 1", "subtitle": "Advanced layout"},
-                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck2"], "label": "Deck 2", "subtitle": "Beginner layout"},
-                {"path": ["/dashboard/dashboard-page/com_company_sample3/deck3"], "label": "Deck 3 (preprocessed)", "subtitle": "Preprocessed Deck Definition"}
+                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck1"], "label": "Deck 1", "subtitle": "Advanced + Lazy Load"},
+                {"path": ["/dashboard/dashboard-page/com_company_sample2/deck2"], "label": "Deck 2", "subtitle": "1-card deck"},
+                {"path": ["/dashboard/dashboard-page/com_company_sample3/deck3"], "label": "Deck 3", "subtitle": "Simple configuration"}
             ]
         },
         {
             "label": "Nodeflow",
             "links": [
-                {"path": ["/dashboard/dashboard-page/nodeflow/deck3"], "label": "Nodeflow Graph 3", "subtitle": "Beginner 3 nodes"},
-                {"path": ["/dashboard/dashboard-page/nodeflow/deck4"], "label": "Nodeflow Graph 4", "subtitle" : "Complex 7 nodes"}
+                {"path": ["/dashboard/dashboard-page/nodeflow/deck3"], "label": "Graph 3", "subtitle": "4-node diagram"},
+                {"path": ["/dashboard/dashboard-page/nodeflow/deck4"], "label": "Graph 4", "subtitle" : "7-node diagram"}
             ]
         }
     ]

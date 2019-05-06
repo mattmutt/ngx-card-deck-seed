@@ -1,0 +1,84 @@
+.discussionsList {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+
+    > .messageHistoryView {
+        flex: 1;
+        overflow-y: auto;
+
+        UL {
+            > LI {
+                display: flex;
+                flex-direction: row;
+                padding: 2px 0;
+
+                opacity:0;
+                background-color: #00aa88;
+
+                > .icon {
+                    transform: scale(0.1); // tiny
+
+                    padding-left: 0;
+                    padding-right: 3px;
+
+                    > .iconButtonShape {
+                        width: 1rem;
+                        height: 1rem;
+                    }
+                }
+
+                > .envelope {
+                    font-size: smaller;
+                }
+
+                > .message {
+                    flex: 1;
+                    padding: 0 0.5rem;
+
+                }
+
+
+                // nice animation each time an entry is received
+                &.published {
+                    $transformDuration: 0.5s;
+
+                    opacity:1;
+                    background-color: transparent;
+                    transition: $transformDuration all;
+
+
+                    > .icon {
+                        transition: $transformDuration all;
+                        transform: none;
+                    }
+                }
+
+                // alternate
+                &:nth-child(2n+1) {
+                    background-color: rgba(0, 0, 0, .05);
+                    border-bottom: 1px solid rgba(0, 0, 0, .1);
+                }
+
+            }
+        }
+    }
+
+    > .newMessageView {
+        display: flex;
+
+        > input {
+            flex: 1;
+
+        }
+
+        > button {
+            flex: 0;
+            margin-right: 0;
+        }
+
+    }
+
+
+}

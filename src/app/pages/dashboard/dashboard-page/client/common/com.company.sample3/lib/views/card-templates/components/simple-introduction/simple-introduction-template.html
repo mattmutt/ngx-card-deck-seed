@@ -1,0 +1,135 @@
+<ng-container #templates>
+    <ng-container #presentation>
+        <ng-container #header></ng-container>
+
+        <ng-container #body>
+
+            <ng-template #introductionView let-cardModel="cardModel" let-library="library">
+
+                <section role="container">
+
+
+                    <section class="details">
+
+                        <clr-tabs>
+                            <clr-tab>
+                                <button clrTabLink>Inventory
+                                    <ng-container *ngIf="cardModel.model.devices.length">
+                                        ({{ cardModel.model.devices.length }})
+                                    </ng-container>
+                                </button>
+                                <clr-tab-content *clrIfActive>
+                                    <ng-template [ngTemplateOutlet]="devicesList"
+                                                 [ngTemplateOutletContext]="{ $implicit: cardModel.model.devices }"></ng-template>
+                                </clr-tab-content>
+                            </clr-tab>
+
+                            <clr-tab>
+                                <button clrTabLink>Messages
+                                    <ng-container *ngIf="cardModel.model.messageHistoryList.length">
+                                        ({{ cardModel.model.messageHistoryList.length }})
+                                    </ng-container>
+
+                                </button>
+                                <clr-tab-content *clrIfActive>
+                                    <ng-template [ngTemplateOutlet]="discussionsList"></ng-template>
+                                </clr-tab-content>
+                            </clr-tab>
+
+                        </clr-tabs>
+
+
+                    </section>
+
+                    <section class="icon">
+                        <div class="iconButtonShape"
+                             [class.active]="viewState.detailsPane.visible"
+                             (click)="onToggleViewPane(viewState.detailsPane)">
+                            <i [ngClass]="cardModel.model.viewAssetIconClass"></i>
+                        </div>
+
+
+                    </section>
+
+                </section>
+
+
+                <ng-template #devicesList let-list>
+                    <section class="devicesList">
+
+                        <b>{{ cardModel.model.title }}</b> ::
+                        <span>{{ cardModel.model.product }}</span>
+
+                        <table>
+                            <thead>
+                            <th>Device</th>
+                            <th>Category</th>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let device of list">
+                                <td>
+                                    <div>{{ device.label }}</div>
+                                </td>
+                                <td>
+                                    <div>{{ device.category.name }}</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </section>
+
+                </ng-template>
+
+
+                <ng-template #discussionsList>
+                    <section class="discussionsList">
+                        <div class="messageHistoryView">
+
+                            <ul>
+                                <li *ngFor="let bundle of cardModel.model.messageHistoryList" [class.published]="!!bundle.receivedDate">
+
+                                    <div class="icon">
+                                        <div class="iconButtonShape" [attr.title]="bundle.senderName">
+                                            <i [ngClass]="bundle.senderIcon"></i>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="envelope">
+                                        <div>{{ bundle.receivedDate | date: 'h:mm' }}</div>
+                                    </div>
+
+
+                                    <div class="message">{{ bundle.message }}</div>
+
+                                </li>
+                            </ul>
+
+                        </div>
+                        <div class="newMessageView">
+
+                            <input #messageField type="text" placeholder="Type message..."
+                                   (keydown.enter)="onSendMessage(messageField, $event)"/>
+                            <button class="btn btn-primary btn-sm" (click)="onSendMessage(messageField, $event)">Send</button>
+
+                        </div>
+
+                    </section>
+                </ng-template>
+
+
+                <ng-template #notReady>
+                    Loading....
+                </ng-template>
+
+
+            </ng-template>
+
+
+        </ng-container>
+
+        <ng-container #footer></ng-container>
+
+    </ng-container>
+</ng-container>
+

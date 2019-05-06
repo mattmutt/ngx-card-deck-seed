@@ -1,10 +1,9 @@
 import { Inject, Injectable } from "@angular/core";
-import { Observable, of, throwError } from "rxjs";
+import { asyncScheduler, Observable, of, throwError } from "rxjs";
 import { DemoDashboardDeploymentConfigurationService } from "../../../../../../../integration/environment/demo-dashboard-deployment-configuration.service";
 import { DemoDashboardGlobalStateService } from "../../../../../../../integration/environment/demo-dashboard-global-state.service";
 import { HttpClient, HttpEvent } from "@angular/common/http";
 import { catchError } from "rxjs/operators";
-import { AsyncScheduler } from "rxjs/internal/scheduler/AsyncScheduler";
 import { MessageResult } from "ngx-card-deck";
 import { DeploymentConfigurationBase } from "ngx-card-deck";
 
@@ -52,7 +51,7 @@ export class DemoAppSessionObserverService {
     private initStream(): Observable<MessageResult> {
 
         // some thing not correct about the generalized casting
-        return of<any>({success: true}, AsyncScheduler);
+        return of<any>({success: true}, asyncScheduler);
 
         // check, has capabilities pulled from the legacy app client?
         /*

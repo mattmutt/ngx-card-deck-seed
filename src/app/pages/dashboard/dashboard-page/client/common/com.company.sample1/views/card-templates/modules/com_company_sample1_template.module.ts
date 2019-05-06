@@ -6,25 +6,27 @@ import { DemoClientGridCardTemplateComponent } from "../components/demo-client-g
 import { DemoClientSummaryBillboardTemplateComponent } from "../components/demo-client-summary-billboard/demo-client-summary-billboard-template.component";
 
 @NgModule({
-   imports: [
-      CommonModule,
-      ClrIconModule,
-      ClrDatagridModule // simple grid
-   ],
-   // compiler needs
-   declarations: [
-      DemoClientGridCardIconDirective, // simple grid
-      DemoClientSummaryBillboardTemplateComponent,
-      DemoClientGridCardTemplateComponent
-   ],
+    imports: [
+        CommonModule,
+        ClrIconModule,
+        ClrDatagridModule // simple grid
+    ],
+    // compiler needs
+    declarations: [
+        DemoClientGridCardIconDirective, // simple grid
+        DemoClientSummaryBillboardTemplateComponent,
+        DemoClientGridCardTemplateComponent
+    ],
 
-   // dynamic injection
-   entryComponents: [
-      DemoClientSummaryBillboardTemplateComponent,
-      DemoClientGridCardTemplateComponent
-   ],
+    // dynamic injection
+    entryComponents: [
+        DemoClientSummaryBillboardTemplateComponent,
+        DemoClientGridCardTemplateComponent
+    ],
 
-   providers: []
+    providers: [],
+
+    exports: [ClrDatagridModule] // for grid card clients
 
 })
 export class ComCompanySample1TemplateModule {

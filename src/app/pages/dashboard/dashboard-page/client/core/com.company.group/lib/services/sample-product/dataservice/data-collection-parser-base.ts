@@ -1,10 +1,11 @@
-import { ParsedResponseTransformable, ParsedResponseTransformBase } from "./response-parser-base.class";
+import { StandardResponseParserTransformable } from "../../../../../../common/standard/card-outlet/card-assembly-plugins/base/standard-response-parser-base";
+import { ParsedResponseTransformBase } from "./parsed-response-transform-base.class";
 
 interface StrategyTransformerSchema {
-    [ identifier: string ]: ParsedResponseTransformable;
+    [identifier: string]: StandardResponseParserTransformable<any>;
 }
 
-export class DataCollectionParserBaseService {
+export class DataCollectionParserBase {
 
     strategyTransformerMap: StrategyTransformerSchema = {/* injectables map */};
 

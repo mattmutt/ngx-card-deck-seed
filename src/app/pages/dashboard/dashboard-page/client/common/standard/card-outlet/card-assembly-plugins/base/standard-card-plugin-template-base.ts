@@ -1,9 +1,8 @@
-import { OnInit } from "@angular/core";
-import { StandardFieldRenderTemplate } from "../../../organizer/standard-template.interface";
 import { CardPluginTemplateBase } from "ngx-card-deck";
+import { StandardFieldRenderTemplate } from "../../../organizer/standard-template.interface";
 
 
-export abstract class StandardCardPluginTemplateBase extends CardPluginTemplateBase implements OnInit {
+export abstract class StandardCardPluginTemplateBase extends CardPluginTemplateBase {
     // +++++++++++++++++++ implementations over base class +++++++++++++++++++++++
     // via metadata : only this organization can consume and deal with the templates matching owner of card's organization.
     // placed here for sample validation. The rules must be asserted and implemented by the team

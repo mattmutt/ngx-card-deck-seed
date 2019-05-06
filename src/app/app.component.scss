@@ -87,6 +87,14 @@ HEADER {
                 UL {
                     LI {
                         list-style: none;
+                        > A {
+                            font-weight: bold;
+                            display: inline;
+                        }
+                        > SPAN {
+                            padding-left: 0.2rem;
+                            font-size: smaller;
+                        }
                     }
                 }
 

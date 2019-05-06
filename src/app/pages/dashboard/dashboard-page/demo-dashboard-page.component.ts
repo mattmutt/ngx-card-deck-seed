@@ -308,7 +308,7 @@ export class DemoDashboardPageComponent implements OnInit, AfterViewInit, OnDest
     }
 
     /**
-     *  moouse drag background to move entire canvas project around to some preferred area
+     *  mouse drag background to move entire canvas project around to some preferred area
      */
     private prepareMousePanningEvents() {
         this.panService.cleanupMouseEvents(this.dashboardInstanceViewContainerRef.element.nativeElement);
