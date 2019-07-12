@@ -2,17 +2,20 @@
     $expando-size: 0.7rem;
     padding: 0 0.2rem;
     border-radius: $expando-size;
-    border:1px solid rgba(0,0,0,.1);
+    border: 1px solid rgba(0, 0, 0, .2);
+    margin: 1px;
+    background-color: rgba(255, 255, 255, .3);
     user-select: none;
 
     &:hover {
         text-decoration: underline;
-        background-color: rgba(255,255,255,.3);
-        border:1px solid rgba(0,0,0,.3);
+        background-color: rgba(255, 255, 255, .3);
+        border: 1px solid rgba(0, 0, 0, .3);
     }
 
     .pane-expando {
         display: inline-block;
+
         &::before {
             display: inline-block;
             background-color: rgba(0, 0, 0, .1);
@@ -33,6 +36,7 @@
             &::before {
                 background-color: rgba(0, 0, 0, .3);
             }
+
             cursor: pointer;
 
         }

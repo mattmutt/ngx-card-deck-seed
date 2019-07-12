@@ -43,9 +43,17 @@
                             },
                             "SimpleGridCard": {
                                 "isHeaderVisible": true,
-                                "isFooterVisible": false,
+                                "isFooterVisible": true,
                                 "isFilterVisible": false,
-                                "isColumnSeparatorVisible": false
+                                "controls": {
+                                    "pagination": {
+                                        "visible": true,
+                                        "pageSize": 10,
+                                        "initialPage": 2,
+                                        "entityNamePluralized": "items"
+                                    }
+                                },
+                                "isColumnSeparatorVisible": true
                             }
                         }
                     }

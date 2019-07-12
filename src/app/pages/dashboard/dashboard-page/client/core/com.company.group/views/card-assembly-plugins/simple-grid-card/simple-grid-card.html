@@ -2,8 +2,8 @@
 <section #componentSection *ngIf="isComponentPhaseReady" role="grid-widget">
 
     <clr-datagrid #gridComponent (clrDgRefresh)="onRefreshEvent($event)" [clrDgLoading]="!loadedFlag"
-                  [class.removeFilters]="this.library.alias.parameters['SimpleGridCard']['isFilterVisible'] === false"
-                  [class.removeColumnSeparators]="this.library.alias.parameters['SimpleGridCard']['isColumnSeparatorVisible'] === false"
+                  [class.removeFilters]="library.alias.parameters['SimpleGridCard']['isFilterVisible'] === false"
+                  [class.removeColumnSeparators]="library.alias.parameters['SimpleGridCard']['isColumnSeparatorVisible'] === false"
                   [style.height.px]="layout.availableScrollHeightMetric">
 
         <clr-dg-column #gridHeader *ngFor="let fieldMetadata of fieldMetadataList"
@@ -12,14 +12,14 @@
                        [style.width.px]="fieldMetadata.layout.dimensions.width?.initial.value">
 
             <ng-template
-                *ngIf="this.library.alias.parameters['SimpleGridCard']['isHeaderVisible'] !== false"
+                *ngIf="library.alias.parameters['SimpleGridCard']['isHeaderVisible'] !== false"
                 [ngTemplateOutlet]="positionBasedTemplateMap.header[fieldMetadata.id]"
                 [ngTemplateOutletContext]="{ fieldMetadata: fieldMetadata, library: library }"></ng-template>
 
         </clr-dg-column>
 
 
-        <clr-dg-row *ngFor="let rowData of transformedSimpleGridRecords" [clrDgItem]="rowData">
+        <clr-dg-row *clrDgItems="let rowData of transformedSimpleGridRecords" [clrDgItem]="rowData">
             <clr-dg-cell *ngFor="let fieldMetadata of fieldMetadataList"
                          [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'body')">
                 <ng-template
@@ -29,23 +29,52 @@
             </clr-dg-cell>
         </clr-dg-row>
 
-        <clr-dg-footer *ngIf="this.library.alias.parameters['SimpleGridCard']['isFooterVisible'] !== false">
-            <div class="datagrid-footer-container datagrid-row">
-                <div #footerContainerMaster class="datagrid-footer-container-master datagrid-row-flex">
-                    <div #gridFooter *ngFor="let fieldMetadata of fieldMetadataList; let idx=index"
-                         class="datagrid-cell"
-                         [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'footer')"
-                         [style.width.px]="deriveSynchronizedColumnWidth(fieldMetadata, idx)"
-                    >
-                        <ng-template
-                                *ngIf="transformedSimpleGridRecords"
-                                [ngTemplateOutlet]="positionBasedTemplateMap.footer[fieldMetadata.id]"
-                                [ngTemplateOutletContext]="{ fieldMetadata: fieldMetadata, model: initialDataModelResponseModel, records: simpleGridRecords, library: library }"></ng-template>
-                    </div>
+        <!-- optional controls shown in footer region -->
+        <clr-dg-footer
+            *ngIf="library.alias.parameters['SimpleGridCard']['isFooterVisible'] !== false || library.alias.parameters['SimpleGridCard']['controls']['pagination']['visible'] !== false">
 
+            <ng-container *ngIf="library.alias.parameters['SimpleGridCard']['isFooterVisible'] !== false">
+                <div class="datagrid-host">
+                    <div class="datagrid synthetic-grid-enclosure" [style.left.px]="-syncDatagridTableScrollLeft"
+                         [style.width.px]="syncDatagridTableWidth">
+                        <div ngProjectAs="clr-dg-row" class="datagrid-footer-container datagrid-row">
+                            <div #footerContainerMaster class="datagrid-footer-container-master datagrid-row-flex">
+                                <div class="datagrid-row-scrollable">
+                                    <div #gridFooter ngProjectAs="clr-dg-cell"
+                                         *ngFor="let fieldMetadata of fieldMetadataList; let idx=index"
+                                         class="datagrid-cell"
+                                         role="gridcell"
+                                         [class.datagrid-fixed-width]="gridColumnsService?.columnStates[idx].strictWidth"
+                                         [ngClass]="generateResourceAbstractColumnClassName(fieldMetadata, 'footer')"
+                                         [style.width.px]="deriveSynchronizedColumnWidth(fieldMetadata, idx)"
+                                    >
+                                        <ng-template
+                                            *ngIf="transformedSimpleGridRecords"
+                                            [ngTemplateOutlet]="positionBasedTemplateMap.footer[fieldMetadata.id]"
+                                            [ngTemplateOutletContext]="{ fieldMetadata: fieldMetadata, model: initialDataModelResponseModel, records: simpleGridRecords, library: library }"></ng-template>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </ng-container>
+
+            <ng-container *ngIf="library.alias.parameters['SimpleGridCard']['controls']['pagination'] as paginationControl">
+                <ng-container *ngIf="paginationControl['visible']">
+
+                    <clr-dg-pagination #pagination [clrDgPageSize]="paginationControl['pageSize']"
+                                       [(clrDgPage)]="paginationControl['initialPageIndex']">
+                        {{ pagination.firstItem + 1 }} - {{ pagination.lastItem + 1 }}
+                        of {{ pagination.totalItems }} {{ paginationControl['entityNamePluralized'] }}
+                    </clr-dg-pagination>
+
+                </ng-container>
+            </ng-container>
+
         </clr-dg-footer>
+
 
         <clr-dg-placeholder>
             <span [textContent]="library.alias.cardI18n['grid.empty_results']"></span>
@@ -65,7 +94,7 @@
 
 
 <ng-template #defaultBodyTemplate let-rowData="rowData" let-fieldMetadata="fieldMetadata">
-    {{ rowData[ fieldMetadata.id] }}
+    {{ rowData[fieldMetadata.id] }}
 </ng-template>
 
 

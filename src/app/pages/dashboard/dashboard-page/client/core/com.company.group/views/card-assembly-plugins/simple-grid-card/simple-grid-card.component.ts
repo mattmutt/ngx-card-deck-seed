@@ -8,6 +8,8 @@ import {
     forwardRef,
     Host,
     Inject,
+    NgZone,
+    OnDestroy,
     OnInit,
     QueryList,
     Renderer2,
@@ -16,8 +18,15 @@ import {
     ViewChildren,
     ViewContainerRef
 } from "@angular/core";
-import { ClrDatagrid } from "@clr/angular";
-
+import { ClrDatagrid, ClrDatagridFooter } from "@clr/angular";
+import { ColumnsService } from "@clr/angular/data/datagrid/providers/columns.service";
+import ResizeObserver from "resize-observer-polyfill";
+import { BehaviorSubject, Observable } from "rxjs";
+import { debounceTime, delay } from "rxjs/operators";
+import { CARD_RESOURCE_TOKEN } from "ngx-card-deck";
+import { GlobalStateBase } from "ngx-card-deck";
+import { DashboardComponent } from "ngx-card-deck";
+import { DashboardAssemblyLayout } from "ngx-card-deck";
 import {
     Alias,
     LayoutAssemblyCardBase,
@@ -25,40 +34,46 @@ import {
     TemplateLibraryManager,
     Translation
 } from "ngx-card-deck";
-import { DashboardAssemblyLayout } from "ngx-card-deck";
-import { CARD_RESOURCE_TOKEN } from "ngx-card-deck";
 import {
     CardOutletComponent,
     CardResourceInjectionTokenValue
 } from "ngx-card-deck";
-import { GlobalStateBase } from "ngx-card-deck";
-import { DashboardComponent } from "ngx-card-deck";
+import { SimpleGridParserService } from "../../../../../common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/simple-grid-parser.service";
+import { RelationalDataFieldMetadata } from "./grid-relational-data-field-model.interface";
+import { SimpleGridDataModel } from "./simple-grid-card.model";
 
 
 import { SimpleGridCardService, SimpleGridDataRecordEntitySchema } from "./simple-grid-card.service";
-import { Observable } from "rxjs";
-import { debounceTime, delay } from "rxjs/operators";
-import { SimpleGridDataModel } from "./simple-grid-card.model";
-import { RelationalDataFieldMetadata } from "./grid-relational-data-field-model.interface";
-import { DatagridRenderOrganizer } from "@clr/angular/data/datagrid/render/render-organizer";
-import { SimpleGridParserService } from "../../../../../common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/simple-grid-parser.service";
-
 
 @Component({
     viewProviders: [TemplateLibraryManager, Translation, Parameters, Alias],
 
     selector: 'dash-simple-grid-card',
-    styleUrls: ['./simple-grid-card.scss', '../../../../../common/com.company.sample1/views/card-templates/components/demo-client-grid-card/demo-client-grid-card-template.scss'],
-    templateUrl: './simple-grid-card.html',
+    styleUrls: ['simple-grid-card.scss', '../../../../../common/com.company.sample1/views/card-templates/components/demo-client-grid-card/demo-client-grid-card-template.scss'],
+    templateUrl: 'simple-grid-card.html',
     // require manually triggering CD from here on out
     changeDetection: ChangeDetectionStrategy.OnPush // accel, as data is a snapshot
 
 })
-export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDataModel> implements OnInit, AfterViewInit, AfterContentInit {
+export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDataModel> implements OnInit, AfterViewInit, AfterContentInit, OnDestroy {
 
     // specialization
     public initialDataModelResponse$: Observable<SimpleGridDataModel>;
     public initialDataModelResponseModel: SimpleGridDataModel; // for template binding and extracting from original response
+
+
+    // dimension of ir.. notice code was fixed
+    public scrollbarTrackerDimension = 0;
+
+    public datagridLayoutElement: HTMLElement | null; // internal clarity marker
+    public gridVerticalScrollChange$ = new BehaviorSubject<boolean>(false);
+    public gridHorizontalScrollChange$ = new BehaviorSubject<boolean>(false);
+    syncDatagridOverflowDimension = 0;
+    syncDatagridTableWidth = -1; // will assign
+    syncDatagridTableHeight = -1; // will assign
+
+    syncDatagridTableScrollLeft = 0; // will sync
+
 
     public isTemplatePhaseReady = false;
     public isComponentPhaseReady = false;
@@ -87,14 +102,19 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
     // data pointer to assembly layout
     private assemblyLayout: DashboardAssemblyLayout<any>;
 
-    @ViewChild("componentSection") private componentSection: ElementRef; // <section>
+    private initializeGridViewTimer: number;
+    private resizeObserverList: Array<ResizeObserver> = [];
+
+
+    @ViewChild("componentSection", {static: false}) private componentSection: ElementRef; // <section>
 
     // holds the footer-columns set. will add whitespacing on the right
-    @ViewChild("footerContainerMaster") private footerContainerMaster: ElementRef; // <section>
+    @ViewChild("footerContainerMaster", {static: false}) private footerContainerMaster: ElementRef; // <section>
 
     // grid internals
-    @ViewChild("gridComponent") private gridComponent: ClrDatagrid;
-    @ViewChild("gridComponent", {read: ViewContainerRef}) private gridComponentViewContainerRef: ViewContainerRef;
+    @ViewChild("gridComponent", {static: false}) private gridComponent: ClrDatagrid;
+    @ViewChild("gridComponent", {static: false, read: ViewContainerRef}) private gridComponentViewContainerRef: ViewContainerRef;
+    @ViewChild(ClrDatagridFooter, {static: false}) private gridFooterComponent: ClrDatagridFooter;
 
 
     // internal
@@ -110,6 +130,7 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
 
         protected _globalState: GlobalStateBase,
         protected _cd: ChangeDetectorRef,
+        protected _zone: NgZone,
         private _dashboardComponent: DashboardComponent,
         private _element: ElementRef,
         private _parser: SimpleGridParserService<RelationalDataFieldMetadata>,
@@ -129,6 +150,11 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
 
         this.layout = {} as any;
 
+    }
+
+    // Warning: depending on an indirect approach to gathering column state on the grid. need a cleaner way
+    get gridColumnsService(): ColumnsService | undefined {
+        return this.gridComponent && this.gridFooterComponent["columnsService"] as ColumnsService; // Clarity internal specification
     }
 
     setupHeaderSection() {
@@ -204,9 +230,19 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
         // view components melt otherwise
         if (!Object.keys(this.positionBasedTemplateMap).length) {
             // expresses when no templates are bound, just initialize the grid view regardless after a tick
-            setTimeout(() => this.initializeGridView(), 0);
+            this.initializeGridViewTimer = setTimeout(() => this.initializeGridView(), 0);
         }
 
+    }
+
+    ngOnDestroy() {
+        // knock off DOM util events
+        clearTimeout(this.initializeGridViewTimer);
+        this.resizeObserverList.forEach((resizer) => resizer.disconnect());
+        this.datagridLayoutElement && this.datagridLayoutElement.removeEventListener("scroll", this.scrollDatagridEvent);
+
+        // perform any clean up of objects, subscriptions
+        super.ngOnDestroy();
     }
 
     // view template utilities
@@ -217,40 +253,18 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
 
     }
 
-    // synch footer column to a header's size
+    // sync footer column to a header's size
     public deriveSynchronizedColumnWidth(fieldMetadata: RelationalDataFieldMetadata, fieldIndex: number): number {
+        const unknown = -1;
 
         if (this.gridComponent) {
-
-            // rely on body sizings
             if (this.gridComponent.items.displayed.length) {
-                // dangerous API usage
-                const privateOrganizer: DatagridRenderOrganizer = this.gridComponent["organizer"];
-
-                if (fieldIndex !== privateOrganizer.widths.length - 1) {
-                    return (privateOrganizer.widths[fieldIndex].px);
-                } else {
-                    // last cell handling
-                    return (privateOrganizer.widths[fieldIndex].px);
-                }
-
-            } else {
-
-                // if no body data yet to reference, rely solely on header
-                const match = this.gridHeaderQueryList.filter((val) => val.element.nativeElement.getAttribute("ng-reflect-field") === fieldMetadata.id);
-                if (match.length) {
-                    const e = match[0].element.nativeElement;
-                    const width = e.getBoundingClientRect().width;
-                    return width;
-                } else {
-                    return -1; // auto
-                }
+                const fieldColumnState = this.gridColumnsService!.columnStates[fieldIndex];
+                return (fieldColumnState && fieldColumnState.width) || unknown;
             }
-        } else {
-            return -1;
         }
+        return unknown;
     }
-
 
     // for all layout positions known, generate some CSS classes as standard
     public generateResourcePositionLayoutColumnClassCSS(fieldMetadata: RelationalDataFieldMetadata): string {
@@ -294,7 +308,7 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
                 // resolve and map to pointer used by view reference
                 this.loadedFlag = true;
                 this.updateCardCountView();
-                this.synchronizeFooterLayout();
+                this.gridComponent.resize();
                 this.forceViewRelayout();
             })
         );
@@ -341,22 +355,23 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
                         this.isComponentPhaseReady = true; // step2 - alas render grid component
                         this._cd.markForCheck();
 
+                        // ----------------------------
 
-                        // ESSENTIAL page binding sequence bootstrapping
-                        // compile to a factory
-                        /*
-                        this.preparingTemplateModuleFactory(clazz).then((resolved) => {
+                        // after requesting data, setup fields
+                        // establish templating views
+                        this.fieldMetadataList.forEach((col: any) => {
 
-                           // integration steps phased
-                           this.isTemplatePhaseReady = true; // step1
-                           this._cd.markForCheck(); // deps load and prep
+                            if (!this.positionBasedTemplateMap.header[col.id]) {
+                                this.positionBasedTemplateMap.header[col.id] = this.defaultHeaderTemplate; // default
+                            }
 
-                           this.isComponentPhaseReady = true; // step2 - alas render grid component
-                           this._cd.markForCheck();
-
+                            if (!this.positionBasedTemplateMap.body[col.id]) {
+                                this.positionBasedTemplateMap.body[col.id] = this.defaultBodyTemplate; // default
+                            }
                         });
-                        */
 
+                        this._cd.detectChanges(); // gridComponent instance activated
+                        this.gridComponent.resize();
 
                     } else {
                         // no template?
@@ -376,12 +391,6 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
         // meanwhile, extract field definitions
         this.fieldMetadataList = this._service.prepareFieldMetadataList<RelationalDataFieldMetadata>(this.resourceToken.card);
 
-        // after requesting data, setup fields
-        // establish templating views
-        this.fieldMetadataList.forEach((col: any) => {
-            this.positionBasedTemplateMap.header[col.id] = this.defaultHeaderTemplate; // default
-            this.positionBasedTemplateMap.body[col.id] = this.defaultBodyTemplate; // default
-        });
 
     }
 
@@ -394,8 +403,9 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
 
     // add decorative classes for fields
     private updateGridLayoutClasses() {
-
+        const scrollableRegionSelector = ".datagrid";
         const columnStyle = this.componentSection.nativeElement.ownerDocument.createElement("style");
+        this.scrollbarTrackerDimension = this.calculateScrollbarDimension();
 
         this._renderer.appendChild(this.componentSection.nativeElement, columnStyle);
 
@@ -405,7 +415,75 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
             .map((fieldMetadata) => this.generateResourcePositionLayoutColumnClassCSS(fieldMetadata))
             .join("\n");
 
+        // trace when datagrid is showing vertical scrollbar for many rows
+        this.datagridLayoutElement = (this.gridComponentViewContainerRef.element.nativeElement! as HTMLElement).querySelector<HTMLElement>(scrollableRegionSelector);
+        if (this.datagridLayoutElement) {
+
+            const scrollResizeObserver = new ResizeObserver((entries, observer) => {
+                const isHorizontalScrolled = this.datagridLayoutElement!.scrollWidth > this.datagridLayoutElement!.clientWidth;
+                if (this.gridHorizontalScrollChange$.getValue() !== isHorizontalScrolled) {
+                    this.gridHorizontalScrollChange$.next(isHorizontalScrolled);
+                }
+
+                const isVerticalScrolled = this.datagridLayoutElement!.scrollHeight > this.datagridLayoutElement!.clientHeight;
+                if (this.gridVerticalScrollChange$.getValue() !== isVerticalScrolled) {
+                    this.gridVerticalScrollChange$.next(isVerticalScrolled);
+                }
+
+            });
+            scrollResizeObserver.observe(this.datagridLayoutElement);
+            this.resizeObserverList.push(scrollResizeObserver);
+
+
+            // sync scrolling
+            this._zone.runOutsideAngular(() => this.datagridLayoutElement!.addEventListener("scroll", this.scrollDatagridEvent));
+        }
+
+        // if original datagrid has a scrollbar, then shift the margin in slightly
+        this.assemblySubscriptionList.push(
+            this.gridVerticalScrollChange$.pipe(debounceTime(1000)).subscribe((flag) => {
+                this.syncDatagridOverflowDimension = flag ? this.scrollbarTrackerDimension : -1;
+            }));
+
+
+        // match width at all times
+        const ro = new ResizeObserver((entries, observer) => {
+            this.syncDatagridTableWidth = entries[0].contentRect.width;
+            this.syncDatagridTableHeight = entries[0].contentRect.height;
+            this._cd.detectChanges();
+        });
+        ro.observe(this.gridComponent.datagridTable.nativeElement);
+        this.resizeObserverList.push(ro);
+
+
     }
+
+    // DOM event listener
+    private scrollDatagridEvent = (evt: Event) => {
+        this.syncDatagridTableScrollLeft = (evt.target! as HTMLElement).scrollLeft;
+        this._cd.detectChanges(); // debounce?
+    };
+
+    // "thickness" of a browser scrollbar tracker
+    private calculateScrollbarDimension(): number {
+
+        // Creating invisible container
+        const outer = document.createElement("div");
+        outer.style.visibility = "hidden";
+        outer.style.overflow = "scroll"; // forcing scrollbar to appear
+        document.body.appendChild(outer);
+
+        // Creating inner element and placing it in the container
+        const inner = document.createElement("div");
+        outer.appendChild(inner);
+
+        // Calculating difference between container"s full width and the child width
+        const scrollbarWidth = (outer.offsetWidth - inner.offsetWidth);
+        (outer.parentElement!).removeChild(outer); // DOM cleanup
+
+        return scrollbarWidth;
+    }
+
 
     // collapsed header support for some views
     private updateGridHeaderView() {
@@ -443,7 +521,7 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
     }
 
 
-    // template preparation sequence
+// template preparation sequence
 
     private generateResourceAbstractColumnClassStyle(fieldMetadata: RelationalDataFieldMetadata, position: string): string {
 
@@ -493,24 +571,6 @@ export class SimpleGridCardComponent extends LayoutAssemblyCardBase<SimpleGridDa
             renderTargetClassSelector].filter(Boolean).join(" ");
 
         return generated ? `${selector}  { ${generated} }` : "";
-    }
-
-
-    // often have to ensure the footer accommodate body scroll by introducing some spacing
-    private synchronizeFooterLayout() {
-
-        if (this.footerContainerMaster) {
-
-            const headDirective = this.gridComponentViewContainerRef.element.nativeElement.querySelector(".datagrid-head");
-
-            this._cd.detectChanges(); // determine
-            // may need hard whitespace to enforce right most col, accommodating long lists
-            if (headDirective) {
-                this._renderer.setStyle(this.footerContainerMaster.nativeElement, "paddingRight", headDirective.style.paddingRight);
-            }
-            this.gridComponent.resize(); // body columns
-        }
-
     }
 
 }

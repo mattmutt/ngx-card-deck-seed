@@ -119,7 +119,7 @@
 // header icon
 @include selectCardLayoutAspectByComponentType("*", "card-asset-node", "header") {
     // styling header background just for this card type
-    background: linear-gradient(0deg, rgba(233, 233, 233, 1), rgba(166, 166, 166, 0));
+    background: linear-gradient(rgba(233, 233, 233, .1), rgba(66, 66, 66, .3));
     border-bottom: 1px solid rgba(0, 0, 0, .2);
 
     ::ng-deep I.headerIcon {

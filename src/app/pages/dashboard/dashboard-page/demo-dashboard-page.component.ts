@@ -52,13 +52,13 @@ const resources = {
 export class DemoDashboardPageComponent implements OnInit, AfterViewInit, OnDestroy {
 
     // diagramming with SVG
-    @ViewChild("svgContainerHandle") svgContainerHandle: SVGSVGElement;
+    @ViewChild("svgContainerHandle", {static: false}) svgContainerHandle: SVGSVGElement;
 
-    @ViewChild("dashboardInstance") public dashboardInstance: DashboardComponent;
-    @ViewChild("dashboardInstance", {read: ViewContainerRef}) public dashboardInstanceViewContainerRef: ViewContainerRef;
+    @ViewChild("dashboardInstance", {static: false}) public dashboardInstance: DashboardComponent;
+    @ViewChild("dashboardInstance", {static: false, read: ViewContainerRef}) public dashboardInstanceViewContainerRef: ViewContainerRef;
 
     // demo extension points: subview captured - loose coupling
-    @ViewChild("canvasWidget", {read: ViewContainerRef}) canvasWidgetViewContainerRef: ViewContainerRef;
+    @ViewChild("canvasWidget", {static: false, read: ViewContainerRef}) canvasWidgetViewContainerRef: ViewContainerRef;
 
     // announce after changing zoom
     // tslint:disable-next-line:no-output-rename

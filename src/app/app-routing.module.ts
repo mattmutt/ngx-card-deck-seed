@@ -9,7 +9,7 @@ const routes: Routes = [
     {path: 'about', component: AboutComponent},
     {
         path: 'dashboard',
-        loadChildren: './pages/dashboard/demo-dashboard.module#DemoDashboardModule'
+        loadChildren: () => import('./pages/dashboard/demo-dashboard.module').then(m => m.DemoDashboardModule)
     },
 
     /*

@@ -1,59 +1,58 @@
 import { Injectable } from "@angular/core";
+import {
+    DashboardConfigurationResourceCardSchema,
+    DashboardConfigurationResourceFacade
+} from "ngx-card-deck";
 import { TemplateLibraryManager } from "ngx-card-deck";
 import {
-    BaseViewItemSchema,
-    NumericTransformValueItem,
-    ResourceMetersModelItemSchema
-} from "../../../../../core/com.company.group/lib/services/sample-product/platform/demo-app-terminology.interface";
+    ResponseParserRegisterable,
+    StandardResponseParserTransformable
+} from "../../../../standard/card-outlet/card-assembly-plugins/base/standard-response-parser-base";
+import { StandardFieldMetadata } from "../../../../standard/organizer/standard-template.interface";
+import { MetricsListTransformerService } from "./metrics-list-transformer.service";
 
+const resources = {
+    // tags the name of collection within the JSON response that holds resulting dataset
+    dashboardServiceAllocatedCollectionName: "ParsedResponseTransformable"
+};
+
+/* JSON
+"DashboardParserService": {
+    "ParsedResponseTransformable": "InventorySummaryTransformerService"
+},
+ */
 
 @Injectable()
-export class MetricsParserService {
-
-    constructor(private _library: TemplateLibraryManager) {
-
-    }
-
-    // view helper: create subset of only visible columns, localize the displayed label
-    public deriveVisibleModelItemsList(dataItems: Array<ResourceMetersModelItemSchema>): Array<NumericTransformValueItem> {
-
-        const i18n = this._library.alias.cardI18n;
-        // post transformed decorated structure
-        const results: Array<NumericTransformValueItem> = [];
-
-        dataItems.forEach((dataItem) => {
-
-            const isProcessableFlag = true; // should be read in param
-            if (isProcessableFlag) {
-
-                const valueItem: NumericTransformValueItem = {
-                    model: dataItem,
-                    view: this.baseViewItemFactory(dataItem), // be practical for placing transient variables bound to the view
-                    message: i18n[dataItem.title],
-                    data: dataItem.progress // core value
-                };
-
-                results.push(valueItem);
-            }
-        });
+export class MetricsParserService<M extends StandardFieldMetadata> implements ResponseParserRegisterable<M> {
 
 
-        return results;
+    // as many customized data transformers, add them here as DI
+    constructor(private transformer1: MetricsListTransformerService<M>) {
     }
 
 
-    // add view helpers per data item
-    private baseViewItemFactory(dataBoundItem: ResourceMetersModelItemSchema): BaseViewItemSchema {
-        const trailingDecimalSize = 0;
-        const a: any = {};
-        a.attribute = {
-            free: {
-                value: parseFloat(dataBoundItem.free).toFixed(trailingDecimalSize),
-                unit: dataBoundItem.free.split(/ +/)[1] // problem with data aspect
-            }
-        };
+    // strategy implementation, pull out the correct parser and prepare it for data handling
+    public register(card: DashboardConfigurationResourceFacade<DashboardConfigurationResourceCardSchema, DashboardConfigurationResourceCardSchema>,
+                    libraryStateManager: TemplateLibraryManager,
+                    fieldMetadataList: Array<M>): StandardResponseParserTransformable<M> {
 
-        return a;
+        this.transformer1.prepare(card, fieldMetadataList, libraryStateManager);
+
+        /*
+        const registeringCollectionName = libraryStateManager.alias.parameters["DashboardParserService"][resources.dashboardServiceAllocatedCollectionName];
+        let prt: StandardResponseParserTransformable<M> | undefined;
+
+        // register when found transformer
+        if (registeringCollectionName) {
+            prt = this.strategyTransformerMap[registeringCollectionName];
+            if (prt) {
+                prt.prepare(card, fieldMetadataList, libraryStateManager);
+            }
+        }
+
+         */
+
+        return this.transformer1; // sample: more complex registration processes can be setup to leverage providers declarations
     }
 
 

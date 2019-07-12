@@ -38,7 +38,7 @@ export abstract class ToolbarNodeflowActionBase implements OnInit, OnChanges, On
 
     toolbarNodeflowBehaviorActionForm: FormGroup; // each action component subclass will create its own stateful form
     resolvedNodeflow: NodeflowStudioCompositorComponent; // resolves via VCR
-    resolvedNodeflowReady$: BehaviorSubject<boolean> = new BehaviorSubject(false); // after wrapper injects the Nodeflow directly
+    resolvedNodeflowReady$ = new BehaviorSubject<boolean>(false); // after wrapper injects the Nodeflow directly
 
     nodeCollectionChange$: Observable<Array<NodeModel>>; //surfaced from NodeflowStudioGridStateManagerService
     nodeCollectionCache$: Observable<Array<NodeModel>>;

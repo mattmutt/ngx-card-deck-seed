@@ -6,10 +6,6 @@ CLR-DATAGRID {
     // this seems to fix the last column with "overhang" problem
     overflow-x: hidden;
 
-    //> .datagrid-overlay-wrapper { height: inherit;
-
-    //> .datagrid-scroll-wrapper { height: inherit;
-
     > .datagrid {
         margin: 0; // nasty margin and spacing added to component by lib
         width: inherit; // allocated by container, not by its own content
@@ -27,15 +23,11 @@ CLR-DATAGRID {
 
                         > .datagrid-row-master {
 
-
                             // enclose each header
                             CLR-DG-COLUMN {
 
                                 // simplify align
                                 .datagrid-column-title {
-                                    // title font restyle
-                                    //font-size: 12px;
-                                    //color: #000000;
 
                                 }
 
@@ -51,39 +43,66 @@ CLR-DATAGRID {
             background: none; // clr reset - what is this separator doing. WRONG. it completely disrupts grids being contained
         }
 
-        // fixed footer columns under main grid
-        .datagrid-foot {
-            // reset
-            font-size: inherit;
-            line-height: inherit;
-            padding: 0;
-            display: block;
+    }
 
-            // clr
-            > .datagrid-foot-description {
-                -webkit-box-flex: 1;
-                flex: 1 1 auto;
-                display: flex;
-                flex-flow: column nowrap;
-                min-height: 1px;
+    // fixed footer columns under main grid
+    > .datagrid-footer {
+        // reset
+        font-size: inherit;
+        line-height: inherit;
+        padding: 0;
+        display: block;
 
-                // dashboard injected container
-                > .datagrid-footer-container {
-                    flex-shrink: 0;
-                    display: block;
+        // clarity class
+        > .datagrid-footer-description {
+            min-height: 1px;
 
-                    > .datagrid-footer-container-master {
+            // re-purpose clarity structure ( not the original grid)
+            > .datagrid-host {
+                overflow: hidden; // clip as width of child grid is larger
 
-                        // footer item cell
-                        > DIV {
-                            flex-shrink: 0; // keep it tight
-                            flex-grow: 0; // more tight
+                // re-purpose clarity structure ( not the original grid)
+                > .datagrid.synthetic-grid-enclosure {
+                    position: relative; // to sync "Scroll"
+                    margin: 0; // clr reset
+                    max-width: none; // let the size and scroll constrain it better
+                    overflow: hidden;
+                    border: 0;
 
+                    // ngx-card-deck custom class injected container ( for locked row footer row placement )
+                    > .datagrid-footer-container {
+                        flex-shrink: 0;
+                        display: block;
+
+                        &:hover {
+                            background: none; // reset row highlight
+                        }
+
+
+                        > .datagrid-footer-container-master {
+                            border-top-style: solid; // partition body from locked footer
+                            border-top-width: 1px; // partition body from locked footer
+
+
+                            .datagrid-row-scrollable {
+                                flex-direction: row;
+
+                                // footer item cell
+                                .datagrid-cell {
+                                    flex: 1 1 auto; // stretchy
+
+                                    // whenever respective column is manually resized
+                                    &.datagrid-fixed-width {
+                                        flex: 0 0 auto;
+                                    }
+                                }
+
+                            }
                         }
 
                     }
-
                 }
+
             }
         }
 
