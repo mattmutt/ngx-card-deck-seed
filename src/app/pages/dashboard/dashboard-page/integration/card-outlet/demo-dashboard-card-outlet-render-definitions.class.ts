@@ -1,6 +1,7 @@
 import { NgModule, Type } from "@angular/core";
 import { DashboardCardPluggable, ServiceRenderClass } from "ngx-card-deck";
 import { demoModuleRouteMap } from "../../../demo-dashboard-routing.module";
+import { MetricsListTransformerService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/metrics-billboard/metrics-list-transformer.service";
 import { MetricsParserService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/metrics-billboard/metrics-parser.service";
 import { InstalledPluginsDashboardTransformerService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/installed-plugins-dashboard-transformer.service";
 import { InventorySummaryTransformerService } from "../../client/common/com.company.sample1/views/card-assembly-plugins/simple-grid-card/parser/inventory-summary-transformer.service";
@@ -116,7 +117,7 @@ export const demoClientMetricsBillboardCardViewRenderCompartment: DemoDashboardC
     identifier: "card-metrics-billboard",
     organizerPackage: DemoDashboardOrganizerPackageEnumeration.com_company_sample1,
     componentClass: MetricsBillboardComponent,
-    viewProviders: [MetricsBillboardService, MetricsParserService],
+    viewProviders: [MetricsBillboardService, MetricsParserService, MetricsListTransformerService],
 
     // optional template association
     resolveTemplatableClassesList: [{

@@ -254,10 +254,10 @@ export class NodeflowAssetNodeComponent<T extends NodeflowAssetNodeDataModel, F 
 
     // signals when size of card becomes too small
     private createCompactResponsiveViewListener(): Observable<boolean> {
-        return combineLatest(
+        return combineLatest([
             this.streamCardLayoutDimension("width").pipe(distinctUntilChanged()),
             this.streamCardLayoutDimension("height").pipe(distinctUntilChanged())
-        ).pipe(
+        ]).pipe(
             map((predicateDimensions) => ((
                     predicateDimensions[0] < resources.layout.responsiveBreakpoint.compact.width ||
                     predicateDimensions[1] < resources.layout.responsiveBreakpoint.compact.height

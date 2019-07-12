@@ -14,7 +14,9 @@
 
 ### Introduction
 
-Want flexible, composible dashboards from a dynamic layout structure? 
+| | |
+| ------------- |:-------------|
+| [![ngx-card-deck-logo.png](http://i.postimg.cc/N0pxppFX/ngx-card-deck-logo.png)]() | Welcome to the Angular card deck component! Want flexible, composible dashboards from a dynamic layout structure? This is the _intermediate_ version for hungry developers |
 
 [![grid layout](http://i.postimg.cc/x8rLRTvy/ngx-card-deck-grid-layout.png)](http://i.postimg.cc/x8rLRTvy/ngx-card-deck-grid-layout.png)
 
@@ -39,8 +41,8 @@ Then this component may offer a head start for scaling up to the demands of UI p
 
 
 ## Platform dependencies versions
-* Angular 7 (version 8 would require refactoring as this component uses some internal Angular APIs)
-* Clarity 1
+* Angular 8
+* Clarity 2
 * RxJS 6
 * Node.js 10+ ( Angular CLI requirements)
 * ES2015 ( no need to support IE11 going forward? )

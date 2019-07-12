@@ -60,14 +60,14 @@ export class NodeflowStudioCompositorComponent implements NodeflowCompositorView
     // @Input() overlayTemplate: TemplateRef<any>;
 
     // triggered menu
-    @ViewChild("gridItemMenuOverlayTemplate") public gridItemMenuOverlayTemplate: TemplateRef<any>;
-    @ViewChild("segmentConnectorMenuOverlayTemplate") public segmentConnectorMenuOverlayTemplate: TemplateRef<any>;
+    @ViewChild("gridItemMenuOverlayTemplate", {static: false}) public gridItemMenuOverlayTemplate: TemplateRef<any>;
+    @ViewChild("segmentConnectorMenuOverlayTemplate", {static: false}) public segmentConnectorMenuOverlayTemplate: TemplateRef<any>;
     // toggles menu and projects back to the "overlayMenuContainer" section, from demo-dashboard-page template
     visibleOverlayTemplate: TemplateRef<any> | undefined; // projected in dashboard-container-grid-widget-overlay
 
 
     // triggered tooltip
-    @ViewChild("socketConnectorTooltipTemplate") socketConnectorTooltipTemplate: TemplateRef<any>;
+    @ViewChild("socketConnectorTooltipTemplate", {static: false}) socketConnectorTooltipTemplate: TemplateRef<any>;
     visibleTooltipTemplate: TemplateRef<any> | undefined; // projected in dashboard-container-grid-widget-overlay
     // tooltip context
     visibleTooltipContext = {
@@ -78,7 +78,7 @@ export class NodeflowStudioCompositorComponent implements NodeflowCompositorView
 
 
     // error notifications
-    @ViewChild("canvasCardParseErrorOverlayTemplate") canvasCardParseErrorOverlayTemplate: TemplateRef<any>;
+    @ViewChild("canvasCardParseErrorOverlayTemplate", {static: false}) canvasCardParseErrorOverlayTemplate: TemplateRef<any>;
     visibleNotificationTemplate: TemplateRef<any> | undefined; // projected in dashboard-container-grid-widget-overlay
     // notification scoping context
     visibleNotificationContext = {
@@ -90,8 +90,8 @@ export class NodeflowStudioCompositorComponent implements NodeflowCompositorView
     // scaling factor
     @Input() zoomLevel: number;
 
-    @ViewChild("svgCanvasHandle") svgCanvasHandle: ElementRef; // reference starting SVG tag
-    @ViewChild("svgCanvasTransformerGroup") svgCanvasTransformerGroup: ElementRef; // relates and synchronizes pan/zoom
+    @ViewChild("svgCanvasHandle", {static: false}) svgCanvasHandle: ElementRef; // reference starting SVG tag
+    @ViewChild("svgCanvasTransformerGroup", {static: false}) svgCanvasTransformerGroup: ElementRef; // relates and synchronizes pan/zoom
 
     nodeValidatorResultManager: CardSubjectsParseValidatorManager;
     private dashboardPageComponentSubscriptionList: Array<Subscription>;

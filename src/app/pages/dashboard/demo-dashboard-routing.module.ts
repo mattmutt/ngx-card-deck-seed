@@ -59,7 +59,12 @@ export class DemoDashboardRouting implements Resolve<DashboardConfigurationSchem
 export const demoModuleRouteMap: { [identifier: string]: Route } = {
     demoClientMetricsBillboard: {
         outlet: "DemoClientMetricsBillboard",
-        loadChildren: "./dashboard-page/client/common/com.company.sample1/views/card-templates/components/demo-client-metrics-billboard/demo-client-metrics-billboard-template.module#DemoClientMetricsBillboardTemplateModule"
+
+        // Angular 8 syntax
+        loadChildren: () => import( "./dashboard-page/client/common/com.company.sample1/views/card-templates/components/demo-client-metrics-billboard/demo-client-metrics-billboard-template.module")
+           .then(m => m.DemoClientMetricsBillboardTemplateModule)
+
+        // loadChildren: "./dashboard-page/client/common/com.company.sample1/views/card-templates/components/demo-client-metrics-billboard/demo-client-metrics-billboard-template.module#DemoClientMetricsBillboardTemplateModule"
     }
 };
 

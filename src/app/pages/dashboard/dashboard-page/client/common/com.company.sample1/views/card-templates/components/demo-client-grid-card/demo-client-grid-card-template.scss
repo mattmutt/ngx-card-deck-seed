@@ -6,7 +6,7 @@
         > .datagrid > .datagrid-table-wrapper > [role="grid"] {
 
 
-            > [role="rowgroup"] > [role="row"]  [role="cell"]   {
+            > [role="rowgroup"] > [role="row"]  [role="gridcell"]  {
 
                 @import "styles/bar-graph";
                 @import "styles/inventory-summary-grid-column";

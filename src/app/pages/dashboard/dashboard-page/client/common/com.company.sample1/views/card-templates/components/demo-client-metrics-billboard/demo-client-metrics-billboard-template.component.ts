@@ -26,7 +26,7 @@ export class DemoClientMetricsBillboardTemplateComponent extends CardPluginTempl
 
     constructor(// interface token conformance requirement
         @Inject(forwardRef(() => CARD_RESOURCE_TOKEN)) public resourceToken: CardResourceInjectionTokenValue,
-        @Inject(MetricsBillboardComponent) public cardAssemblyPlugin: MetricsBillboardComponent, // implements DashboardCardPluggable
+        @Inject(MetricsBillboardComponent) public cardAssemblyPlugin: MetricsBillboardComponent<any, any, any, any>, // implements DashboardCardPluggable
 
         _dashboardComponent: DashboardComponent,
         _globalState: GlobalStateBase,

@@ -47,6 +47,14 @@
                                 "isHeaderVisible": true,
                                 "isFooterVisible": false,
                                 "isFilterVisible": false,
+                                "controls": {
+                                    "pagination": {
+                                        "visible": true,
+                                        "pageSize": 10,
+                                        "initialPage": 1,
+                                        "entityNamePluralized": "items"
+                                    }
+                                },
                                 "isColumnSeparatorVisible": false
                             }
                         }

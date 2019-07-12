@@ -3,11 +3,13 @@
 
     <section role="chart-widget">
 
-        <section *ngFor="let metricEntity of numericTransformedValueItemsList" role="chart-metric">
+        <section *ngFor="let metricEntity of numericTransformedValueItemsList" role="chart-metric" [attr.title]="metricEntity.message">
 
+            <!--
             <section role="chart-metric-title">
                 <h4 [textContent]="metricEntity.message"></h4>
             </section>
+            -->
 
 
             <section role="chart-metric-label">
